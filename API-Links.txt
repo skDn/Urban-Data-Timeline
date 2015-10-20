@@ -1,0 +1,18 @@
+Querying for busy venues in a an area of a city
+curl -H "Content-Type: application/json" -XPOST http://imcdnode-01:8080/ubdc-web/getBusyVenues.action -d '{request: {lat: 55.8748 , lon:-4.2929, radius:0.05, timestamp: "2015-07-01 14:00:00"}}'
+
+Querying for statistical information regarding a Twitter hashtag
+curl -H "Content-Type: application/json" -XPOST http://imcdnode-01:8080/ubdc-web-backup/getTweetStats.action -d '{"request":{"query":"yesscotland","date":"2014-08-25"}}'
+
+Querying historical train data for delays at a given train station on a given date
+curl -H "Content-Type: application/json" -XPOST http://130.209.67.145:8080/ubdc-web/getDelayedServices.action -d '{"request":{"tiploc":"GLGQHL","shortDate":"2015-04-01","minimumDelay":"5"}}'
+
+This end point allow end users to obtain all train stations within a specified geo-spatial boundaries. This end point is particularly useful for obtaining the identifiers of UK train stations in order to query the relevant end points for delays
+curl -H "Content-Type: application/json" -XPOST http://imcdnode-01:8080/ubdc-web/getTrainStations.action -d '{"request":{"lat": 55.8580 , "lon":-4.2590, "radius": 1.0}}'
+
+This end point enables the prediction of transportation mode of GPS trails from the survey data
+------- trailId the unique Id of the GPS trails file(string)
+curl -H "Content-Type: application/json" -XPOST http://imcdnode-01.dcs.gla.ac.uk:8080/ubdc-web/testGetTMDPrediction.jsp -d '{"request": {"trailId":"0_test1.csv"}}'
+
+Cannot run visualisation examples 
+http://130.209.67.145:8080/ubdc-web/trains_vis/index.html
