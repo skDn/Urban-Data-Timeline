@@ -36,6 +36,14 @@ if ($q == "Google") {
         )
     );
     $ch = curl_init('http://localhost:8080/ubdc-web/getBusyVenues.action');
+} elseif ($q == "Twitter") {
+    $postData = array(
+        "request" => array(
+            "query" => "yesscotland",
+            "date" => "2014-08-25"
+        )
+    );
+    $ch = curl_init('http://localhost:8080/ubdc-web/getTweetStats.action');
 }
 
 
@@ -70,6 +78,8 @@ if ($q == "TrainDelays") {
 //    echo $responseData['response'];
 } elseif ($q == "Venues") {
     var_dump($responseData['response']['results']);
+} elseif ($q == "Twitter") {
+    echo $response;
 }
 
 
