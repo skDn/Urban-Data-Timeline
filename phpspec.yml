@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Urban
+        psr4_prefix: Urban
+        src_path: app
