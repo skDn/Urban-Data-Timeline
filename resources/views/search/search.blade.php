@@ -11,7 +11,9 @@
 
 @section('content')
     {{--<section id="cd-timeline" class="cd-container"/>--}}
+    <div class="container" style="margin-top: 15px;">
     @include('templates.partials.searchbox')
+    </div>
     @yield('results')
 @stop
 

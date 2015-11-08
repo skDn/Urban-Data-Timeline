@@ -5,7 +5,7 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Search</a> </li>
+                <li><a href="{{ route('event') }}">Search</a> </li>
             </ul>
         </div>
     </div>

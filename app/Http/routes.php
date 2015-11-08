@@ -20,3 +20,8 @@ Route::get('/event/search', [
     'uses' => '\Urban\Http\Controllers\SearchController@getResults',
     'as' => 'search.results',
 ]);
+
+Route::get('/event/search/count', [
+    'uses' => '\Urban\Http\Controllers\SearchController@getUserCount',
+    'as' => 'search.count',
+]);
