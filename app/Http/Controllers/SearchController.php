@@ -13,9 +13,14 @@ use Urban\Twitter;
 
 class SearchController extends Controller
 {
-    public function index()
+    public function event()
     {
         return view('search.search');
+    }
+
+    public function comparison()
+    {
+        return view('comparison.comparison');
     }
 
     public function getResults(Request $request)
@@ -66,7 +71,12 @@ class SearchController extends Controller
 
         $twit = new Twitter($query);
 
-        echo $twit->getNumberOfTweetsForDay($this->matchParametersToRegex($day, $month, $year));
+        return $twit->getNumberOfTweetsForDay($this->matchParametersToRegex($day, $month, $year));
+    }
+
+    public function compareTwoEvents(Request $request)
+    {
+        return view('search.result');
     }
 
 }

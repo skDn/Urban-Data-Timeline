@@ -7,4 +7,6 @@ crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/reset.css">
 
+{!! Html::style('css/style.css')  !!}
+
 @yield('styles')

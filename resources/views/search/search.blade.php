@@ -23,12 +23,6 @@
 <title>Search</title>
 @stop
 
-@section('styles')
-    @parent
-    {!! Html::style('css/search.css') !!}
-    {!! Html::style('css/style.css')  !!}
-@stop
-
 
 @section('scripts')
     {{--TODO: transfer everything to js files and don't use parent--}}
@@ -38,8 +32,9 @@
 
 
 @section('content')
-
+    <div class="center-block col-lg-8">
     @include('templates.partials.searchbox')
+    </div>
     @include('templates.partials.scrollTop')
 
     @yield('results')

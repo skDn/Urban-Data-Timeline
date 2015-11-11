@@ -6,10 +6,8 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ route('comparison') }}">Compare</a> </li>
                 <li><a href="{{ route('event') }}">Search</a> </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ route('event') }}">Compare</a> </li>
             </ul>
         </div>
     </div>
