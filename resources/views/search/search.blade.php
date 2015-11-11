@@ -40,6 +40,7 @@
 @section('content')
 
     @include('templates.partials.searchbox')
+    @include('templates.partials.scrollTop')
 
     @yield('results')
 @stop

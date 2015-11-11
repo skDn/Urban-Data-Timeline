@@ -5,7 +5,6 @@ jQuery(document).ready(function($){
 	$timeline_block.each(function(){
 		if($(this).offset().top > $(window).scrollTop()+$(window).height()*0.9) {
 			$(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
-			console.log('adding hidden');
 		}
 	});
 
@@ -14,6 +13,10 @@ jQuery(document).ready(function($){
 		$timeline_block.each(function(){
 			if( $(this).offset().top <= $(window).scrollTop()+$(window).height()*0.9 && $(this).find('.cd-timeline-img').hasClass('is-hidden') ) {
 				$(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+			}
+			// Restore is-hidden class if scrolling to the top 
+			if($(this).offset().top > $(window).scrollTop()+$(window).height()*2) {
+				$(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('bounce-in').addClass('is-hidden');
 			}
 		});
 	});
