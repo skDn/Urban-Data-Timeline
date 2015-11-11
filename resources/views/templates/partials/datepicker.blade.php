@@ -97,56 +97,59 @@
 
     </div>
 </div>
+@section('scripts')
+    @parent
 
-<script type="text/javascript">
-    //   	$('#test li').on('click', function(){
-    //   		$('#test1').text($(this).text());
-    // });
-    var dayInputID = "#day";
-    var monthInputID = "#month";
-    var yearInputID = "#year";
+    <script type="text/javascript">
+        //   	$('#test li').on('click', function(){
+        //   		$('#test1').text($(this).text());
+        // });
+        var dayInputID = "#day";
+        var monthInputID = "#month";
+        var yearInputID = "#year";
 
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
 
-    $(".dropdown-menu li").click(function () {
-        var relatedAnchorID = $(this).closest('div').find('a').attr("id");
-        $('#' + relatedAnchorID).text($(this).text());
-    });
-    $('.btn-group ul').each(function () {
-        $(this).css({'width': $(this).parent().width()});
-    });
-    $(".btn-group-justified a").click(function () {
-        //console.log($(this).attr('data-action'));
-        //console.log($(this).attr('data-action') );
-        if ($(this).attr('data-action') === 'decrementDays' || $(this).attr('data-action') === 'incrementDays') {
+        $(".dropdown-menu li").click(function () {
+            var relatedAnchorID = $(this).closest('div').find('a').attr("id");
+            $('#' + relatedAnchorID).text($(this).text());
+        });
+        $('.btn-group ul').each(function () {
+            $(this).css({'width': $(this).parent().width()});
+        });
+        $(".btn-group-justified a").click(function () {
+            //console.log($(this).attr('data-action'));
+            //console.log($(this).attr('data-action') );
+            if ($(this).attr('data-action') === 'decrementDays' || $(this).attr('data-action') === 'incrementDays') {
 
-            var day = $(dayInputID).text();
-            var month = $(monthInputID).text();
-            var year = $(yearInputID).text();
+                var day = $(dayInputID).text();
+                var month = $(monthInputID).text();
+                var year = $(yearInputID).text();
 
-            var d = new Date(year, monthNames.indexOf(month), day);
+                var d = new Date(year, monthNames.indexOf(month), day);
 
-            if ($(this).attr('data-action') === 'decrementDays') {
-                d.setDate(d.getDate() - 1);
+                if ($(this).attr('data-action') === 'decrementDays') {
+                    d.setDate(d.getDate() - 1);
+                }
+                if ($(this).attr('data-action') === 'incrementDays') {
+                    d.setDate(d.getDate() + 1);
+                }
+                $(dayInputID).text(d.getDate());
+                $(monthInputID).text(monthNames[d.getMonth()]);
+                $(yearInputID).text(d.getFullYear());
+
             }
-            if ($(this).attr('data-action') === 'incrementDays') {
-                d.setDate(d.getDate() + 1);
-            }
-            $(dayInputID).text(d.getDate());
-            $(monthInputID).text(monthNames[d.getMonth()]);
-            $(yearInputID).text(d.getFullYear());
 
-        }
+            //$("#dayInput").val('1');
+            //console.log($("#day").next());
 
-        //$("#dayInput").val('1');
-        //console.log($("#day").next());
+        });
+        $('form').submit(function (event) {
+            $(dayInputID).next().val($(dayInputID).text());
+            $(monthInputID).next().val(monthNames.indexOf($(monthInputID).text()) + 1);
+            $(yearInputID).next().val($(yearInputID).text());
+        });
 
-    });
-    $('form').submit(function (event) {
-        $(dayInputID).next().val($(dayInputID).text());
-        $(monthInputID).next().val(monthNames.indexOf($(monthInputID).text())+1);
-        $(yearInputID).next().val($(yearInputID).text());
-    });
-
-</script>
+    </script>
+@stop
