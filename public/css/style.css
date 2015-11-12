@@ -81,13 +81,13 @@ header h1 {
   }
 }
 
-#cd-timeline {
+#cd-timeline, #cd-timelineFirst, #cd-timelineSecond{
   position: relative;
   padding: 2em 0;
   margin-top: 2em;
   margin-bottom: 2em;
 }
-#cd-timeline::before {
+#cd-timeline::before, #cd-timelineFirst::before, #cd-timelineSecond::before {
   /* this is the vertical line */
   content: '';
   position: absolute;
@@ -98,11 +98,11 @@ header h1 {
   background: #d7e4ed;
 }
 @media only screen and (min-width: 1170px) {
-  #cd-timeline {
+  #cd-timeline, #cd-timelineFirst, #cd-timelineSecond {
     margin-top: 3em;
     margin-bottom: 3em;
   }
-  #cd-timeline::before {
+  #cd-timeline::before, #cd-timelineFirst::before, #cd-timelineSecond::before {
     left: 50%;
     margin-left: -2px;
   }

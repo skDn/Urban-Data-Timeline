@@ -50,7 +50,7 @@ class Twitter
                 "date" => $d,
             )
         );
-        $ch = curl_init('http://localhost:8080/ubdc-web/getTweetStats.action');
+        $ch = curl_init('http://localhost:8070/ubdc-web/getTweetStats.action');
         curl_setopt_array($ch, array(
             CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,

@@ -9,7 +9,7 @@
     }
 </style>
 
-<div id="page" style="width: 80%;margin:auto;margin-top:40px;background:transparent">
+<div id="page" style="width: 80%;margin:auto;margin-top:40px;">
     <div id="loading-container" class="row text-center">
         <img src="https://www.musicianswithoutborders.org/wp-content/themes/mwb/images/ajax-loader-light.gif" width="32"
              height="32" alt="tweet loader"/>
@@ -127,11 +127,12 @@
         }
 
         function drawChart(element, data) {
+            data = sortDictionary(data, 'date');
             var array = convertJsonToArray(data);
             var data = google.visualization.arrayToDataTable(array);
 
             var options = {
-                title: 'Company Performance',
+                title: 'Tweets',
                 hAxis: {title: 'Day',  titleTextStyle: {color: '#333'}},
                 vAxis: {minValue: 0}
             };
@@ -142,37 +143,45 @@
         }
 
         $(document).ready(function () {
-            var dict = {};
-            $('input').each(function () {
-                dict[$(this).attr("name")] = ($(this).val().length > 0) ? $(this).val() : $(this).text();
-            });
-            dict['day'] = $(dayInputID).text().trim();
-            dict['month'] = $(monthInputID).text().trim();
-            dict['year'] = $(yearInputID).text().trim();
-            resp = [];
-            function foo() {
-                var upper = parseInt(dict['day']) + 5;
-                var lower = parseInt(dict['day']) - 5;
-                var result = [];
-                for (i = lower; i < upper; i++) {
-                    dict['day'] = i + "";
-                    $.ajax({
-                        type: "GET",
-                        url: "search/count",
-                        async: 'false',
-                        data: dict,
-                        dataType: 'json',
-                        success: function (res) {
-                            resp.push(res);
-                            if (resp.length == 10) {
-                                drawChart('#page', resp);
-                            }
-                        }
-                    });
+            var searchSpace = [];
+            var indexes = ['First', 'Second']
+            var getInfo;
+            for (i = 0; i<indexes.length;++i){
+                getInfo = getDate(indexes[i]);
+                if (Object.keys(getInfo).length > 0) {
+                    searchSpace.push(getInfo);
                 }
             }
 
-            foo();
+            function foo(bound,queries) {
+                var upper = parseInt(queries[0]['day']) + bound/2;
+                var lower = parseInt(queries[0]['day']) - bound/2;
+                var limit = bound * queries.length;
+                console.log();
+                resp = [];
+                var j = 0;
+                //for (j = 0;j<queries.length-1;j++) {
+                    for (i = lower; i < upper; i++) {
+                        queries[j]['day'] = i + "";
+                        $.ajax({
+                            type: "GET",
+                            url: "search/count",
+                            async: 'false',
+                            data: queries[j],
+                            dataType: 'json',
+                            success: function (res) {
+                                resp.push(res);
+                                if (resp.length == bound) {
+                                    drawChart('#page', resp);
+                                }
+                            }
+                        });
+                    }
+                //}
+
+            }
+
+            foo(10,searchSpace);
         });
     </script>
 @stop

@@ -33,5 +33,5 @@ Route::get('/event/search/count', [
 
 Route::get('/event/compare', [
     'uses' => '\Urban\Http\Controllers\SearchController@compareTwoEvents',
-    'as' => 'event.compare',
+    'as' => 'comparison.results',
 ]);

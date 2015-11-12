@@ -12,8 +12,9 @@
         <p> No results found </p>
 
     @else
-
-        @include('templates.partials.lineGraph')
+        <div class="col-lg-12">
+            @include('templates.partials.lineGraph')
+        </div>
         {{--<style> .is-hidden {display: none} </style>--}}
         <section id="cd-timelineFirst" class="cd-container col-lg-6">
             @foreach ($data['responseFirst'] as $event)
