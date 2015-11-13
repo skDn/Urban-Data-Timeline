@@ -6,6 +6,8 @@ namespace Urban;
 
 class Twitter
 {
+    protected $url;
+
     protected $query;
 
     protected $date;
@@ -15,6 +17,7 @@ class Twitter
     function __construct($q)
     {
         $this->query = $q;
+        $this->url = config('services.twitter.url');
         //$this->date = $d;
     }
 
@@ -50,7 +53,7 @@ class Twitter
                 "date" => $d,
             )
         );
-        $ch = curl_init('http://localhost:8070/ubdc-web/getTweetStats.action');
+        $ch = curl_init($this->url);
         curl_setopt_array($ch, array(
             CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,
