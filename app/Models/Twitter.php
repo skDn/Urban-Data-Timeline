@@ -57,11 +57,6 @@ class Twitter extends AbstractService
         }
         return array();
     }
-
-    protected function getPostData()
-    {
-        return $this->postData;
-    }
     protected function setPostDataDate($date)
     {
         $this->postData['request']['date'] = $this->dateToString($date);
@@ -70,33 +65,6 @@ class Twitter extends AbstractService
     protected function dateToString($date)
     {
         return date("Y-m-d",$date);
-    }
-
-    public function getCountForRange($startDate, $endDate)
-    {
-        if ($startDate == $endDate)
-        {
-            $response = $this->getCount($startDate);
-        }
-        else {
-            if ($startDate > $endDate) {
-                $start = $endDate;
-                $endDate = $startDate;
-                $startDate = $start;
-            }
-            $response = array();
-            while ($startDate <= $endDate) {
-                array_push($response, $this->getCount($startDate));
-                $startDate = strtotime('+1 days', $startDate);
-            }
-        }
-        $this->setResponse($response);
-        return $this->getResponse();
-    }
-
-    protected function getResponse()
-    {
-        return $this->responseData;
     }
 
     protected function setResponse($data)

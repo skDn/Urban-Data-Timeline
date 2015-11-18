@@ -18,48 +18,125 @@ namespace Urban\Models;
 class BusyVenues extends AbstractService
 {
 
+    function __construct($q, $lat, $lon)
+    {
+        $this->query = $q;
+        $this->url = config('services.busyVenues.url');
+        $this->postData = array(
+            "request" => array(
+//                "query" => $this->query,
+                "lat" => $lat,
+                "lon" => $lon,
+                "radius" => config('controls.venuesRange'),
+                "timestamp" => null,
+            )
+        );
+        $this->responseData = array(
+            "venues" => null,
+        );
+        //$this->date = $d;
+    }
     protected function getURL()
     {
-        // TODO: Implement getURL() method.
-    }
-
-    protected function getPostData()
-    {
-        // TODO: Implement getPostData() method.
-    }
-
-    protected function getResponse()
-    {
-        // TODO: Implement getResponse() method.
+        return $this->url;
     }
 
     protected function setResponse($data)
     {
-        // TODO: Implement setResponse() method.
+        $this->responseData['venues'] = $data;
     }
 
     protected function setPostDataDate($date)
     {
-        // TODO: Implement setPostDataDate() method.
+        $this->postData['request']['timestamp'] = $this->dateToString($date);
     }
 
     protected function dateToString($date)
     {
-        // TODO: Implement dateToString() method.
+        return date("Y-m-d h:m:s",$date);
     }
 
     public function getCount($queryDate)
     {
-        // TODO: Implement getCount() method.
-    }
+        // init request parameters
+        $this->setPostDataDate($queryDate);
+        // sending request
+        $response = $this->sendRequest($this->getPostData());
 
-    public function getCountForRange($startDate, $endDate)
-    {
-        // TODO: Implement getCountForRange() method.
+        $count = 0;
+        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
+            foreach ($response['response']['results']['results'] as $venue)
+            {
+                if ($venue['score'] > 0.0)
+                {
+                    $count++;
+                }
+            }
+        }
+        $returnArray = array(
+            'date' => $this->dateToString($queryDate),
+            'count' => $count,
+        );
+
+        return $returnArray;
     }
 
     public function getData($queryDate, $start, $end)
     {
-        // TODO: Implement getData() method.
+        $this->setPostDataDate($queryDate);
+
+        $response = $this->sendRequest($this->getPostData());
+        //dd($response['response']['results']);
+        $modifiedData = array();
+        $filter = array();
+        //TODO: implement infinite scrolling
+        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
+            foreach ($response['response']['results']['results'] as $venue)
+                {
+                    if ($venue['score'] > 0.0)
+                    {
+                        array_push($filter, $venue);
+                    }
+                }
+            foreach($filter as $venue)
+            {
+                $timeSeries = array();
+//                TODO: Service has a bug with score to value mapping
+//                foreach($response['response']['results']['venueTimeSeries'][$venue['id']] as $timeSeriesIter)
+//                {
+//                    if($timeSeriesIter['value']>0.0)
+//                    {
+//                        array_push($timeSeries,$timeSeriesIter);
+//                    }
+//                }
+                $randint = rand(0 , count($response['response']['results']['venueTimeSeries'][$venue['id']])-1);
+                //dd($response['response']['results']['venueTimeSeries'][$venue['id']]);
+                // getting a random record from the time series
+                $timeSeries = array_values($response['response']['results']['venueTimeSeries'][$venue['id']])[$randint];
+                //dd($timeSeries);
+                $venueInformation = array();
+                // getting info for each venue
+                foreach ($response['response']['results']['venuesData'] as $entryInfo) {
+                    //dd($entryInfo);
+                    if ($entryInfo['id'] == $venue['id'])
+                    {
+                        array_push($venueInformation,$entryInfo);
+                        break;
+                    }
+                }
+
+                array_push($modifiedData,array(
+                    'venue' => $venue['displayName'],
+                    'timeSeries' => $timeSeries,
+                    'venueInfo' => $venueInformation,
+                ));
+            }
+            //return array_slice($response['response']['serviceJson']['users'], $start, $end, true);
+        }
+//        following code returns the response in format 'venues' => array()
+//        $this->setResponse($modifiedData);
+//        return $this->getResponse();
+
+        return $modifiedData;
     }
 }

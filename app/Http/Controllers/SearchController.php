@@ -9,6 +9,7 @@
 namespace Urban\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 
 class SearchController extends Controller
@@ -60,6 +61,11 @@ class SearchController extends Controller
 
         $twit = new Twitter($query);
 
+        $lat = 55.8748;
+        $lon = -4.2929;
+        $venues = new BusyVenues($query,$lat,$lon);
+        //dd($venues->getData(strtotime($date), 0 , 20));
+        //dd($twit->getData(strtotime($date), 0, 10));
         $firstElement = array(
             'id' => $this->firstID,
             'query' => $query,
@@ -69,9 +75,12 @@ class SearchController extends Controller
             'elements' => array(
                 'first' => $firstElement,
             ),
-            'response' => $twit->getData(strtotime($date), 0, 10),
+            'response' => array(
+                'twitter' => $twit->getData(strtotime($date), 0, 10),
+                'venues' => $venues->getData(strtotime($date), 0 , 20),
+            )
         );
-        //dd($response);
+        dd($response);
         return view('search.result')->with('data', $response);
         //return
     }
@@ -108,11 +117,17 @@ class SearchController extends Controller
 
         $twit = new Twitter($query);
 
+        $lat = 55.8748;
+        $lon = -4.2929;
+        $venues = new BusyVenues($query,$lat,$lon);
+
         //return $twit->getCount($this->getDateObject($day, $month, $year));
         $returnData = array(
-            $query => $twit->getCountForRange($dateStart, $dateEnd),
+            $query => array(
+                'twitter' => $twit->getCountForRange($dateStart, $dateEnd),
+                'venues' => $venues->getCountForRange($dateStart,$dateEnd),
+            )
         );
-
         return json_encode($returnData);
     }
 

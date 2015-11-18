@@ -20,9 +20,9 @@ abstract class AbstractService
     // Force Extending class to define this method
     abstract protected function getURL();
 
-    abstract protected function getPostData();
+//    abstract protected function getPostData();
 
-    abstract protected function getResponse();
+//    abstract protected function getResponse();
 
     abstract protected function setResponse($data);
 
@@ -32,7 +32,7 @@ abstract class AbstractService
 
     abstract public function getCount($queryDate);
 
-    abstract public function getCountForRange($startDate, $endDate);
+    //abstract public function getCountForRange($startDate, $endDate);
 
     abstract public function getData($queryDate, $start, $end);
     //abstract protected function prefixValue($prefix);
@@ -61,5 +61,38 @@ abstract class AbstractService
         $responseData = json_decode($response, TRUE);
         //return array_slice($responseData['response']['serviceJson']['users'], 0, 20,true);
         return $responseData;
+    }
+
+    protected function getPostData()
+    {
+        return $this->postData;
+    }
+
+    protected function getResponse()
+    {
+        return $this->responseData;
+    }
+
+    public function getCountForRange($startDate, $endDate)
+    {
+        if ($startDate == $endDate)
+        {
+            $response = $this->getCount($startDate);
+        }
+        else {
+            if ($startDate > $endDate) {
+                $start = $endDate;
+                $endDate = $startDate;
+                $startDate = $start;
+            }
+            $response = array();
+            while ($startDate <= $endDate) {
+                array_push($response, $this->getCount($startDate));
+                $startDate = strtotime('+1 days', $startDate);
+            }
+        }
+//        $this->setResponse($response);
+//        return $this->getResponse();
+        return $response;
     }
 }
