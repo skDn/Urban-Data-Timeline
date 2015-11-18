@@ -35,13 +35,18 @@
                         <i class="glyphicon glyphicon-search"></i>
                         <input type="text" class="form-control" style="width: 100%;font-size: inherit !important;"
                                placeholder="Search" name="query{{ $element['id'] }}"
-                               value="{{ $element['query'] or '' }}">
+                               value="{{ $element['query'] or '' }}"
+                               id="query_{{ $element['id'] }}">
                     </div>
-                    @include('templates.partials.datepicker')
+                    {{--@include('templates.partials.datepicker')--}}
                 </div>
             @endforeach
+            <div class="col-lg-8 center-block" style="top:15px;">
+                @include('templates.partials.datepicker')
+            </div>
             {{--<input type="hidden" name="_token" value="{{ Session::token() }}">--}}
-                <input type="submit" value="Submit">
+
+            <input type="submit" value="Submit">
         </form>
         @yield('results')
     </div>

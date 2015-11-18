@@ -19,18 +19,18 @@
 <div class="form-inline" style="margin-top:15px;">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
 
-        <a type="button" title="Decrement Day" id="decrement_{{ $element['id'] }}" class="btn btn-default" data-action="decrementDays"><span
+        <a type="button" title="Decrement Day" id="decrement_" class="btn btn-default" data-action="decrementDays"><span
                     class="glyphicon glyphicon-menu-left"></span></a>
 
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default dropdown-toggle" id="day{{ $element['id'] }}" data-toggle="dropdown">
-                @if (isset($element['day']))
-                    {{ $element['day'] }}
+            <a type="button" class="btn btn-default dropdown-toggle" id="day_" data-toggle="dropdown">
+                @if (isset($element['date']))
+                    {{ date("d", strtotime($element['date'])) }}
                 @else
                     Day <span class="glyphicon glyphicon-menu-down"></span>
                 @endif
             </a>
-            <input type="hidden" name="day{{ $element['id'] }}"/>
+            {{--<input type="hidden" name="day"/>--}}
             <ul id="test" class="dropdown-menu">
 
                 <li><a type="button" class="btn btn-default">1</a></li>
@@ -46,14 +46,14 @@
             </ul>
         </div>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default dropdown-toggle" id="month{{ $element['id'] }}" data-toggle="dropdown">
-                @if (isset($element['month']))
-                    {{ $element['month'] }}
+            <a type="button" class="btn btn-default dropdown-toggle" id="month_" data-toggle="dropdown">
+                @if (isset($element['date']))
+                    {{ date("m", strtotime($element['date'])) }}
                 @else
                     Month <span class="glyphicon glyphicon-menu-down"></span>
                 @endif
             </a>
-            <input type="hidden" name="month{{ $element['id'] }}">
+            {{--<input type="hidden" name="month">--}}
             <ul id="test" class="dropdown-menu">
 
                 <li><a type="button" class="btn btn-default">1</a></li>
@@ -68,14 +68,14 @@
 
         </div>
         <div class="btn-group" role="group">
-            <a type="button" class="btn btn-default dropdown-toggle" id="year{{ $element['id'] }}" data-toggle="dropdown">
-                @if (isset($element['year']))
-                    {{ $element['year'] }}
+            <a type="button" class="btn btn-default dropdown-toggle" id="year_" data-toggle="dropdown">
+                @if (isset($element['date']))
+                    {{ date("Y", strtotime($element['date'])) }}
                 @else
                     Year <span class="glyphicon glyphicon-menu-down"></span>
                 @endif
             </a>
-            <input type="hidden" name="year{{ $element['id'] }}">
+            {{--<input type="hidden" name="year">--}}
             <ul id="test" class="dropdown-menu">
 
                 <li><a type="button" class="btn btn-default">2015</a></li>
@@ -90,8 +90,10 @@
 
         </div>
 
-        <a type="button" title="Increment Day" id="increment_{{ $element['id'] }}" class="btn btn-default" data-action="incrementDays"><span
+        <a type="button" title="Increment Day" id="increment_" class="btn btn-default" data-action="incrementDays"><span
                     class="glyphicon glyphicon-menu-right"></span></a>
+
+        <input type="hidden" id="date_" name="date"/>
 
     </div>
 </div>

@@ -9,7 +9,7 @@
 namespace Urban\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Urban\Twitter;
+use Urban\Models\Twitter;
 
 class SearchController extends Controller
 {
@@ -51,9 +51,9 @@ class SearchController extends Controller
     public function getResults(Request $request)
     {
         $query = $request->input('query' . $this->firstID);
-        $day = $request->input('day' . $this->firstID);
-        $month = $request->input('month' . $this->firstID);
-        $year = $request->input('year' . $this->firstID);
+        // use this if more than one date picker
+        //$date = $request->input('date' . $this->firstID);
+        $date = $request->input('date');
         if (!$query) {
             return redirect()->route('event');
         }
@@ -62,17 +62,16 @@ class SearchController extends Controller
 
         $firstElement = array(
             'id' => $this->firstID,
-            'query'=> $query,
-            'day'=> $day,
-            'month'=> $month,
-            'year'=> $year,
+            'query' => $query,
+            'date' => $date,
         );
         $response = array(
             'elements' => array(
                 'first' => $firstElement,
             ),
-            'response' => $twit->getUsers($this->matchParametersToRegex($day, $month, $year)),
+            'response' => $twit->getData(strtotime($date), 0, 10),
         );
+        //dd($response);
         return view('search.result')->with('data', $response);
         //return
     }
@@ -82,14 +81,26 @@ class SearchController extends Controller
         $month = sprintf("%02d", $m);
         $day = sprintf("%02d", $d);
         return $y . '-' . $month . '-' . $day;
+        //return mktime(0, 0, 0, $m, $d, $y);
+    }
+
+    private function getDateObject($d, $m, $y)
+    {
+        $month = sprintf("%02d", $m);
+        $day = sprintf("%02d", $d);
+        //return $y . '-' . $month . '-' . $day;
+        return mktime(0, 0, 0, $m, $d, $y);
     }
 
     public function getUserCount(Request $request)
     {
         $query = $request->input('query');
-        $day = $request->input('day');
-        $month = $request->input('month');
-        $year = $request->input('year');
+        $date = strtotime($request->input('date'));
+
+        $range = floor(config('controls.countReportRange') / 2);
+
+        $dateStart = strtotime('-' . $range . ' days', $date);
+        $dateEnd = strtotime('+' . $range . ' days', $date);
 
         if (!$query) {
             return redirect()->route('event');
@@ -97,22 +108,24 @@ class SearchController extends Controller
 
         $twit = new Twitter($query);
 
-        return $twit->getNumberOfTweetsForDay($this->matchParametersToRegex($day, $month, $year));
+        //return $twit->getCount($this->getDateObject($day, $month, $year));
+        $returnData = array(
+            $query => $twit->getCountForRange($dateStart, $dateEnd),
+        );
+
+        return json_encode($returnData);
     }
 
     public function compareTwoEvents(Request $request)
     {
         $queryFirst = $request->input('query' . $this->firstID);
-        $dayFirst = $request->input('day' . $this->firstID);
-        $monthFirst = $request->input('month' . $this->firstID);
-        $yearFirst = $request->input('year' . $this->firstID);
+        //$dateFirst = $request->input('date' . $this->firstID);
 
         $querySecond = $request->input('query' . $this->secondID);
-        $daySecond = $request->input('day' . $this->secondID);
-        $monthSecond = $request->input('month' . $this->secondID);
-        $yearSecond = $request->input('year' . $this->secondID);
+        //$dateSecond = $request->input('date' . $this->secondID);
+        $dateFirst = $dateSecond = $request->input('date');
 
-        $querySecond = $request->input('querySecond');
+
 
         if (!$queryFirst && !$querySecond) {
             return redirect()->route('event');
@@ -121,9 +134,6 @@ class SearchController extends Controller
         $input = array(
             'queryFirst' => $queryFirst,
             'querySecond' => $querySecond,
-//            'day' => $dayFirst,
-//            'month' => $monthFirst,
-//            'year' => $yearFirst,
         );
 
         $twitFirst = new Twitter($queryFirst);
@@ -132,22 +142,18 @@ class SearchController extends Controller
 
         $firstElement = array(
             'id' => $this->firstID,
-            'query'=> $queryFirst,
-            'day'=> $dayFirst,
-            'month'=> $monthFirst,
-            'year'=> $yearFirst,
+            'query' => $queryFirst,
+            'date' => $dateFirst,
         );
         $secondElement = array(
             'id' => $this->secondID,
-            'query'=> $querySecond,
-            'day'=> $daySecond,
-            'month'=> $monthSecond,
-            'year'=> $yearSecond,
+            'query' => $querySecond,
+            'date' => $dateSecond,
         );
 
         $response = array(
-            'responseFirst' => $twitFirst->getUsers($this->matchParametersToRegex($dayFirst, $monthFirst, $yearFirst)),
-            'responseSecond' => $twitSecond->getUsers($this->matchParametersToRegex($daySecond, $monthSecond, $yearSecond)),
+            'responseFirst' => $twitFirst->getData(strtotime($dateFirst),0,10),
+            'responseSecond' => $twitSecond->getData(strtotime($dateSecond),0,10),
             'elements' => array(
                 'first' => $firstElement,
                 'second' => $secondElement,
