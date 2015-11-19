@@ -48,6 +48,7 @@ class SearchController extends Controller
             )
         );
     }
+
     function date_compare($a, $b)
     {
         $t1 = strtotime($a['dateString']);
@@ -69,7 +70,7 @@ class SearchController extends Controller
 
         $lat = 55.8748;
         $lon = -4.2929;
-        $venues = new BusyVenues($query,$lat,$lon);
+        $venues = new BusyVenues($lat, $lon);
 
         $firstElement = array(
             'id' => $this->firstID,
@@ -79,7 +80,7 @@ class SearchController extends Controller
         /**
          * sorting the array
          */
-        $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10),$venues->getData(strtotime($date), 0 , 20));
+        $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10), $venues->getData(strtotime($date), 0, 20));
         usort($mergeQueries, array($this, 'date_compare'));
         $response = array(
             'elements' => array(
@@ -134,13 +135,13 @@ class SearchController extends Controller
 
         $lat = 55.8748;
         $lon = -4.2929;
-        $venues = new BusyVenues($query,$lat,$lon);
+        $venues = new BusyVenues($lat, $lon);
 
         //return $twit->getCount($this->getDateObject($day, $month, $year));
         $returnData = array(
             $query => array(
                 'twitter' => $twit->getCountForRange($dateStart, $dateEnd),
-                'venues' => $venues->getCountForRange($dateStart,$dateEnd),
+                'venues' => $venues->getCountForRange($dateStart, $dateEnd),
             )
         );
         return json_encode($returnData);
@@ -156,7 +157,6 @@ class SearchController extends Controller
         $dateFirst = $dateSecond = $request->input('date');
 
 
-
         if (!$queryFirst && !$querySecond) {
             return redirect()->route('event');
         }
@@ -170,6 +170,10 @@ class SearchController extends Controller
 
         $twitSecond = new Twitter($querySecond);
 
+        $lat = 55.8748;
+        $lon = -4.2929;
+        $venues = new BusyVenues($lat, $lon);
+
         $firstElement = array(
             'id' => $this->firstID,
             'query' => $queryFirst,
@@ -181,9 +185,20 @@ class SearchController extends Controller
             'date' => $dateSecond,
         );
 
+        /**
+         * sorting the array
+         */
+        $ven = $venues->getData(strtotime($dateFirst), 0, 20);
+
+        $mergeQueries1 = array_merge($twitFirst->getData(strtotime($dateFirst), 0, 10), $ven);
+        usort($mergeQueries1, array($this, 'date_compare'));
+
+        $mergeQueries2 = array_merge($twitSecond->getData(strtotime($dateSecond), 0, 10), $ven);
+        usort($mergeQueries2, array($this, 'date_compare'));
+
         $response = array(
-            'responseFirst' => $twitFirst->getData(strtotime($dateFirst),0,10),
-            'responseSecond' => $twitSecond->getData(strtotime($dateSecond),0,10),
+            'responseFirst' => $mergeQueries1,
+            'responseSecond' => $mergeQueries2,
             'elements' => array(
                 'first' => $firstElement,
                 'second' => $secondElement,

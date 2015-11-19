@@ -18,13 +18,12 @@ namespace Urban\Models;
 class BusyVenues extends AbstractService
 {
 
-    function __construct($q, $lat, $lon)
+    function __construct($lat, $lon)
     {
-        $this->query = $q;
+
         $this->url = config('services.busyVenues.url');
         $this->postData = array(
             "request" => array(
-//                "query" => $this->query,
                 "lat" => $lat,
                 "lon" => $lon,
                 "radius" => config('controls.venuesRange'),

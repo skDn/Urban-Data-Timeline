@@ -19,19 +19,32 @@
         <section id="cd-timelineFirst" class="cd-container col-lg-6">
             @foreach ($data['responseFirst'] as $event)
                 <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-tweet">
-                        <img src="https://g.twimg.com/Twitter_logo_white.png" alt="Tweet">
-                    </div>
-                    <!-- cd-timeline-img -->
+                    @if ($event['class'] == 'tweet')
+                        <div class="cd-timeline-img cd-tweet">
+                            <img src="https://g.twimg.com/Twitter_logo_white.png" alt="Tweet">
+                        </div>
+                        <!-- cd-timeline-img -->
+                        <div class="cd-timeline-content">
+                            <h2>{{ $event['screen_name'] }}</h2>
 
-                    <div class="cd-timeline-content">
-                        <h2>{{ $event['screen_name'] }}</h2>
+                            <p>{{ $event['count'] }}</p>
+                            <a href="#" class="cd-read-more">Read more</a>
+                            <span class="cd-date">{{ date("d - H:i", strtotime($event['dateString'])) }}</span>
+                        </div>
+                    @elseif($event['class'] == 'venue')
+                        <div class="cd-timeline-img cd-venue">
+                            <img src="http://www.mobilemerit.com/mobile/restaurant/restaurant/images/icon-location.png" alt="Venue">
+                        </div>
+                        <!-- cd-timeline-img -->
+                        <div class="cd-timeline-content">
+                            <h2>{{ $event['venueInfo']['name'] }}</h2>
 
-                        <p>{{ $event['count'] }}</p>
-                        <a href="#" class="cd-read-more">Read more</a>
-                        <span class="cd-date">Jan 14</span>
-                    </div>
-                    <!-- cd-timeline-content -->
+                            <p>{{ $event['venue'] }}</p>
+                            <a href="#" class="cd-read-more">Read more</a>
+                            <span class="cd-date">{{ date("d - H:i", strtotime($event['dateString'])) }}</span>
+                        </div>
+                        @endif
+                                <!-- cd-timeline-content -->
                 </div> <!-- cd-timeline-block -->
             @endforeach
         </section>
@@ -39,19 +52,32 @@
         <section id="cd-timelineSecond" class="cd-container col-lg-6">
             @foreach ($data['responseSecond'] as $event)
                 <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-tweet">
-                        <img src="https://g.twimg.com/Twitter_logo_white.png" alt="Tweet">
-                    </div>
-                    <!-- cd-timeline-img -->
+                    @if ($event['class'] == 'tweet')
+                        <div class="cd-timeline-img cd-tweet">
+                            <img src="https://g.twimg.com/Twitter_logo_white.png" alt="Tweet">
+                        </div>
+                        <!-- cd-timeline-img -->
+                        <div class="cd-timeline-content">
+                            <h2>{{ $event['screen_name'] }}</h2>
 
-                    <div class="cd-timeline-content">
-                        <h2>{{ $event['screen_name'] }}</h2>
+                            <p>{{ $event['count'] }}</p>
+                            <a href="#" class="cd-read-more">Read more</a>
+                            <span class="cd-date">{{ date("d - H:i", strtotime($event['dateString'])) }}</span>
+                        </div>
+                    @elseif($event['class'] == 'venue')
+                        <div class="cd-timeline-img cd-venue">
+                            <img src="http://www.mobilemerit.com/mobile/restaurant/restaurant/images/icon-location.png" alt="Venue">
+                        </div>
+                        <!-- cd-timeline-img -->
+                        <div class="cd-timeline-content">
+                            <h2>{{ $event['venueInfo']['name'] }}</h2>
 
-                        <p>{{ $event['count'] }}</p>
-                        <a href="#" class="cd-read-more">Read more</a>
-                        <span class="cd-date">Jan 14</span>
-                    </div>
-                    <!-- cd-timeline-content -->
+                            <p>{{ $event['venue'] }}</p>
+                            <a href="#" class="cd-read-more">Read more</a>
+                            <span class="cd-date">{{ date("d - H:i", strtotime($event['dateString'])) }}</span>
+                        </div>
+                        @endif
+                                <!-- cd-timeline-content -->
                 </div> <!-- cd-timeline-block -->
             @endforeach
         </section>
