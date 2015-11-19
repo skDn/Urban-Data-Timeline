@@ -9,7 +9,7 @@
 return [
 
   'countReportRange' => 9,
-  'venuesRange' => 0.5,
+  'venuesRange' => 1,
 
 
 ];

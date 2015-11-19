@@ -95,4 +95,13 @@ abstract class AbstractService
 //        return $this->getResponse();
         return $response;
     }
+    protected function getRandomTimeOfDay($date)
+    {
+        $startdate = $date;
+        $enddate = strtotime('+ 23 hours', $date);
+
+        $randDate = rand($startdate, $enddate);
+
+        return date('Y-m-d H:i:s', $randDate);
+    }
 }

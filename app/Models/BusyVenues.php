@@ -120,16 +120,17 @@ class BusyVenues extends AbstractService
                     //dd($entryInfo);
                     if ($entryInfo['id'] == $venue['id'])
                     {
-                        array_push($venueInformation,$entryInfo);
+                        array_push($modifiedData,array(
+                            'class' => 'venue',
+                            'venue' => $venue['displayName'],
+                            'dateString' => $timeSeries['dateString'],
+                            'venueInfo' => $entryInfo,
+                        ));
                         break;
                     }
                 }
 
-                array_push($modifiedData,array(
-                    'venue' => $venue['displayName'],
-                    'timeSeries' => $timeSeries,
-                    'venueInfo' => $venueInformation,
-                ));
+
             }
             //return array_slice($response['response']['serviceJson']['users'], $start, $end, true);
         }

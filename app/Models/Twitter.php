@@ -22,6 +22,7 @@ class Twitter extends AbstractService
         );
         //$this->date = $d;
     }
+
     protected function getURL()
     {
         return $this->url;
@@ -29,6 +30,7 @@ class Twitter extends AbstractService
 
     public function getCount($queryDate)
     {
+        //dd($this->getRandomTimeOfDay($queryDate));
         // init request parameters
         $this->setPostDataDate($queryDate);
         // sending request
@@ -52,11 +54,24 @@ class Twitter extends AbstractService
 
         $response = $this->sendRequest($this->getPostData());
         //TODO: implement infinite scrolling
+        $sliced = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            return array_slice($response['response']['serviceJson']['users'], $start, $end, true);
+            $sliced = array_slice($response['response']['serviceJson']['users'], $start, $end, true);
         }
-        return array();
+        // creating the return array
+        // adding random timestamp to each tweet
+        $returnArr = array();
+        if (count($sliced) > 0) {
+            foreach ($sliced as $arr) {
+                array_push($returnArr, $arr + array(
+                        'dateString' => $this->getRandomTimeOfDay($queryDate),
+                        'class' => 'tweet',
+                    ));
+            }
+        }
+        return $returnArr;
     }
+
     protected function setPostDataDate($date)
     {
         $this->postData['request']['date'] = $this->dateToString($date);
@@ -64,7 +79,7 @@ class Twitter extends AbstractService
 
     protected function dateToString($date)
     {
-        return date("Y-m-d",$date);
+        return date("Y-m-d", $date);
     }
 
     protected function setResponse($data)

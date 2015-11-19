@@ -157,7 +157,9 @@ header h1 {
 .cd-timeline-img.cd-tweet {
   background: #0084b4;
 }
-
+.cd-timeline-img.cd-venue {
+  background: #b43127;
+}
 .cd-timeline-img.cd-picture {
   background: #75ce66;
 }

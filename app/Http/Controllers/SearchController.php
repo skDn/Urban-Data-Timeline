@@ -48,6 +48,12 @@ class SearchController extends Controller
             )
         );
     }
+    function date_compare($a, $b)
+    {
+        $t1 = strtotime($a['dateString']);
+        $t2 = strtotime($b['dateString']);
+        return $t1 - $t2;
+    }
 
     public function getResults(Request $request)
     {
@@ -64,26 +70,32 @@ class SearchController extends Controller
         $lat = 55.8748;
         $lon = -4.2929;
         $venues = new BusyVenues($query,$lat,$lon);
-        //dd($venues->getData(strtotime($date), 0 , 20));
-        //dd($twit->getData(strtotime($date), 0, 10));
+
         $firstElement = array(
             'id' => $this->firstID,
             'query' => $query,
             'date' => $date,
         );
+        /**
+         * sorting the array
+         */
+        $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10),$venues->getData(strtotime($date), 0 , 20));
+        usort($mergeQueries, array($this, 'date_compare'));
         $response = array(
             'elements' => array(
                 'first' => $firstElement,
             ),
-            'response' => array(
-                'twitter' => $twit->getData(strtotime($date), 0, 10),
-                'venues' => $venues->getData(strtotime($date), 0 , 20),
-            )
+            'response' => $mergeQueries,
+//            'response' => array(
+//                'twitter' => $twit->getData(strtotime($date), 0, 10),
+//                'venues' => $venues->getData(strtotime($date), 0 , 20),
+//            )
         );
-        dd($response);
+        //dd($response);
         return view('search.result')->with('data', $response);
         //return
     }
+
 
     private function matchParametersToRegex($d, $m, $y)
     {
@@ -104,6 +116,9 @@ class SearchController extends Controller
     public function getUserCount(Request $request)
     {
         $query = $request->input('query');
+        if (!$query) {
+            $query = $request->input('queryFirst');
+        }
         $date = strtotime($request->input('date'));
 
         $range = floor(config('controls.countReportRange') / 2);

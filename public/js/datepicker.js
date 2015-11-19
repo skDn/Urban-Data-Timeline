@@ -30,7 +30,7 @@ $(".dropdown-menu li").click(function () {
     var itemID = '#' + $(this).closest('div').find('a').attr("id");
     $(itemID).text($(this).text());
 });
-$('.btn-group ul').each(function () {
+$(".btn-group ul").each(function () {
     $(this).css({'width': $(this).parent().width()});
 });
 $(".btn-group-justified a").click(function () {
