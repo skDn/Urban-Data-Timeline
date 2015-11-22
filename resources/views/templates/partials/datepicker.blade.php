@@ -97,3 +97,8 @@
 
     </div>
 </div>
+
+@section('scripts')
+    @parent
+    {!! Html::script('js/datepicker.js') !!}
+@stop

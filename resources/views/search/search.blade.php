@@ -26,8 +26,6 @@
 @section('scripts')
     {{--TODO: transfer everything to js files and don't use parent--}}
     @parent
-    {!! Html::script('js/datepicker.js') !!}
-
 @stop
 
 

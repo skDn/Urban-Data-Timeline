@@ -7,7 +7,7 @@
 var drawChartWithData = 'twitter';
 var elem = 'page';
 var chartArray;
-var chart = new google.visualization.ComboChart(document.getElementById(elem));
+var chart;
 var dataToDraw;
 var options = {
     legend: {position: 'top', maxLines: 10},
@@ -125,7 +125,7 @@ function convertDataToChartArray(data) {
 function drawChart() {
     if (chartArray == undefined)
         chartArray = convertDataToChartArray(dataToDraw);
-
+    chart = new google.visualization.ComboChart(document.getElementById(elem));
     var dataConv = google.visualization.arrayToDataTable(chartArray[drawChartWithData]);
     $("#loading-container").css('display', 'none');
     options['vAxis']['title'] = drawChartWithData;

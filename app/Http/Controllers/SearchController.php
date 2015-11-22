@@ -83,7 +83,7 @@ class SearchController extends Controller
         $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10), $venues->getData(strtotime($date), 0, 20));
         usort($mergeQueries, array($this, 'date_compare'));
         $response = array(
-            'elements' => array(
+            'request' => array(
                 'first' => $firstElement,
             ),
             'response' => $mergeQueries,
@@ -94,7 +94,6 @@ class SearchController extends Controller
         );
         //dd($response);
         return view('search.result')->with('data', $response);
-        //return
     }
 
 
@@ -133,8 +132,8 @@ class SearchController extends Controller
 
         $twit = new Twitter($query);
 
-        $lat = 55.8748;
-        $lon = -4.2929;
+        $lat = $request->input('lat');
+        $lon = $request->input('lng');
         $venues = new BusyVenues($lat, $lon);
 
         //return $twit->getCount($this->getDateObject($day, $month, $year));
@@ -144,6 +143,7 @@ class SearchController extends Controller
                 'venues' => $venues->getCountForRange($dateStart, $dateEnd),
             )
         );
+        dd(json_encode($returnData));
         return json_encode($returnData);
     }
 
@@ -170,8 +170,8 @@ class SearchController extends Controller
 
         $twitSecond = new Twitter($querySecond);
 
-        $lat = 55.8748;
-        $lon = -4.2929;
+        $lat = $request->input('lat');
+        $lon = $request->input('lng');
         $venues = new BusyVenues($lat, $lon);
 
         $firstElement = array(

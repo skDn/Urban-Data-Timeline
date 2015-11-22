@@ -2,7 +2,9 @@
 .inner-addon {
     position: relative;
 }
-.center-block {float: none !important}
+.center-block {
+    float: none !important;
+}
 /* style glyph */
 .inner-addon .glyphicon {
     position: absolute;
