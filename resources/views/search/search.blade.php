@@ -15,7 +15,6 @@
 {{--@yield('results')--}}
 {{--@stop--}}
 
-
 @extends('layout.master')
 
 @section('title')
@@ -30,7 +29,11 @@
 
 
 @section('content')
-    <div class="center-block col-lg-8">
+    {{--@foreach (Input::old() as $key=>$error)--}}
+{{--        {{ head($errors->get('date')) }}<br>--}}
+        {{--{{Input::get('date')}}<br>--}}
+    {{--@endforeach--}}
+    <div class="center-block col-lg-10">
         @foreach ($data['elements'] as $element)
             @include('templates.partials.searchbox')
         @endforeach

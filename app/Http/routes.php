@@ -17,7 +17,7 @@ Route::get('/event', [
 ]);
 
 Route::get('/comparison', [
-    'uses' => '\Urban\Http\Controllers\SearchController@comparison',
+    'uses' => '\Urban\Http\Controllers\ComparisonController@comparison',
     'as' => 'comparison',
 ]);
 
@@ -27,11 +27,11 @@ Route::get('/event/search', [
 ]);
 
 Route::get('/event/search/count', [
-    'uses' => '\Urban\Http\Controllers\SearchController@getUserCount',
+    'uses' => '\Urban\Http\Controllers\CountController@getUserCount',
     'as' => 'search.count',
 ]);
 
 Route::get('/event/compare', [
-    'uses' => '\Urban\Http\Controllers\SearchController@compareTwoEvents',
+    'uses' => '\Urban\Http\Controllers\ComparisonController@compareTwoEvents',
     'as' => 'comparison.results',
 ]);

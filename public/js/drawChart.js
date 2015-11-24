@@ -109,7 +109,7 @@ function convertDataToChartArray(data) {
 
     $div.insertAfter($("#page"));
 //            console.log(keys);
-//            console.log(convertDicToArray(dictionary, 'twitter'));
+//            console.log(convertDicToArray(dictionary, 'venues'));
 
     retArr.push(header);
     var con;
@@ -137,7 +137,8 @@ function drawChart() {
 $(document).ready(function () {
     function getSearchSpace() {
         var searchSpace = [];
-        var indexes = [];
+        var lat = $('#'+latInput).val();
+        var lng = $('#'+lngInput).val();
         $('input').each(function () {
             var itemID = $(this).attr('id');
             if (itemID != undefined) {
@@ -148,6 +149,8 @@ $(document).ready(function () {
                     //searchIt['date'] = getDate(index);
                     searchIt['date'] = getDate();
                     searchIt['query'] = $(this).val();
+                    searchIt['lat'] = lat;
+                    searchIt['lng'] = lng;
                     searchSpace.push(searchIt);
                 }
             }
@@ -156,6 +159,8 @@ $(document).ready(function () {
     }
     function foo(queries) {
         var resp = [];
+        var percentage;
+        var loadingcontainer = $('#loading-container');
         for (i = 0; i < queries.length; i++) {
             $.ajax({
                 type: "GET",
@@ -165,6 +170,11 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (res) {
                     resp.push(res);
+                    // changing loading bar width
+                    percentage = (resp.length*100)/queries.length;
+                    loadingcontainer.children().css( "width",  percentage + "%" );
+                    loadingcontainer.children().text( percentage + "%" );
+                    //
                     if (resp.length == queries.length) {
                         dataToDraw = resp;
                         drawChart();

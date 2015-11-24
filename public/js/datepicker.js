@@ -22,6 +22,9 @@ function getDate(elementID) {
         thisMonth = $(monthID).text().trim();
         thisYear = $(yearID).text().trim();
     }
+    if (thisDay == 'Day' || thisMonth == 'Month' || thisYear == 'Year'){
+        return '';
+    }
     return thisYear+'-'+thisMonth+'-'+thisDay;
 }
 
@@ -62,17 +65,7 @@ $(".btn-group-justified a").click(function () {
 
     }
 
-    //$("#dayInput").val('1');
-    //console.log($("#day").next());
-
 });
 $('form').submit(function (event) {
-    //$('input').each(function () {
-    //    var itemID = $(this).attr('id');
-    //    if ( itemID != undefined && itemID.indexOf('date') > -1 ) {
-    //        var index = itemID.split('_')[1];
-    //        $(dateInputId+index).val(getDate(index));
-    //    }
-    //});
     $(dateInputId).val(getDate());
 });

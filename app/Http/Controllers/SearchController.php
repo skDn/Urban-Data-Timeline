@@ -8,15 +8,15 @@
 
 namespace Urban\Http\Controllers;
 
+use Validator;
 use Illuminate\Http\Request;
+use Urban\Http\Controllers\Controller;
+
 use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 
 class SearchController extends Controller
 {
-    protected $firstID = 'First';
-    protected $secondID = 'Second';
-
     public function event()
     {
         $firstElement = array(
@@ -30,34 +30,34 @@ class SearchController extends Controller
             )
         );
     }
-
-    public function comparison()
+    private function rules()
     {
-        $firstElement = array(
-            'id' => $this->firstID,
-        );
-        $secondElement = array(
-            'id' => $this->secondID,
-        );
-        return view('comparison.comparison')->with('data',
-            array(
-                'elements' => array(
-                    'first' => $firstElement,
-                    'second' => $secondElement,
-                )
-            )
-        );
-    }
-
-    function date_compare($a, $b)
-    {
-        $t1 = strtotime($a['dateString']);
-        $t2 = strtotime($b['dateString']);
-        return $t1 - $t2;
+        return [
+            'query'.$this->firstID => 'required|max:100|alpha_dash',
+            'date' => 'required|date',
+//            digits_between:min,max for lat/lng
+            'lat' => 'required',
+            'lng' => 'required',
+        ];
     }
 
     public function getResults(Request $request)
     {
+        // create the validation rules ------------------------
+//        $this->validate($request, [
+//            'title' => 'required|unique|max:255',
+//            'body' => 'required',
+//        ]);
+
+        $validator = Validator::make($request->all(), $this->rules());
+
+        if ($validator->fails()) {
+//            dd($validator->errors()->all());
+            return redirect()->route('event')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $query = $request->input('query' . $this->firstID);
         // use this if more than one date picker
         //$date = $request->input('date' . $this->firstID);
@@ -68,14 +68,12 @@ class SearchController extends Controller
 
         $twit = new Twitter($query);
 
-        $lat = 55.8748;
-        $lon = -4.2929;
-        $venues = new BusyVenues($lat, $lon);
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+        $venues = new BusyVenues($lat, $lng);
 
         $firstElement = array(
             'id' => $this->firstID,
-            'query' => $query,
-            'date' => $date,
         );
         /**
          * sorting the array
@@ -83,7 +81,7 @@ class SearchController extends Controller
         $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10), $venues->getData(strtotime($date), 0, 20));
         usort($mergeQueries, array($this, 'date_compare'));
         $response = array(
-            'request' => array(
+            'elements' => array(
                 'first' => $firstElement,
             ),
             'response' => $mergeQueries,
@@ -92,119 +90,8 @@ class SearchController extends Controller
 //                'venues' => $venues->getData(strtotime($date), 0 , 20),
 //            )
         );
-        //dd($response);
-        return view('search.result')->with('data', $response);
+//        dd(Input::all());
+//        dd($request->all());
+        return view('search.result')->with('data', $response)->withInput($request->all());
     }
-
-
-    private function matchParametersToRegex($d, $m, $y)
-    {
-        $month = sprintf("%02d", $m);
-        $day = sprintf("%02d", $d);
-        return $y . '-' . $month . '-' . $day;
-        //return mktime(0, 0, 0, $m, $d, $y);
-    }
-
-    private function getDateObject($d, $m, $y)
-    {
-        $month = sprintf("%02d", $m);
-        $day = sprintf("%02d", $d);
-        //return $y . '-' . $month . '-' . $day;
-        return mktime(0, 0, 0, $m, $d, $y);
-    }
-
-    public function getUserCount(Request $request)
-    {
-        $query = $request->input('query');
-        if (!$query) {
-            $query = $request->input('queryFirst');
-        }
-        $date = strtotime($request->input('date'));
-
-        $range = floor(config('controls.countReportRange') / 2);
-
-        $dateStart = strtotime('-' . $range . ' days', $date);
-        $dateEnd = strtotime('+' . $range . ' days', $date);
-
-        if (!$query) {
-            return redirect()->route('event');
-        }
-
-        $twit = new Twitter($query);
-
-        $lat = $request->input('lat');
-        $lon = $request->input('lng');
-        $venues = new BusyVenues($lat, $lon);
-
-        //return $twit->getCount($this->getDateObject($day, $month, $year));
-        $returnData = array(
-            $query => array(
-                'twitter' => $twit->getCountForRange($dateStart, $dateEnd),
-                'venues' => $venues->getCountForRange($dateStart, $dateEnd),
-            )
-        );
-        dd(json_encode($returnData));
-        return json_encode($returnData);
-    }
-
-    public function compareTwoEvents(Request $request)
-    {
-        $queryFirst = $request->input('query' . $this->firstID);
-        //$dateFirst = $request->input('date' . $this->firstID);
-
-        $querySecond = $request->input('query' . $this->secondID);
-        //$dateSecond = $request->input('date' . $this->secondID);
-        $dateFirst = $dateSecond = $request->input('date');
-
-
-        if (!$queryFirst && !$querySecond) {
-            return redirect()->route('event');
-        }
-
-        $input = array(
-            'queryFirst' => $queryFirst,
-            'querySecond' => $querySecond,
-        );
-
-        $twitFirst = new Twitter($queryFirst);
-
-        $twitSecond = new Twitter($querySecond);
-
-        $lat = $request->input('lat');
-        $lon = $request->input('lng');
-        $venues = new BusyVenues($lat, $lon);
-
-        $firstElement = array(
-            'id' => $this->firstID,
-            'query' => $queryFirst,
-            'date' => $dateFirst,
-        );
-        $secondElement = array(
-            'id' => $this->secondID,
-            'query' => $querySecond,
-            'date' => $dateSecond,
-        );
-
-        /**
-         * sorting the array
-         */
-        $ven = $venues->getData(strtotime($dateFirst), 0, 20);
-
-        $mergeQueries1 = array_merge($twitFirst->getData(strtotime($dateFirst), 0, 10), $ven);
-        usort($mergeQueries1, array($this, 'date_compare'));
-
-        $mergeQueries2 = array_merge($twitSecond->getData(strtotime($dateSecond), 0, 10), $ven);
-        usort($mergeQueries2, array($this, 'date_compare'));
-
-        $response = array(
-            'responseFirst' => $mergeQueries1,
-            'responseSecond' => $mergeQueries2,
-            'elements' => array(
-                'first' => $firstElement,
-                'second' => $secondElement,
-            )
-        );
-        return view('comparison.result')->with('data', $response);
-    }
-
 }

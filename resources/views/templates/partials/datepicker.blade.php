@@ -16,6 +16,7 @@
     }
 </style>
 {{--TODO: remove hardcoded code and make javascript to add each field automatically --}}
+
 <div class="form-inline" style="margin-top:15px;">
     <div class="btn-group btn-group-justified" role="group" aria-label="...">
 
@@ -24,8 +25,10 @@
 
         <div class="btn-group" role="group">
             <a type="button" class="btn btn-default dropdown-toggle" id="day_" data-toggle="dropdown">
-                @if (isset($element['date']))
-                    {{ date("d", strtotime($element['date'])) }}
+                @if ( Input::has('date'))
+                    {{ date("d", strtotime(Input::get('date'))) }}
+                @elseif ( Input::old('date'))
+                    {{ date("d", strtotime(Input::old('date'))) }}
                 @else
                     Day <span class="glyphicon glyphicon-menu-down"></span>
                 @endif
@@ -47,8 +50,10 @@
         </div>
         <div class="btn-group" role="group">
             <a type="button" class="btn btn-default dropdown-toggle" id="month_" data-toggle="dropdown">
-                @if (isset($element['date']))
-                    {{ date("m", strtotime($element['date'])) }}
+                @if ( Input::has('date'))
+                    {{ date("m", strtotime(Input::get('date'))) }}
+                @elseif ( Input::old('date'))
+                    {{ date("m", strtotime(Input::old('date'))) }}
                 @else
                     Month <span class="glyphicon glyphicon-menu-down"></span>
                 @endif
@@ -69,8 +74,10 @@
         </div>
         <div class="btn-group" role="group">
             <a type="button" class="btn btn-default dropdown-toggle" id="year_" data-toggle="dropdown">
-                @if (isset($element['date']))
-                    {{ date("Y", strtotime($element['date'])) }}
+                @if ( Input::has('date'))
+                    {{ date("Y", strtotime(Input::get('date'))) }}
+                @elseif ( Input::old('date'))
+                    {{ date("Y", strtotime(Input::old('date'))) }}
                 @else
                     Year <span class="glyphicon glyphicon-menu-down"></span>
                 @endif
@@ -97,6 +104,12 @@
 
     </div>
 </div>
+
+@if (head($errors->get('date')))
+    <div class="alert alert-danger" style="margin-top: 15px;margin-bottom: 0; text-align: center;">
+        {{ head($errors->get('date')) }}
+    </div>
+@endif
 
 @section('scripts')
     @parent

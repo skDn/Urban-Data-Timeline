@@ -52,26 +52,32 @@ function start() {
 }
 
 function success(position) {
-    $('#'+mapDiv).height(($( document ).height()*30)/100);
+    //$('#'+mapDiv).height(($( document ).height()*30)/100);
     var coords;
     var zoom;
+    var lat = document.getElementById(latInput);
+    var lng = document.getElementById(lngInput);
     if (position != false && position.code == undefined) {
-        coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        zoom = 15;
+        if (lat.value == '' && lng.value == '') {
+            coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        }
+        else {
+            coords = new google.maps.LatLng($('#'+latInput).val(), $('#'+lngInput).val());
+        }
+        zoom = 14;
     }
     else {
-        if ($('#'+latInput).val() == '' && $('#'+lngInput).val() == '') {
+        if (lat.value == '' && lng.value == '') {
             coords = new google.maps.LatLng(55.8580, -4.2590);
         }
         else {
             coords = new google.maps.LatLng($('#'+latInput).val(), $('#'+lngInput).val());
         }
-        zoom = 12;
+        zoom = 11;
     }
     //console.log(options);
-
-    document.getElementById(latInput).value = coords.lat().toFixed(4);
-    document.getElementById(lngInput).value = coords.lng().toFixed(4);
+    lat.value = coords.lat().toFixed(4);
+    lng.value = coords.lng().toFixed(4);
 
     geocoder = new google.maps.Geocoder();
     var options = {
@@ -94,14 +100,16 @@ function success(position) {
     });
 
     google.maps.event.addListener(marker, 'dragend', function (evt) {
-        document.getElementById(latInput).value = evt.latLng.lat().toFixed(4);
-        document.getElementById(lngInput).value = evt.latLng.lng().toFixed(4);
+        map.setCenter(evt.latLng);
+        lat.value = evt.latLng.lat().toFixed(4);
+        lng.value = evt.latLng.lng().toFixed(4);
     });
 
     map.addListener('click', function(evt) {
         marker.setPosition(evt.latLng);
-		document.getElementById(latInput).value = evt.latLng.lat().toFixed(4);
-        document.getElementById(lngInput).value = evt.latLng.lng().toFixed(4);
+        map.setCenter(evt.latLng);
+		lat.value = evt.latLng.lat().toFixed(4);
+        lng.value = evt.latLng.lng().toFixed(4);
     });
     // uncomment if doesn't like the appearing of the input box
     //var $newInput = $('<input id="pac-input" class="controls" type="text" placeholder="Input a location">');
@@ -161,6 +169,8 @@ function codeAddress(address) {
             map.setCenter(results[0].geometry.location);
             map.setZoom(15);
             marker.setPosition(results[0].geometry.location);
+            document.getElementById(latInput).value = results[0].geometry.location.lat().toFixed(4);
+            document.getElementById(lngInput).value = results[0].geometry.location.lng().toFixed(4);
 
             var request = {
                 location: results[0].geometry.location,

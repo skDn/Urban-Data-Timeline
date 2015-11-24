@@ -4,7 +4,7 @@
 @stop
 
 <input id="pac-input" class="controls" type="text" placeholder="Input a location">
-<div id="googleMap" class="col-md-12 center-block" style="margin-top:10px;"></div>
+<div id="googleMap" class="col-md-12 center-block"></div>
 
 @section('scripts')
     @parent
