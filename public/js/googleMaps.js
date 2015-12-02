@@ -31,7 +31,8 @@
 // script.src = "http://maps.googleapis.com/maps/api/js?key=&sensor=false&callback=initialize";
 // document.body.appendChild(script);
 // }
-
+var zoomMin = 12;
+var zoomMax = 14;
 var geocoder;
 var map;
 var infowindow;
@@ -40,13 +41,14 @@ var markers = [];
 var mapDiv = 'googleMap';
 var latInput = 'latInput';
 var lngInput = 'lonInput'
+var lat = document.getElementById(latInput);
+var lng = document.getElementById(lngInput);
 function start() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && lat.value == '' && lng.value == '') {
         navigator.geolocation.getCurrentPosition(success, success);
 
         // geolocation is not supported by this browser
     } else {
-        alert('here');
         success(false);
     }
 }
@@ -55,8 +57,6 @@ function success(position) {
     //$('#'+mapDiv).height(($( document ).height()*30)/100);
     var coords;
     var zoom;
-    var lat = document.getElementById(latInput);
-    var lng = document.getElementById(lngInput);
     if (position != false && position.code == undefined) {
         if (lat.value == '' && lng.value == '') {
             coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -64,16 +64,18 @@ function success(position) {
         else {
             coords = new google.maps.LatLng($('#'+latInput).val(), $('#'+lngInput).val());
         }
-        zoom = 14;
+        zoom = zoomMax;
     }
     else {
         if (lat.value == '' && lng.value == '') {
             coords = new google.maps.LatLng(55.8580, -4.2590);
+            zoom = zoomMin;
         }
         else {
             coords = new google.maps.LatLng($('#'+latInput).val(), $('#'+lngInput).val());
+            zoom = zoomMax;
         }
-        zoom = 11;
+
     }
     //console.log(options);
     lat.value = coords.lat().toFixed(4);

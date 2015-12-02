@@ -37,7 +37,7 @@
 </head>
 <body>
 @include('templates.partials.navigation')
-<div class="container" id="main">
+<div class="container" id="main" style="height: 2000px;">
     @yield('content')
 </div><!-- #main -->
 

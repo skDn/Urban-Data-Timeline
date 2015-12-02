@@ -14,6 +14,7 @@
     @else
 
         @include('templates.partials.lineGraph')
+        @include('templates.partials.infoBox')
         {{--<style> .is-hidden {display: none} </style>--}}
         <section id="cd-timeline" class="cd-container">
             @foreach ($data['response'] as $event)
