@@ -5,7 +5,7 @@
         .fixed {
             position: fixed;
             top:0;
-            z-index: 1000;
+            z-index: 2000000;
         }
     </style>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>

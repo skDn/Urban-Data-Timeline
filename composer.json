@@ -13,7 +13,9 @@
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
-		"illuminate/html": "5.*"
+		"illuminate/html": "5.*",
+        "thujohn/twitter": "~2.0"
+
     },
     "autoload": {
         "classmap": [

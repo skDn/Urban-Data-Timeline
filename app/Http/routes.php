@@ -35,3 +35,7 @@ Route::get('/event/compare', [
     'uses' => '\Urban\Http\Controllers\ComparisonController@compareTwoEvents',
     'as' => 'comparison.results',
 ]);
+Route::get('/test/', [
+    'uses' => '\Urban\Http\Controllers\TestController@test',
+    'as' => 'test.results'
+]);

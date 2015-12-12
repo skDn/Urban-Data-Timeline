@@ -146,6 +146,12 @@ return [
         Urban\Providers\EventServiceProvider::class,
         Urban\Providers\RouteServiceProvider::class,
 
+        /**
+         * twitter
+         */
+        Thujohn\Twitter\TwitterServiceProvider::class,
+
+
     ],
 
     /*
@@ -196,6 +202,8 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 		'Html'      => Illuminate\Html\HtmlFacade::class,
 		'Form'      => Illuminate\Html\FormFacade::class,
+        'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
+
     ],
 
 ];
