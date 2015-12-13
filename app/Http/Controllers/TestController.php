@@ -9,6 +9,7 @@ namespace Urban\Http\Controllers;
 
 define("DATEASID",     "M-d");
 define("DATEASCONTENT",     "Y-m-d h:i");
+define("USEDIFF" , false);
 
 
 
@@ -57,38 +58,54 @@ class TestController extends Controller
 		$response['info']['profile_image_url'] = $first->profile_image_url;
 
 		/* getting sections */
+		$sectionDate = null;
 		$currentDate = null;
 		$section = null;
+		$previousdiff = 0;
 		foreach ($tweets as $tweet) {
 			
 			$date = new DateTime($tweet->created_at);
 			
-			if ($currentDate === null) {
-				$currentDate = $date->format(DATEASID);
+			if ($sectionDate === null) {
+				$sectionDate = $date->format(DATEASID);
 				$section = array(
-					'id' => $currentDate,
+					'id' => $sectionDate,
 					'tweets' => array(),
 				);
 			}
-			elseif ($currentDate != $date->format(DATEASID)) {
+			elseif ($sectionDate != $date->format(DATEASID)) {
 				
-				$currentDate = $date->format(DATEASID);
+				$sectionDate = $date->format(DATEASID);
 				
 				array_push($response['section'], $section);
 				$section = array(
-					'id' => $currentDate,
+					'id' => $sectionDate,
 					'tweets' => array(),
 				);
+			}
+
+			if(USEDIFF) {
+				$diff = ($currentDate === null) ? 0 : $date->diff($currentDate);
+				$diff = (!is_object($diff) || ($diff->y == 0 && $diff->m  == 0 && $diff->d  == 0 && 
+							$diff->h == 0 && $diff->i == 0)) ? $previousdiff : round(log($diff->i + $diff->h*60 + $diff->d*3600,2));	
+			}
+			else {
+				$diff = 0;
 			}
 			$tweet = array(
 				'name' => $tweet->user->name,
 				'screen_name' => $tweet->user->screen_name,
-				'text' => $tweet->text,
+				'text' => Twitter::linkify($tweet->text),
 				'created_at' => $date->format(DATEASCONTENT),
+				/* trying to smooth the distance between two events */
+				'diff' => $diff,
+				'original' => Twitter::linkTweet($tweet),
 			);
+			$currentDate = $date;
+			$previousdiff = $diff;
 			array_push($section['tweets'], $tweet);
 		}
-
+		// dd($response);
 		return view('test.test')->with('data', $response)->withInput($request->all());
     }
 }

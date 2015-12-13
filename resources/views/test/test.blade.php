@@ -48,26 +48,38 @@
     @foreach ($data['section'] as $section)
         <div class="section" id="{{$section['id']}}">
             <div class="title">
-                <a href="">{{$section['id']}}</a>
+                <a>{{$section['id']}}</a>
             </div>
 
             <ol class="events">
                 @foreach($section['tweets'] as $tweet)
-                    <li class="event">
+                    <li class="event"> 
+                    <!-- style="margin-top: {!! $tweet['diff'] !!}px;"> -->
                         <i class="event_pointer"></i>
 
                         <div class="event_container">
+                            <!-- event title -->
                             <div class="event_title">
                                 <i class="fa fa-twitter fa-2x profile_image twitter"> </i>
 
                                 <h3>{{$tweet['name']}}</h3>
                                 <span class='subtitle'>{{'@'.$tweet['screen_name']}}</span>
                             </div>
+                            <!-- end of event title -->
                             <div class="event_content">
-                                <p>{{$tweet['text']}}</p>
+                                <p>{!! $tweet['text'] !!}</p>
+                                <!-- adding link to original tweet -->
+                                <br>
+                                <p>
+                                <strong>Original Tweet:</strong>
+                                <a href="http:{!! $tweet['original'] !!}">http:{!! $tweet['original'] !!}</a>
+                                </p>
+                                <!-- end of link to original tweet -->
                             </div>
+                            <!-- event timestamp -->
                             <span class='next_to_title'><i
                                         class="fa fa-clock-o fa-1x"></i> {{$tweet['created_at']}}</span>
+                            <!-- end of event timestamp -->
                         </div>
                     </li>
                 @endforeach

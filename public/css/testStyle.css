@@ -1,5 +1,8 @@
-.timeline {
+body {
     background: #e7ebf2;
+}
+.timeline {
+    /*background: #e7ebf2;*/
     font-family: "lucida grande",tahoma,verdana,arial,sans-serif !important;
     position: relative;
     margin: 0px auto;
