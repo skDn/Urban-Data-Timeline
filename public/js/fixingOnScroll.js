@@ -1,6 +1,7 @@
 /**
  * Created by skDn on 02/12/2015.
  */
+/*
 $(function () {
     var elem = $('#infoBox'),
         elemTop = elem.offset().top;

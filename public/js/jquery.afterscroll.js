@@ -27,16 +27,17 @@
 			elBottomPos = self.outerHeight() + elOffset.top,
 			elTopPos = elOffset.top,
 			scrolled = false
-
+			/* make it scrolled && $win.scrollTop() + $win.height() 
+			   if want to change when element is comming from bottom of screen*/
 			$win.scroll(function() {
 				/* Top of element */
 				// haven't scrolled past yet
-				if ( ! scrolled && $win.scrollTop() + $win.height() >= elTopPos ) {
+				if ( ! scrolled && $win.scrollTop() >= elTopPos ) {
 					after_top.apply(t)
 					scrolled = true
 				}
 				// have scrolled past yet
-				else if ( scrolled && $win.scrollTop() + $win.height() < elTopPos ) {
+				else if ( scrolled && $win.scrollTop() < elTopPos ) {
 					before_top.apply(t)
 					scrolled = false
 				}
@@ -44,12 +45,12 @@
 				
 				/* Bottom of element*/
 				// haven't scrolled past yet
-				if ( ! scrolled && $win.scrollTop() + $win.height() >= elBottomPos ) {
+				if ( ! scrolled && $win.scrollTop() >= elBottomPos ) {
 					after_bottom.apply(t)
 					scrolled = true
 				}
 				// have scrolled past yet
-				else if ( scrolled && $win.scrollTop() + $win.height() < elBottomPos ) {
+				else if ( scrolled && $win.scrollTop() < elBottomPos ) {
 					before_bottom.apply(t)
 					scrolled = false
 				}

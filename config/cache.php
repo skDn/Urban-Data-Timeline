@@ -29,7 +29,7 @@ return [
     'stores' => [
 
         'apc' => [
-            'driver' => 'apc',
+            'driver' => 'file',
         ],
 
         'array' => [

@@ -75,6 +75,7 @@
                                 <a href="http:{!! $tweet['original'] !!}">http:{!! $tweet['original'] !!}</a>
                                 </p>
                                 <!-- end of link to original tweet -->
+                                <!-- <a data-readmore-toggle="" aria-controls="info">Read more</a> -->
                             </div>
                             <!-- event timestamp -->
                             <span class='next_to_title'><i
@@ -96,6 +97,27 @@
 {!! Html::script('js/jquery.afterscroll.js')  !!}
 {!! Html::script('js/jquery.mf_timeline.js')  !!}
 
+<script type="text/javascript" src='http://jedfoster.com/js/readmore.min.js'></script>
+<script type="text/javascript">
+// Wait a tick before firing Readmore on the #info block to give Prettify time to finish painting.
+// setTimeout(function() {
+    function readMoreText() {
+  $('.event_content').readmore({
+    moreLink: '<a type="button">Show original tweet</a>',
+    lessLink: '<a type="button">Hide</a>',
+    collapsedHeight: 40,
+    speed: 200,
+    /* use this if focus on the content after closing is required */
+    // afterToggle: function(trigger, element, expanded) {
+    //   if(! expanded) { // The "Close" link was clicked
+    //     $('html, body').animate({scrollTop: $(element).offset().top}, {duration: 100});
+    //   }
+    // }
+  });
+}
+// }, 100);
+
+</script>
 
 </body>
 </html>

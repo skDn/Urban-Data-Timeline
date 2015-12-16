@@ -21,10 +21,19 @@ Route::get('/comparison', [
     'as' => 'comparison',
 ]);
 
-Route::get('/event/search', [
-    'uses' => '\Urban\Http\Controllers\SearchController@getResults',
-    'as' => 'search.results',
-]);
+Route::group(['predix' => 'user'], function(){
+    if (config('view.version')==2){
+        Route::get('/event/search', [
+            'uses' => '\Urban\Http\Controllers\SearchControllerV2@getResults',
+            'as' => 'search.resultsV2',
+        ]);}
+    else {
+        Route::get('/event/search', [
+            'uses' => '\Urban\Http\Controllers\SearchController@getResults',
+            'as' => 'search.results',
+        ]);
+    }
+});
 
 Route::get('/event/search/count', [
     'uses' => '\Urban\Http\Controllers\CountController@getUserCount',

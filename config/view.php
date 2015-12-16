@@ -30,4 +30,8 @@ return [
 
     'compiled' => realpath(storage_path('framework/views')),
 
+    /* adding switch for view version */
+
+    'version' => 2,
+
 ];

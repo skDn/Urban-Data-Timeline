@@ -14,6 +14,7 @@ define("USEDIFF" , false);
 
 
 use Validator;
+use Cache;
 use Illuminate\Http\Request;
 use Urban\Http\Controllers\Controller;
 
@@ -44,8 +45,22 @@ class TestController extends Controller
 					'created_at' => ,
 				) )
     	*/
+        $user = 'ketchupwestend';
+        $cacheTag = 'twitter'; //config timeline twitter
+        $cacheKey = $user."-".$cacheTag;
+        $cacheLimit = 15;
+        $tweets = null;
 
-		$tweets = Twitter::getUserTimeline(['screen_name' => 'ketchupwestend', 'count' => 20, 'format' => 'object']);
+        /* caching */
+
+        // $john = Cache::tags(['people', 'artists'])->get('John');
+        if (Cache::has($cacheKey)) {
+            $tweets = Cache::get($cacheKey);
+        }
+        else {
+            $tweets = Twitter::getUserTimeline(['screen_name' => $user, 'count' => 20, 'format' => 'object']);
+            Cache::put($cacheKey, $tweets, $cacheLimit);
+        }
 		
 		/* getting venue info */
 

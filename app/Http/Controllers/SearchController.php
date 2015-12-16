@@ -14,6 +14,7 @@ use Urban\Http\Controllers\Controller;
 
 use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
+use Urban\Models\TwitterTimeline;
 
 class SearchController extends Controller
 {
@@ -70,7 +71,10 @@ class SearchController extends Controller
 
         $lat = $request->input('lat');
         $lng = $request->input('lng');
+
         $venues = new BusyVenues($lat, $lng);
+
+
 
         $firstElement = array(
             'id' => $this->firstID,
@@ -80,6 +84,8 @@ class SearchController extends Controller
          */
         $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10), $venues->getData(strtotime($date), 0, 20));
         usort($mergeQueries, array($this, 'date_compare'));
+        //dd($mergeQueries);
+
         $response = array(
             'elements' => array(
                 'first' => $firstElement,

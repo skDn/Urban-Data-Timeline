@@ -52,7 +52,7 @@ class BusyVenues extends AbstractService
 
     protected function dateToString($date)
     {
-        return date("Y-m-d h:m:s",$date);
+        return date("Y-m-d 12:00:00",$date);
     }
 
     public function getCount($queryDate)
@@ -113,6 +113,9 @@ class BusyVenues extends AbstractService
                 // getting a random record from the time series
                 $timeSeries = array_values($response['response']['results']['venueTimeSeries'][$venue['id']])[$randint];
                 //dd($timeSeries);
+                $originalDate = $timeSeries['dateString'];
+                $newDate = date("Y-m-d H:i", strtotime($originalDate));
+
                 $venueInformation = array();
                 // getting info for each venue
                 foreach ($response['response']['results']['venuesData'] as $entryInfo) {
@@ -122,7 +125,7 @@ class BusyVenues extends AbstractService
                         array_push($modifiedData,array(
                             'class' => 'venue',
                             'venue' => $venue['displayName'],
-                            'dateString' => $timeSeries['dateString'],
+                            'dateString' => $newDate,
                             'venueInfo' => $entryInfo,
                         ));
                         break;
@@ -138,5 +141,37 @@ class BusyVenues extends AbstractService
 //        return $this->getResponse();
 
         return $modifiedData;
+    }
+
+    public function getVenueData ($queryDate) {
+        $this->setPostDataDate($queryDate);
+        //dd($this->getPostData());
+        $post = $this->getPostData();
+        $post['request']['radius'] = 0;
+        $response = $this->sendRequest($post);
+
+        $venueTime = array_values($response['response']['results']['venueTimeSeries'])[0];
+        $venueData = array_values($response['response']['results']['venuesData'])[0];
+
+        $returnArr = array();
+        foreach ($venueTime as $timeSeries) {
+            $originalDate = $timeSeries['dateString'];
+            $newDate = date("Y-m-d H:i", strtotime($originalDate));
+
+            array_push($returnArr, array(
+                'class' => 'venueTimeSeries',
+                'dateString' => $newDate,
+                'value' => $timeSeries['value'],
+                'name' => $venueData['name'],
+                'phone' => $venueData['contact']['formattedPhone'],
+                'location' => $venueData['location']['address'],
+                'menuURL' => $venueData['menu']['url'],
+                'twitter' => $venueData['contact']['twitter'],
+            ));
+        }
+
+        //dd($returnArr);
+        return $returnArr;
+
     }
 }

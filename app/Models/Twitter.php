@@ -53,6 +53,7 @@ class Twitter extends AbstractService
         $this->setPostDataDate($queryDate);
 
         $response = $this->sendRequest($this->getPostData());
+        //dd($response);
         //TODO: implement infinite scrolling
         $sliced = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
@@ -69,6 +70,7 @@ class Twitter extends AbstractService
                     ));
             }
         }
+        //dd($returnArr);
         return $returnArr;
     }
 

@@ -4,7 +4,7 @@
 @stop
 {{-- TODO: change every component to be a row and remove margin-top from everywhere--}}
 <form class="col-md-12 center-block" style="padding: 0 !important;" role="search"
-      action="{{ route('search.results') }} " methond="get"
+      action="{{ route('search.resultsV2') }} " methond="get"
       id="searchForm">
     <div class="inner-addon left-addon form-search form-inline">
         <i class="glyphicon glyphicon-search"></i>

@@ -102,6 +102,6 @@ abstract class AbstractService
 
         $randDate = rand($startdate, $enddate);
 
-        return date('Y-m-d H:i:s', $randDate);
+        return date('Y-m-d H:i', $randDate);
     }
 }
