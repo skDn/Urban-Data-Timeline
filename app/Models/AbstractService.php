@@ -68,8 +68,15 @@ abstract class AbstractService
         return $this->postData;
     }
 
-    protected function getResponse()
+    public function getResponse()
     {
+//        if(is_null($this->responseData))
+//        {
+//            // TODO - add default date to config file
+//            $this->setPostDataDate(strtotime('2015-08-08'));
+//            dd($this->sendRequest($this->getPostData()));
+//            return $this->sendRequest($this->getPostData());
+//        }
         return $this->responseData;
     }
 

@@ -39,24 +39,45 @@ $(document).ready(function(){
 
 });
 $(function(){ // document ready
- 
-  if (!!$('.sticky').offset()) { // make sure ".sticky" element exists
- 
-    var stickyTop = $('.sticky').offset().top; // returns number 
- 
-    $(window).scroll(function(){ // scroll event
- 
-      var windowTop = $(window).scrollTop(); // returns number 
- 
-      if (stickyTop < windowTop){
-        $('.sticky').css({ position: 'fixed', top: 0 });
-      }
-      else {
-        $('.sticky').css('position','static');
-      }
- 
-    });
- 
-  }
+ fixElement('.timeline_nav');
+  //if (!!$('.sticky').offset()) { // make sure ".sticky" element exists
+  //
+  //  var stickyTop = $('.sticky').offset().top; // returns number
+  //
+  //  $(window).scroll(function(){ // scroll event
+  //
+  //    var windowTop = $(window).scrollTop(); // returns number
+  //
+  //    if (stickyTop < windowTop){
+  //      $('.sticky').css({ position: 'fixed', top: 5 });
+  //    }
+  //    else {
+  //      $('.sticky').css('position','absolute');
+  //    }
+  //
+  //  });
+  //
+  //}
  
 });
+
+function fixElement(elementClass) {
+    if (!!$(elementClass).offset()) { // make sure ".sticky" element exists
+
+        var stickyTop = $(elementClass).offset().top; // returns number
+
+        $(window).scroll(function(){ // scroll event
+
+            var windowTop = $(window).scrollTop(); // returns number
+
+            if (stickyTop < windowTop){
+                $(elementClass).css({ position: 'fixed', top: 5 });
+            }
+            else {
+                $(elementClass).css('position','absolute');
+            }
+
+        });
+
+    }
+}

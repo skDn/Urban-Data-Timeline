@@ -9,7 +9,8 @@
 namespace Urban\Models;
 
 
-define("DATEASID",     "M-d-h");
+//define("DATEASID",     "M-d-hA");
+define("DATEASID",     "ha");
 define("DATEASCONTENT",     "Y-m-d h:i");
 define("USEDIFF" , false);
 
@@ -92,7 +93,7 @@ class TwitterTimeline extends AbstractService
             );
             array_push($this->responseData['twitterTimeline'], $tweet);
         }
-
+        dd($this->responseData);
         return $this->responseData['twitterTimeline'];
     }
 

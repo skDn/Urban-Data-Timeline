@@ -37,7 +37,7 @@ class SearchControllerV2 extends Controller
     private function rules()
     {
         return [
-            'query'.$this->firstID => 'required|max:100|alpha_dash',
+            'query'.$this->firstID => 'max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
             'lat' => 'required',
@@ -66,9 +66,9 @@ class SearchControllerV2 extends Controller
         // use this if more than one date picker
         //$date = $request->input('date' . $this->firstID);
         $date = $request->input('date');
-        if (!$query) {
-            return redirect()->route('event');
-        }
+//        if (!$query) {
+//            return redirect()->route('event');
+//        }
 
         $twitTimeline = new TwitterTimeline($query);
 
@@ -89,10 +89,10 @@ class SearchControllerV2 extends Controller
          */
         //dd($twit->getData(strtotime($date), 0, 10));
 
-
+        $searchToken = $request->input('searchToken');
 
         $mergeQueries = array_merge((array)$twit->getData(strtotime($date), 0, 10),
-            (array)$venues->getVenueData(strtotime($date)),
+            ($searchToken && $searchToken === 'venue') ? (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0 ,10),
             (array)$twitTimeline->getData(strtotime($date), 0, 10)
             );
         usort($mergeQueries, array($this, 'date_compare'));

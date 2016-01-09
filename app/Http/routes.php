@@ -40,6 +40,11 @@ Route::get('/event/search/count', [
     'as' => 'search.count',
 ]);
 
+Route::get('/rest/nearbyVenues', [
+    'uses' => '\Urban\Http\Controllers\REST\NearbyVenues@getNearbyVenues',
+    'as' => 'rest.nearbyVenues',
+]);
+
 Route::get('/event/compare', [
     'uses' => '\Urban\Http\Controllers\ComparisonController@compareTwoEvents',
     'as' => 'comparison.results',

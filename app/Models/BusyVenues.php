@@ -30,9 +30,9 @@ class BusyVenues extends AbstractService
                 "timestamp" => null,
             )
         );
-        $this->responseData = array(
-            "venues" => null,
-        );
+//        $this->responseData = array(
+//            "venues" => null,
+//        );
         //$this->date = $d;
     }
     protected function getURL()
@@ -42,7 +42,8 @@ class BusyVenues extends AbstractService
 
     protected function setResponse($data)
     {
-        $this->responseData['venues'] = $data;
+        //$this->responseData['venues'] = $data;
+        $this->responseData = $data;
     }
 
     protected function setPostDataDate($date)
@@ -83,6 +84,7 @@ class BusyVenues extends AbstractService
     public function getData($queryDate, $start, $end)
     {
         $this->setPostDataDate($queryDate);
+        $cmp_date1 = date("Y-m-d", $queryDate);
 
         $response = $this->sendRequest($this->getPostData());
         //dd($response['response']['results']);
@@ -119,16 +121,26 @@ class BusyVenues extends AbstractService
                 $venueInformation = array();
                 // getting info for each venue
                 foreach ($response['response']['results']['venuesData'] as $entryInfo) {
+                    $originalDate = $timeSeries['dateString'];
+
+                    $cmp_date2 = date("Y-m-d", strtotime($originalDate));
+
                     //dd($entryInfo);
                     if ($entryInfo['id'] == $venue['id'])
                     {
-                        array_push($modifiedData,array(
-                            'class' => 'venue',
-                            'venue' => $venue['displayName'],
-                            'dateString' => $newDate,
-                            'venueInfo' => $entryInfo,
-                        ));
-                        break;
+                        if ($cmp_date1 == $cmp_date2) {
+
+                            $newDate = date("Y-m-d H:i", strtotime($originalDate));
+                            array_push($modifiedData, array(
+                                'class' => 'venue',
+                                'venue' => $venue['displayName'],
+                                'dateString' => $newDate,
+                                'users' => $entryInfo['stats']['usersCount'],
+                                'checkins' => $entryInfo['stats']['checkinsCount'],
+                                'location' => $entryInfo['location']['country'],
+                            ));
+                            break;
+                        }
                     }
                 }
 
@@ -139,7 +151,6 @@ class BusyVenues extends AbstractService
 //        following code returns the response in format 'venues' => array()
 //        $this->setResponse($modifiedData);
 //        return $this->getResponse();
-
         return $modifiedData;
     }
 
@@ -147,8 +158,15 @@ class BusyVenues extends AbstractService
         $this->setPostDataDate($queryDate);
         //dd($this->getPostData());
         $post = $this->getPostData();
+        /**
+         * TODO - change this not to 0
+         */
+        // if searchtoken is venue
         $post['request']['radius'] = 0;
+        // else radius is 0.5 or 1
         $response = $this->sendRequest($post);
+//        dd($response);
+        $cmp_date1 = date("Y-m-d", $queryDate);
 
         $venueTime = array_values($response['response']['results']['venueTimeSeries'])[0];
         $venueData = array_values($response['response']['results']['venuesData'])[0];
@@ -156,22 +174,56 @@ class BusyVenues extends AbstractService
         $returnArr = array();
         foreach ($venueTime as $timeSeries) {
             $originalDate = $timeSeries['dateString'];
-            $newDate = date("Y-m-d H:i", strtotime($originalDate));
 
-            array_push($returnArr, array(
-                'class' => 'venueTimeSeries',
-                'dateString' => $newDate,
-                'value' => $timeSeries['value'],
-                'name' => $venueData['name'],
-                'phone' => $venueData['contact']['formattedPhone'],
-                'location' => $venueData['location']['address'],
-                'menuURL' => $venueData['menu']['url'],
-                'twitter' => $venueData['contact']['twitter'],
-            ));
+            $cmp_date2 = date("Y-m-d", strtotime($originalDate));
+            //dd($cmp_date1 . " " .$cmp_date2);
+            if ($cmp_date1 == $cmp_date2) {
+
+                $newDate = date("Y-m-d H:i", strtotime($originalDate));
+                array_push($returnArr, array(
+                    'class' => 'venueTimeSeries',
+                    'dateString' => $newDate,
+                    'value' => $timeSeries['value'],
+                    'name' => $venueData['name'],
+                    'phone' => array_key_exists('formattedPhone',$venueData['contact'])? $venueData['contact']['formattedPhone'] : null,
+                    'location' => array_key_exists('address',$venueData['location'])? $venueData['location']['address'] : null,
+                    //'menuURL' => $venueData['menu']['url'],
+                    //'twitter' => $venueData['contact']['twitter'],
+                    'lat' => $venueData['location']['lat'],
+                    'lng' => $venueData['location']['lng'],
+                ));
+            }
         }
 
         //dd($returnArr);
         return $returnArr;
 
+    }
+
+    public function getVenuesNearBy($radius)
+    {
+        /**
+         * TODO - change this date to config date
+         */
+        $this->setPostDataDate(strtotime('2015-07-01'));
+        //dd($this->getPostData());
+        $post = $this->getPostData();
+        $post['request']['radius'] = $radius;
+        $response = $this->sendRequest($post);
+        $venueData = array_values($response['response']['results']['venuesData']);
+        $returnArr = array();
+        foreach ($venueData as $venue) {
+                //dd($venue);
+                array_push($returnArr, array(
+                    'name' => $venue['name'],
+                    'phone' => array_key_exists('formattedPhone',$venue['contact'])? $venue['contact']['formattedPhone'] : null,
+                    'location' => array_key_exists('address',$venue['location'])? $venue['location']['address'] : null,
+                    'postalCode' => array_key_exists('postalCode',$venue['location'])? $venue['location']['postalCode'] : null,
+                    'twitter' => array_key_exists('twitter',$venue['contact']) ? $venue['contact']['twitter'] : '',
+                    'lat' => $venue['location']['lat'],
+                    'lng' => $venue['location']['lng'],
+                ));
+            }
+        return $returnArr;
     }
 }

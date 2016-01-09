@@ -4,5 +4,6 @@
         integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
         crossorigin="anonymous"></script>
 {{--{{ HTML::script('packages/bs/js/bootstrap.min.js') }}--}}
+{!! Html::script('js/toolTips.js') !!}
 
 @yield('scripts')

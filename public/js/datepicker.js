@@ -23,7 +23,7 @@ function getDate(elementID) {
         thisYear = $(yearID).text().trim();
     }
     if (thisDay == 'Day' || thisMonth == 'Month' || thisYear == 'Year'){
-        return '';
+        return undefined;
     }
     return thisYear+'-'+thisMonth+'-'+thisDay;
 }

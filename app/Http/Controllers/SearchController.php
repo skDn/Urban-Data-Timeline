@@ -34,7 +34,7 @@ class SearchController extends Controller
     private function rules()
     {
         return [
-            'query'.$this->firstID => 'required|max:100|alpha_dash',
+            'query'.$this->firstID => 'max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
             'lat' => 'required',
