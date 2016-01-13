@@ -61,7 +61,7 @@ function fixElement(elementClass) {
             }
             else {
                 $(elementClass).css('position', 'absolute');
-                $(elementClass).css('top', '10');
+                $(elementClass).css('top', '10px');
                 //fixBootstrapNav('#infoBox');
                 if ($('#infoBox').hasClass('navbar-fixed-top')) {
                     $('#infoBox').removeClass('navbar-fixed-top');
