@@ -3,4 +3,12 @@
 }
 body {
     background: #e7ebf2;
+    padding-top: 70px;
 }
+
+#infoBox {
+    padding-top: 70px;
+    background: #FFFFFF;
+    z-index: 200;
+}
+

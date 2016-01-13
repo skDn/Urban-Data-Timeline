@@ -223,7 +223,8 @@
 .timeline ol.timeline_nav {
     position: absolute;
     list-style: none;
-    right: 20px;
+    /*fix for moving element to far right*/
+    /*right: 0;*/
     top: 45px;
     z-index: 100;
 }

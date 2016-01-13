@@ -93,7 +93,7 @@ class TwitterTimeline extends AbstractService
             );
             array_push($this->responseData['twitterTimeline'], $tweet);
         }
-        dd($this->responseData);
+        //dd($this->responseData);
         return $this->responseData['twitterTimeline'];
     }
 

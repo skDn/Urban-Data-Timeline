@@ -27,3 +27,13 @@ $(window).scroll(function() {
     }
 });
 */
+
+//window.onscroll = function (oEvent) {
+//    var mydivpos = document.getElementById("page").offsetTop;
+//    var scrollPos = document.getElementsByTagName("body")[0].scrollTop;
+//
+//    if(scrollPos >= mydivpos)
+//        document.getElementById("infoBox").className = "";
+//    else
+//        document.getElementById("infoBox").className = "hidden";
+//};

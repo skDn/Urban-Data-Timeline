@@ -182,7 +182,7 @@ function createMarker(place) {
 function getNearbyVenues() {
     $.ajax({
         type: "GET",
-        url: "../rest/nearbyVenues",
+        url: "/rest/nearbyVenues",
         async: 'false',
         data: {
             'lat' : lat.value,
@@ -228,8 +228,11 @@ function createMarkerFromServiceResponse(place) {
     });
     markers.push(marker1);
 
-    var contentString = place['name'] + '<br>' +
-    (place['twitter'] === '')? '' : '@' + place['twitter'] ;
+    placeName = place['name'];
+    placeTwiiter = (place['twitter'] === '')? '' : '@' + place['twitter'] ;
+
+    var contentString = placeName + '<br>' + placeTwiiter;
+
 
     google.maps.event.addListener(marker1, 'mouseover', function () {
         infowindow.setContent(contentString);
@@ -247,7 +250,7 @@ function createMarkerFromServiceResponse(place) {
             lat.value = this.position.lat().toFixed(6);
             lng.value = this.position.lng().toFixed(6);
             //
-            //getTwitterAccountFromContent(infowindow.getContent());
+            getTwitterAccountFromContent(infowindow.getContent());
             $('#venueSearchModal').modal('show');
         }
     });
@@ -303,5 +306,22 @@ function submitVenueSearch() {
 }
 
 function getTwitterAccountFromContent(content) {
-    alert(content.split('\n'));
+    contentInfo = content.split('<br>');
+    queryParameter = '';
+    if (contentInfo.length == 1) {
+        queryParameter = contentInfo[0];
+    }
+    else {
+        if (contentInfo[1] == '') {
+            queryParameter = contentInfo[0];
+        }
+        else {
+            queryParameter = contentInfo[1].replace('@','');
+        }
+    }
+    $('<input>').attr({
+        type: 'hidden',
+        name: 'twitterAccount',
+        value: queryParameter
+    }).appendTo('form');
 }

@@ -167,7 +167,7 @@ class BusyVenues extends AbstractService
         $response = $this->sendRequest($post);
 //        dd($response);
         $cmp_date1 = date("Y-m-d", $queryDate);
-
+        //dd($response);
         $venueTime = array_values($response['response']['results']['venueTimeSeries'])[0];
         $venueData = array_values($response['response']['results']['venuesData'])[0];
 
@@ -210,6 +210,7 @@ class BusyVenues extends AbstractService
         $post = $this->getPostData();
         $post['request']['radius'] = $radius;
         $response = $this->sendRequest($post);
+//        dd($response);
         $venueData = array_values($response['response']['results']['venuesData']);
         $returnArr = array();
         foreach ($venueData as $venue) {

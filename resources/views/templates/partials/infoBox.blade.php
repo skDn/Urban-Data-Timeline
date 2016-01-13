@@ -76,7 +76,7 @@
 {{--<div class="container">--}}
 {{--<div class="collapse navbar-collapse">--}}
 {{--<ul class="nav navbar-nav nav-justified">--}}
-<nav class="navbar navbar-default">
+<nav id="infoBox" class="navbar navbar-default hidden">
     <ul class="nav nav-justified">
         <li>
             <div>

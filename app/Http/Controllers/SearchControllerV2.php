@@ -69,8 +69,8 @@ class SearchControllerV2 extends Controller
 //        if (!$query) {
 //            return redirect()->route('event');
 //        }
-
-        $twitTimeline = new TwitterTimeline($query);
+        $twitterAccount = $request->input('twitterAccount');
+        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
 
         $twit = new Twitter($query);
 
