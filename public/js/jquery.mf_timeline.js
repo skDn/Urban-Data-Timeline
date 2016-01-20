@@ -34,8 +34,31 @@ $(document).ready(function () {
     });
 
     $(".timeline_nav li").click(function () {
-        $('html, body').animate({scrollTop: ($('#' + $(this).first().text().trim()).offset().top)}, 500);
+        $('html, body').animate({scrollTop: ($('#' + $(this).first().text().trim()).offset().top)-140}, 500);
     });
+
+    // check if in comparison view
+    var tlFstSelector = $('#timelineFirst');
+    var tlSecSelector = $('#timelineSecond');
+    var sectionId;
+    var corSection;
+
+    if (tlFstSelector.length && tlSecSelector.length) {
+        tlFstSelector.find('.section').each(function () {
+            //console.log($(this).height())
+            sectionId = $(this).attr('id');
+            corSection = tlSecSelector.find('#'+sectionId);
+            if ($(this).height() > corSection.height()) {
+                corSection.height($(this).height());
+            }
+            if ($(this).height() < corSection.height()) {
+                $(this).height(corSection.height());
+            }
+            console.log($(this).attr('id'))
+        });
+    }
+    //function doesn't work
+    //alignTwoTimelines(tlFstSelector,tlSecSelector);
 
 });
 $(function () { // document ready
@@ -100,5 +123,24 @@ function fixBootstrapNav(elementClass) {
 
         });
 
+    }
+}
+function alignTwoTimelines (tlFstSelector, tlSecSelector) {
+    var sectionId;
+    var corSection;
+
+    if (tlFstSelector.length && tlSecSelector.length) {
+        tlFstSelector.find('.section').each(function () {
+            //console.log($(this).height())
+            sectionId = $(this).attr('id');
+            corSection = tlSecSelector.find('#'+sectionId);
+            if ($(this).height() > corSection.height()) {
+                corSection.height($(this).height());
+            }
+            if ($(this).height() < corSection.height()) {
+                $(this).height(corSection.height());
+            }
+            console.log($(this).attr('id'))
+        });
     }
 }

@@ -8,13 +8,11 @@
 
 namespace Urban\Http\Controllers;
 
+use Urban\Http\Middleware\SearchHelper;
 use Validator;
 use Illuminate\Http\Request;
 use Urban\Http\Controllers\Controller;
-
-use Urban\Models\BusyVenues;
-use Urban\Models\Twitter;
-
+use \DateTime as DateTime;
 
 class ComparisonController extends Controller
 {
@@ -39,8 +37,8 @@ class ComparisonController extends Controller
     private function rules()
     {
         return [
-            'query'.$this->firstID => 'required|max:100|alpha_dash',
-            'query'.$this->secondID => 'required|max:100|alpha_dash',
+            'query' . $this->firstID => 'required|max:100|alpha_dash',
+            'query' . $this->secondID => 'required|max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
             'lat' => 'required',
@@ -60,30 +58,55 @@ class ComparisonController extends Controller
                 ->withInput();
         }
 
+
+        /**
+         * testing the array
+         */
+
+//        $array_1 = array(
+//            array(
+//                'id' => '6am',
+//            ),
+//            array(
+//                'id' => '8am',
+//            ),
+//            array(
+//                'id' => '9am',
+//            ),
+//            array(
+//                'id' => '10am',
+//            ),
+//            array(
+//                'id' => '4pm',
+//            ),
+//            array(
+//                'id' => '7pm',
+//            ),
+//        );
+//        dd($this->findPosition($array_1,'3pm'));
+
+        $response = $this->prepareDataForView($request);
+        return view('comparison.result')->with('data', $response);
+    }
+
+    private function prepareDataForView ($request)
+    {
         $queryFirst = $request->input('query' . $this->firstID);
         //$dateFirst = $request->input('date' . $this->firstID);
 
         $querySecond = $request->input('query' . $this->secondID);
         //$dateSecond = $request->input('date' . $this->secondID);
+
         $dateFirst = $dateSecond = $request->input('date');
 
-
-        if (!$queryFirst && !$querySecond) {
-            return redirect()->route('event');
-        }
 
         $input = array(
             'queryFirst' => $queryFirst,
             'querySecond' => $querySecond,
         );
 
-        $twitFirst = new Twitter($queryFirst);
-
-        $twitSecond = new Twitter($querySecond);
-
         $lat = $request->input('lat');
         $lng = $request->input('lng');
-        $venues = new BusyVenues($lat, $lng);
 
         $firstElement = array(
             'id' => $this->firstID,
@@ -100,16 +123,34 @@ class ComparisonController extends Controller
             'lng' => $lng,
         );
 
-        /**
-         * sorting the array
-         */
-        $ven = $venues->getData(strtotime($dateFirst), 0, 20);
+        $helper = new SearchHelper();
+        $mergeQueries1 = $helper->getResultsForEvent($queryFirst, $request);
+        $mergeQueries2 = $helper->getResultsForEvent($querySecond, $request);
 
-        $mergeQueries1 = array_merge($twitFirst->getData(strtotime($dateFirst), 0, 10), $ven);
-        usort($mergeQueries1, array($this, 'date_compare'));
-
-        $mergeQueries2 = array_merge($twitSecond->getData(strtotime($dateSecond), 0, 10), $ven);
-        usort($mergeQueries2, array($this, 'date_compare'));
+        foreach ($mergeQueries1['sections'] as $element1)
+        {
+            if(!$this->containsSectionWithId($mergeQueries2['sections'],$element1['id']))
+            {
+                $point = $this->findPosition($mergeQueries2['sections'],$element1['id']);
+                $sectionToAdd = array(array(
+                    'id' => $element1['id'],
+                    'events' => array(),
+                ));
+                array_splice($mergeQueries2['sections'], $point, 0, $sectionToAdd);
+            }
+        }
+        foreach ($mergeQueries2['sections'] as $element2)
+        {
+            if(!$this->containsSectionWithId($mergeQueries1['sections'],$element2['id']))
+            {
+                $point = $this->findPosition($mergeQueries1['sections'],$element2['id']);
+                $sectionToAdd = array(array(
+                    'id' => $element2['id'],
+                    'events' => array(),
+                ));
+                array_splice($mergeQueries1['sections'], $point, 0, $sectionToAdd);
+            }
+        }
 
         $response = array(
             'responseFirst' => $mergeQueries1,
@@ -119,6 +160,35 @@ class ComparisonController extends Controller
                 'second' => $secondElement,
             )
         );
-        return view('comparison.result')->with('data', $response);
+        //dd($response);
+        return $response;
+
     }
+
+    private function containsSectionWithId($array,$id)
+    {
+        foreach($array as $arrayElement)
+        {
+            if($arrayElement['id'] === $id)
+                return true;
+        }
+        return false;
+    }
+
+    private function findPosition($array, $id)
+    {
+        $d1=new DateTime($id);
+        $pointer = 0;
+        foreach($array as $arrayElement)
+        {
+            $d2=new DateTime($arrayElement['id']);
+            if($d2<$d1)
+                $pointer++;
+            else
+                break;
+        }
+        return $pointer;
+
+    }
+
 }

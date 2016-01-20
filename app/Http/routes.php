@@ -11,6 +11,12 @@
 |
 */
 
+Route::get('/', function()
+{
+    return View::make('home.home');
+});
+
+
 Route::get('/event', [
     'uses' => '\Urban\Http\Controllers\SearchController@event',
     'as' => 'event',
