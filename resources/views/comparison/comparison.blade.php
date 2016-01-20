@@ -26,7 +26,7 @@
 
 
 @section('content')
-    <div class="center-block col-lg-12 myHalfCol">
+    <div class="container myHalfCol">
         <form class="col-md-12 center-block" role="search" action="{{ route('comparison.results') }} " methond="get"
               id="searchForm">
             <div class="row">

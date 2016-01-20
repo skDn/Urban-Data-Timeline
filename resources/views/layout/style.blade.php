@@ -6,11 +6,12 @@ integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7Ar
 crossorigin="anonymous">
 {!! Html::style('css/bootstrap.css')  !!}
 {!! Html::style('css/global.css')  !!}
+<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet"
+      type="text/css">
 
 @if(config('view.version')!=2)
 <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/reset.css">
 {{--<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />--}}
 {!! Html::style('css/style.css')  !!}
-
 @endif
 @yield('styles')

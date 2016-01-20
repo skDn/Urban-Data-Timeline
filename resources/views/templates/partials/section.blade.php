@@ -108,7 +108,32 @@
                         <!-- event timestamp -->
                         <span class='next_to_title'><i
                                     class="fa fa-clock-o fa-1x"></i> {{$event['dateString']}}</span>
+                    @elseif($event['class'] === 'tweet')
+                        <div class="event_title">
+                            <i class="fa fa-twitter fa-2x profile_image twitter"> </i>
 
+                            <h3>{{$event['screen_name']}}</h3>
+                            <span class='subtitle'>{{'@'.$event['screen_name']}}</span>
+                        </div>
+                        <!-- end of event title -->
+                        <div class="event_content">
+                            <p>Count: {!! $event['count'] !!}</p>
+                            {{--TODO: fix when service is returning more data--}}
+                            {{--<p>{!! $event['text'] !!}</p>--}}
+                            {{--<!-- adding link to original tweet -->--}}
+                            {{--<br>--}}
+
+                            {{--<p>--}}
+                                {{--<strong>Original Tweet:</strong>--}}
+                                {{--<a href="{!! $event['original'] !!}">{!! $event['original'] !!}</a>--}}
+                            {{--</p>--}}
+                            <!-- end of link to original tweet -->
+                            <!-- <a data-readmore-toggle="" aria-controls="info">Read more</a> -->
+                        </div>
+                        <!-- event timestamp -->
+                        <span class='next_to_title'><i
+                                    class="fa fa-clock-o fa-1x"></i> {{$event['dateString']}}</span>
+                        <!-- end of event timestamp -->
                     @endif
                 </div>
             </li>

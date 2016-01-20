@@ -54,7 +54,7 @@ $(document).ready(function () {
             if ($(this).height() < corSection.height()) {
                 $(this).height(corSection.height());
             }
-            console.log($(this).attr('id'))
+            //console.log($(this).attr('id'))
         });
     }
     //function doesn't work
@@ -89,7 +89,7 @@ function fixElement(elementClass) {
                 if ($('#infoBox').hasClass('navbar-fixed-top')) {
                     $('#infoBox').removeClass('navbar-fixed-top');
                     $('#infoBox').addClass('hidden');
-                    console.log('removed');
+                    //console.log('removed');
                 }
             }
 
@@ -117,7 +117,7 @@ function fixBootstrapNav(elementClass) {
                 if ($(elementClass).hasClass('navbar-fixed-top')) {
                     $(elementClass).removeClass('navbar-fixed-top');
                     $(elementClass).addClass('hidden');
-                    console.log('removed');
+                    //console.log('removed');
                 }
             }
 
@@ -140,7 +140,7 @@ function alignTwoTimelines (tlFstSelector, tlSecSelector) {
             if ($(this).height() < corSection.height()) {
                 $(this).height(corSection.height());
             }
-            console.log($(this).attr('id'))
+            //console.log($(this).attr('id'))
         });
     }
 }

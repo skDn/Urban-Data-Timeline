@@ -97,6 +97,7 @@
     border-radius: 4px;
     padding: 5px;
     overflow: hidden;
+    word-break:break-all;
     /*width: 80%;*/
 }
 

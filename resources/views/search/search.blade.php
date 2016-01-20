@@ -33,12 +33,13 @@
 {{--        {{ head($errors->get('date')) }}<br>--}}
         {{--{{Input::get('date')}}<br>--}}
     {{--@endforeach--}}
-    <div class="center-block col-lg-10">
+    <div class="container">
         @foreach ($data['elements'] as $element)
             @include('templates.partials.searchbox')
         @endforeach
-    </div>
+
     @include('templates.partials.scrollTop')
 
     @yield('results')
+    </div>
 @stop
