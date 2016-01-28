@@ -1,6 +1,6 @@
 .timeline {
     /*background: #e7ebf2;*/
-    font-family: "lucida grande",tahoma,verdana,arial,sans-serif !important;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif !important;
     position: relative;
     margin: 0px auto;
     padding: 0px;
@@ -46,6 +46,7 @@
     color: #ffffff;
     display: inline-block;
     font-size: 13px;
+    font-size: 0.929em;
     padding: 4px 20px 5px 20px;
     text-decoration: none;
 }
@@ -66,17 +67,8 @@
     margin: 0px 0px 20px 0px;
     padding: 0px;
     position: relative;
-    width: 50%;
-}
-
-.timeline .section ol.events li.event:nth-child(1n+2), .timeline .section ol.events li.event:first-child {
-    clear: left;
-    float: left;
-}
-
-.timeline .section ol.events li.event:nth-child(2n+2) {
-    clear: right;
-    float: right;
+    width: 100%;
+    clear: both;
 }
 
 .timeline .section ol.events li.event.featured {
@@ -97,12 +89,13 @@
     border-radius: 4px;
     padding: 5px;
     overflow: hidden;
-    word-break:break-all;
+    word-break: break-all;
     /*width: 80%;*/
 }
 
 .timeline .section ol.events li.event .event_container p {
     font-size: 13px;
+    font-size: 0.929em;
     line-height: 14px;
     margin: 0px 0px 15px 0px;
 }
@@ -136,13 +129,15 @@
     color: #808080;
     display: block;
     font-size: 11px;
+    font-size: 0.786em;
     line-height: 12px;
     margin: 0px 0px 0px 0px;
     width: auto;
 }
 
 .timeline .section ol.events li.event .event_container .event_title h3 {
-    font-size: 14px;
+    font-size: 18px;
+    font-size: 1.286rem;
     line-height: 15px;
     margin: 0px 0px 2px 0px;
     text-transform: none;
@@ -161,30 +156,6 @@
     top: 20px;
     width: 18px;
     z-index: 99;
-}
-
-/* Left Column */
-.timeline .section ol.events li.event:nth-child(1n+2) .event_container,
-.timeline .section ol.events li.event:first-child .event_container {
-    float: right;
-    margin-right: 12px;
-}
-
-.timeline .section ol.events li.event:nth-child(1n+2) .event_pointer,
-.timeline .section ol.events li.event:first-child .event_pointer {
-    background-position: 0px 0px;
-    right: -5px;
-}
-
-/* Right Column */
-.timeline .section ol.events li.event:nth-child(2n+2) .event_container {
-    float: left;
-    margin-left: 17px;
-}
-
-.timeline .section ol.events li.event:nth-child(2n+2) .event_pointer {
-    background-position: 0px -15px;
-    left: 0px;
 }
 
 /* Featured Event */
@@ -214,6 +185,7 @@
 
 .timeline .section ol.events li.event.featured .event_container .event_title h3 {
     font-size: 18px;
+    font-size: 1.286rem;
     font-weight: 800;
 }
 
@@ -225,7 +197,7 @@
     position: absolute;
     list-style: none;
     /*fix for moving element to far right*/
-    /*right: 0;*/
+    right: 100%;
     top: 45px;
     z-index: 100;
 }
@@ -238,7 +210,7 @@
 }
 
 .timeline ol.timeline_nav li:hover {
-    cursor:pointer;
+    cursor: pointer;
     background: #6179af;
 }
 
@@ -257,6 +229,7 @@
 .timeline ol.timeline_nav li a {
     color: #c7d0e3;
     font-size: 11px;
+    font-size: 0.786em;
     text-decoration: none;
 }
 
@@ -268,21 +241,114 @@
     color: #6179af;
     font-weight: 600;
 }
+
 .timeline .section ol.events li.event:nth-child(2n+2) {
-    margin:20px 0px 20px 0px !important;
+    margin: 20px 0px 20px 0px !important;
 }
+
 /*.timeline .section ol.events li.event .event_container:hover {
 	background: silver;
 }*/
+@media only screen and (min-width: 1170px) {
+    #cd-timeline, #cd-timelineFirst, #cd-timelineSecond {
+        margin-top: 3em;
+        margin-bottom: 3em;
+    }
+
+    #cd-timeline::before, #cd-timelineFirst::before, #cd-timelineSecond::before {
+        left: 50%;
+        margin-left: -2px;
+    }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 900px) {
+    .timeline .section ol.events li.event.featured .event_container p {
+        font-size: 16px;
+        font-size: 1rem;
+    }
+
+    .timeline .section ol.events li.event.featured .event_container .event_title,
+    .timeline .section ol.events li.event.featured .event_container .next_to_title {
+        font-size: 14px;
+        font-size: 0.875rem;
+    }
+
+    .timeline .section ol.events li.event.featured .event_container .event_title h3 {
+        font-size: 20px;
+        font-size: 1.25rem;
+    }
+
+    .timeline .section ol.events li.event .event_container .event_title h3 {
+        font-size: 20px;
+        font-size: 1.25rem;
+    }
+
+    .timeline .section ol.events li.event .event_container .event_title span.subtitle {
+        font-size: 16px;
+        font-size: 1rem;
+    }
+
+    .timeline .section ol.events li.event .event_pointer {
+        display: none;
+    }
+    .timeline ol.timeline_nav {
+        display: none;
+    }
+
+}
+
+@media only screen and (min-width: 1170px) {
+    /* Left Column */
+    .timeline .section ol.events li.event:nth-child(1n+2) .event_container,
+    .timeline .section ol.events li.event:first-child .event_container {
+        float: right;
+        margin-right: 12px;
+    }
+
+    .timeline .section ol.events li.event:nth-child(1n+2) .event_pointer,
+    .timeline .section ol.events li.event:first-child .event_pointer {
+        background-position: 0px 0px;
+        right: -5px;
+    }
+
+    /* Right Column */
+    .timeline .section ol.events li.event:nth-child(2n+2) .event_container {
+        float: left;
+        margin-left: 17px;
+    }
+
+    .timeline .section ol.events li.event:nth-child(2n+2) .event_pointer {
+        background-position: 0px -15px;
+        left: 0px;
+    }
+
+    .timeline .section ol.events li.event {
+        width: 50%;
+
+    }
+
+    .timeline .section ol.events li.event:nth-child(1n+2), .timeline .section ol.events li.event:first-child {
+        clear: left;
+        float: left;
+    }
+
+    .timeline .section ol.events li.event:nth-child(2n+2) {
+        clear: right;
+        float: right;
+    }
+}
+
 .is-hidden {
     visibility: hidden;
 }
+
 /*.event_title {
     padding: 0 !important;
 }*/
 .twitter {
     color: #4099FF;
 }
+
 .venue {
     color: #ff4f65;
 }
@@ -292,6 +358,7 @@
     color: #808080;
     display: block;
     font-size: 12px;
+    font-size: 0.8571rem;
     line-height: 12px;
     margin: 0px 0px 0px 0px;
     width: auto;

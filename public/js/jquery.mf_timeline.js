@@ -75,7 +75,7 @@ function fixElement(elementClass) {
             var windowTop = $(window).scrollTop(); // returns number
 
             if (stickyTop < windowTop) {
-                $(elementClass).css({position: 'fixed', top: 140});
+                $(elementClass).css({position: 'fixed', top: 140, left:0});
                 if (!$('#infoBox').hasClass('navbar-fixed-top')) {
                     $('#infoBox').toggleClass('navbar-fixed-top');
                     $('#infoBox').toggleClass('hidden');

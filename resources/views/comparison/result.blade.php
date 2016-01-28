@@ -1,18 +1,18 @@
 @extends('comparison.comparison')
 
-@section('scripts')
+@section('styles')
     @parent
-    @if(config('view.version')!=2)
-        <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
-        <script src="{{ URL::to('js/index.js') }}" type="text/javascript"></script>
-    @else
+    {{--@if(config('view.version')!=2)--}}
+        {{--<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>--}}
+        {{--<script src="{{ URL::to('js/index.js') }}" type="text/javascript"></script>--}}
+    {{--@else--}}
         <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
         {!! Html::style('css/testStyle.css')  !!}
         {!! Html::style('css/animate.css')  !!}
-    @endif
+    {{--@endif--}}
 @stop
 
 @section('scripts')
@@ -35,7 +35,7 @@
         </div>
         @if(config('view.version')!=2)
             {{--<style> .is-hidden {display: none} </style>--}}
-            <section id="cd-timelineFirst" class="cd-container col-lg-6">
+            <section id="cd-timelineFirst" class="cd-container col-lg-6 col-xs-6">
                 @foreach ($data['responseFirst'] as $event)
                     <div class="cd-timeline-block">
                         @if ($event['class'] == 'tweet')
@@ -106,7 +106,7 @@
 
             {{--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>--}}
         @else
-            <div id="timelineFirst" class="timeline col-lg-6">
+            <div id="timelineFirst" class="timeline col-lg-6 col-xs-6">
                 <a href="" class="timeline_spine"></a>
                 <ol class="timeline_nav" style="/*position: fixed;*/">
                     @foreach ($data['responseFirst']['sections'] as $section)
@@ -119,7 +119,7 @@
                     @include('templates.partials.section')
                 @endforeach
             </div>
-            <div id="timelineSecond" class="timeline col-lg-6">
+            <div id="timelineSecond" class="timeline col-lg-6 col-xs-6">
                 <a href="" class="timeline_spine"></a>
                 @foreach ($data['responseSecond']['sections'] as $section)
                     @include('templates.partials.section')
