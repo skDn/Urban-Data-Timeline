@@ -61,6 +61,7 @@ class Twitter extends AbstractService
         }
         // creating the return array
         // adding random timestamp to each tweet
+        dd($response);
         $returnArr = array();
         if (count($sliced) > 0) {
             foreach ($sliced as $arr) {

@@ -17,7 +17,7 @@ class DelayedServices extends AbstractService
   // TODO: Implement getPostData() method.
  }
 
- protected function getResponse()
+ public function getResponse()
  {
   // TODO: Implement getResponse() method.
  }

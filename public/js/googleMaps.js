@@ -294,6 +294,7 @@ function codeAddress(address) {
         }
     });
 }
+//loading google maps
 window.onload = start;
 
 function submitVenueSearch() {

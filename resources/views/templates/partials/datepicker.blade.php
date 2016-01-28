@@ -14,6 +14,12 @@
     .choice {
         width: 600px;
     }
+    .scrollable-menu {
+        height: auto;
+        max-height: 180px;
+        overflow-x: hidden;
+    }
+
 </style>
 {{--TODO: remove hardcoded code and make javascript to add each field automatically --}}
 
@@ -34,17 +40,7 @@
                 @endif
             </a>
             {{--<input type="hidden" name="day"/>--}}
-            <ul id="test" class="dropdown-menu">
-
-                <li><a type="button" class="btn btn-default">1</a></li>
-
-                <li><a type="button" class="btn btn-default">2</a></li>
-
-                <li><a type="button" class="btn btn-default">3</a></li>
-
-                <li><a type="button" class="btn btn-default">4</a></li>
-
-                <li><a type="button" class="btn btn-default">25</a></li>
+            <ul id="dayDropDown" class="dropdown-menu scrollable-menu">
 
             </ul>
         </div>
@@ -59,16 +55,7 @@
                 @endif
             </a>
             {{--<input type="hidden" name="month">--}}
-            <ul id="test" class="dropdown-menu">
-
-                <li><a type="button" class="btn btn-default">1</a></li>
-
-                <li><a type="button" class="btn btn-default">2</a></li>
-
-                <li><a type="button" class="btn btn-default">3</a></li>
-
-                <li><a type="button" class="btn btn-default">8</a></li>
-
+            <ul id="monthDropDown" class="dropdown-menu scrollable-menu">
             </ul>
 
         </div>
@@ -83,16 +70,7 @@
                 @endif
             </a>
             {{--<input type="hidden" name="year">--}}
-            <ul id="test" class="dropdown-menu">
-
-                <li><a type="button" class="btn btn-default">2015</a></li>
-
-                <li><a type="button" class="btn btn-default">2014</a></li>
-
-                <li><a type="button" class="btn btn-default">2013</a></li>
-
-                <li><a type="button" class="btn btn-default">2012</a></li>
-
+            <ul id="yearDropDown" class="dropdown-menu scrollable-menu">
             </ul>
 
         </div>

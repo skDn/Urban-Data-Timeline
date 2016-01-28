@@ -1,5 +1,10 @@
 @extends('layout.master')
 
+
+@section('title')
+    <title>Urban Data Timeline</title>
+@stop
+
 @section('styles')
     @parent
 
