@@ -23,11 +23,6 @@ class Twitter extends AbstractService
         //$this->date = $d;
     }
 
-    protected function getURL()
-    {
-        return $this->url;
-    }
-
     public function getCount($queryDate)
     {
         //dd($this->getRandomTimeOfDay($queryDate));
@@ -61,7 +56,7 @@ class Twitter extends AbstractService
         }
         // creating the return array
         // adding random timestamp to each tweet
-        dd($response);
+//        dd($response);
         $returnArr = array();
         if (count($sliced) > 0) {
             foreach ($sliced as $arr) {

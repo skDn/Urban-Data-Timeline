@@ -35,10 +35,7 @@ class BusyVenues extends AbstractService
 //        );
         //$this->date = $d;
     }
-    protected function getURL()
-    {
-        return $this->url;
-    }
+
 
     protected function setResponse($data)
     {
@@ -53,7 +50,7 @@ class BusyVenues extends AbstractService
 
     protected function dateToString($date)
     {
-        return date("Y-m-d 12:00:00",$date);
+        return date("Y-m-d 12:00:00", $date);
     }
 
     public function getCount($queryDate)
@@ -65,10 +62,8 @@ class BusyVenues extends AbstractService
 
         $count = 0;
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            foreach ($response['response']['results']['results'] as $venue)
-            {
-                if ($venue['score'] > 0.0)
-                {
+            foreach ($response['response']['results']['results'] as $venue) {
+                if ($venue['score'] > 0.0) {
                     $count++;
                 }
             }
@@ -92,15 +87,12 @@ class BusyVenues extends AbstractService
         $filter = array();
         //TODO: implement infinite scrolling
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            foreach ($response['response']['results']['results'] as $venue)
-                {
-                    if ($venue['score'] > 0.0)
-                    {
-                        array_push($filter, $venue);
-                    }
+            foreach ($response['response']['results']['results'] as $venue) {
+                if ($venue['score'] > 0.0) {
+                    array_push($filter, $venue);
                 }
-            foreach($filter as $venue)
-            {
+            }
+            foreach ($filter as $venue) {
                 $timeSeries = array();
 //                TODO: Service has a bug with score to value mapping
 //                foreach($response['response']['results']['venueTimeSeries'][$venue['id']] as $timeSeriesIter)
@@ -110,7 +102,7 @@ class BusyVenues extends AbstractService
 //                        array_push($timeSeries,$timeSeriesIter);
 //                    }
 //                }
-                $randint = rand(0 , count($response['response']['results']['venueTimeSeries'][$venue['id']])-1);
+                $randint = rand(0, count($response['response']['results']['venueTimeSeries'][$venue['id']]) - 1);
                 //dd($response['response']['results']['venueTimeSeries'][$venue['id']]);
                 // getting a random record from the time series
                 $timeSeries = array_values($response['response']['results']['venueTimeSeries'][$venue['id']])[$randint];
@@ -126,8 +118,7 @@ class BusyVenues extends AbstractService
                     $cmp_date2 = date("Y-m-d", strtotime($originalDate));
 
                     //dd($entryInfo);
-                    if ($entryInfo['id'] == $venue['id'])
-                    {
+                    if ($entryInfo['id'] == $venue['id']) {
                         if ($cmp_date1 == $cmp_date2) {
 
                             $newDate = date("Y-m-d H:i", strtotime($originalDate));
@@ -154,7 +145,8 @@ class BusyVenues extends AbstractService
         return $modifiedData;
     }
 
-    public function getVenueData ($queryDate) {
+    public function getVenueData($queryDate)
+    {
         $this->setPostDataDate($queryDate);
         //dd($this->getPostData());
         $post = $this->getPostData();
@@ -185,8 +177,8 @@ class BusyVenues extends AbstractService
                     'dateString' => $newDate,
                     'value' => $timeSeries['value'],
                     'name' => $venueData['name'],
-                    'phone' => array_key_exists('formattedPhone',$venueData['contact'])? $venueData['contact']['formattedPhone'] : null,
-                    'location' => array_key_exists('address',$venueData['location'])? $venueData['location']['address'] : null,
+                    'phone' => array_key_exists('formattedPhone', $venueData['contact']) ? $venueData['contact']['formattedPhone'] : null,
+                    'location' => array_key_exists('address', $venueData['location']) ? $venueData['location']['address'] : null,
                     //'menuURL' => $venueData['menu']['url'],
                     //'twitter' => $venueData['contact']['twitter'],
                     'lat' => $venueData['location']['lat'],
@@ -214,17 +206,17 @@ class BusyVenues extends AbstractService
         $venueData = array_values($response['response']['results']['venuesData']);
         $returnArr = array();
         foreach ($venueData as $venue) {
-                //dd($venue);
-                array_push($returnArr, array(
-                    'name' => $venue['name'],
-                    'phone' => array_key_exists('formattedPhone',$venue['contact'])? $venue['contact']['formattedPhone'] : null,
-                    'location' => array_key_exists('address',$venue['location'])? $venue['location']['address'] : null,
-                    'postalCode' => array_key_exists('postalCode',$venue['location'])? $venue['location']['postalCode'] : null,
-                    'twitter' => array_key_exists('twitter',$venue['contact']) ? $venue['contact']['twitter'] : '',
-                    'lat' => $venue['location']['lat'],
-                    'lng' => $venue['location']['lng'],
-                ));
-            }
+            //dd($venue);
+            array_push($returnArr, array(
+                'name' => $venue['name'],
+                'phone' => array_key_exists('formattedPhone', $venue['contact']) ? $venue['contact']['formattedPhone'] : null,
+                'location' => array_key_exists('address', $venue['location']) ? $venue['location']['address'] : null,
+                'postalCode' => array_key_exists('postalCode', $venue['location']) ? $venue['location']['postalCode'] : null,
+                'twitter' => array_key_exists('twitter', $venue['contact']) ? $venue['contact']['twitter'] : '',
+                'lat' => $venue['location']['lat'],
+                'lng' => $venue['location']['lng'],
+            ));
+        }
         return $returnArr;
     }
 }

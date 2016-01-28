@@ -12,10 +12,14 @@ use Illuminate\Http\Request;
 use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 use Urban\Models\TwitterTimeline;
+use Urban\Models\TrainStations;
+use Urban\Models\DelayedServices;
+
 use \DateTime as DateTime;
 
-class SearchHelper {
-    public function getResultsForEvent($query,Request $request)
+class SearchHelper
+{
+    public function getResultsForEvent($query, Request $request)
     {
         //$query = $request->input('query' . $this->firstID);
         // use this if more than one date picker
@@ -32,6 +36,19 @@ class SearchHelper {
         $lat = $request->input('lat');
         $lng = $request->input('lng');
 
+
+        $trainStations = new TrainStations($lat, $lng);
+        $stations = $trainStations->getData($date, 0, 10);
+        // if there are any train stations nearby
+        //dd($stations);
+        if (count($stations) > 0) {
+            $delayedService = new DelayedServices($date);
+            foreach ($stations as $station) {
+                $delayedService->getDate($station['tiploc']);
+            }
+        }
+
+
         $venues = new BusyVenues($lat, $lng);
 
         //dd($venues->getVenueData(strtotime($date)));
@@ -47,7 +64,7 @@ class SearchHelper {
         $searchToken = $request->input('searchToken');
 
         $mergeQueries = array_merge((array)$twit->getData(strtotime($date), 0, 10),
-            ($searchToken && $searchToken === 'venue') ? (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0 ,10),
+            ($searchToken && $searchToken === 'venue') ? (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0, 10),
             (array)$twitTimeline->getData(strtotime($date), 0, 10)
         );
         usort($mergeQueries, array($this, 'date_compare'));
@@ -88,8 +105,7 @@ class SearchHelper {
                     'id' => $sectionDate,
                     'events' => array(),
                 );
-            }
-            elseif ($sectionDate != $date->format(DATEASID)) {
+            } elseif ($sectionDate != $date->format(DATEASID)) {
 
                 $sectionDate = $date->format(DATEASID);
 
@@ -100,12 +116,11 @@ class SearchHelper {
                 );
             }
 
-            if(USEDIFF) {
+            if (USEDIFF) {
                 $diff = ($currentDate === null) ? 0 : $date->diff($currentDate);
-                $diff = (!is_object($diff) || ($diff->y == 0 && $diff->m  == 0 && $diff->d  == 0 &&
-                        $diff->h == 0 && $diff->i == 0)) ? $previousdiff : round(log($diff->i + $diff->h*60 + $diff->d*3600,2));
-            }
-            else {
+                $diff = (!is_object($diff) || ($diff->y == 0 && $diff->m == 0 && $diff->d == 0 &&
+                        $diff->h == 0 && $diff->i == 0)) ? $previousdiff : round(log($diff->i + $diff->h * 60 + $diff->d * 3600, 2));
+            } else {
                 $diff = 0;
             }
 //
@@ -124,6 +139,7 @@ class SearchHelper {
         }
         return $response;
     }
+
     function date_compare($a, $b)
     {
         $t1 = strtotime($a['dateString']);

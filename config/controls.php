@@ -8,9 +8,11 @@
 
 return [
 
-  'countReportRange' => 9,
-  'venuesRange' => 1,
-  'timeline' => 1,
+    'countReportRange' => 9,
+    'venuesRange' => 1,
+    'stationsRange' => 0.5,
+    'delayedServicesMinDelay' => 5,
+    'timeline' => 1,
 
 
 ];

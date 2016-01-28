@@ -15,50 +15,95 @@
 
 namespace Urban\Models;
 
+//{"request": {"lat": 55.8580 , "lon":-4.2590, "radius": 1.0}}
 class TrainStations extends AbstractService
 {
-	protected function getURL()
-	{
-		// TODO: Implement getURL() method.
-	}
+    function __construct($lat, $lon)
+    {
+        $this->url = config('services.trainStations.url');
+        $this->postData = array(
+            "request" => array(
+                "lat" => $lat,
+                "lon" => $lon,
+                "radius" => config('controls.stationsRange'),
+            )
+        );
+        $this->responseData = array(
+            "trainStations" => null,
+        );
+        //$this->date = $d;
+    }
 
-	protected function getPostData()
-	{
-		// TODO: Implement getPostData() method.
-	}
+    public function getResponse()
+    {
+        // TODO: Implement getResponse() method.
+    }
 
-	public function getResponse()
-	{
-		// TODO: Implement getResponse() method.
-	}
+    protected function setResponse($data)
+    {
+        $this->responseData = $data;
+    }
 
-	protected function setResponse($data)
-	{
-		// TODO: Implement setResponse() method.
-	}
+    protected function setPostDataDate($date)
+    {
+        // TODO: Implement setPostDataDate() method.
+    }
 
-	protected function setPostDataDate($date)
-	{
-		// TODO: Implement setPostDataDate() method.
-	}
+//	protected function dateToString($date)
+//	{
+//		// TODO: Implement dateToString() method.
+//	}
 
-	protected function dateToString($date)
-	{
-		// TODO: Implement dateToString() method.
-	}
+    public function getCount($queryDate)
+    {
+        $this->setPostDataDate($queryDate);
+        // sending request
+        $response = $this->sendRequest($this->getPostData());
 
-	public function getCount($queryDate)
-	{
-		// TODO: Implement getCount() method.
-	}
+        $count = 0;
+        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
+            foreach ($response['response']['trainStations'] as $trainStation) {
 
-	public function getCountForRange($startDate, $endDate)
-	{
-		// TODO: Implement getCountForRange() method.
-	}
+                $count++;
+            }
+        }
+        $returnArray = array(
+            'date' => $this->dateToString($queryDate),
+            'count' => $count,
+        );
+        return $returnArray;
+    }
 
-	public function getData($queryDate, $start, $end)
-	{
-		// TODO: Implement getData() method.
-	}
+    public function getCountForRange($startDate, $endDate)
+    {
+        // TODO: Implement getCountForRange() method.
+    }
+
+    public function getData($queryDate, $start, $end)
+    {
+        $this->setPostDataDate($queryDate);
+        // sending request
+        $response = $this->sendRequest($this->getPostData());
+        //dd($response);
+        $returnArr = array();
+        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
+            foreach ($response['response']['trainStations'] as $trainStation) {
+                array_push($returnArr, array(
+                    'class' => "trainStation",
+                    "stationName" => $trainStation['stationName'],
+                    "lat" => $trainStation['stopLat'],
+                    "lon" => $trainStation['stopLon'],
+                    "tiploc" => $trainStation['tiplocCode'],
+                ));
+            }
+        }
+        //dd($returnArr);
+        return $returnArr;
+
+    }
+
+    protected function dateToString($date)
+    {
+        return date("Y-m-d H:i", strtotime($date));
+    }
 }
