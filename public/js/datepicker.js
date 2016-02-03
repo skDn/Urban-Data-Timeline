@@ -33,25 +33,6 @@ $(function () {
     }
     //end of population
 
-    function getDate(elementID) {
-        var thisDay, thisMonth, thisYear;
-        if (elementID != undefined) {
-            thisDay = $(dayID + elementID).text().trim();
-            thisMonth = $(monthID + elementID).text().trim();
-            thisYear = $(yearID + elementID).text().trim();
-        }
-        else {
-            thisDay = $(dayID).text().trim();
-            thisMonth = $(monthID).text().trim();
-            thisYear = $(yearID).text().trim();
-        }
-        if (thisDay == 'Day' || thisMonth == 'Month' || thisYear == 'Year') {
-            return undefined;
-        }
-        return thisYear + '-' + thisMonth + '-' + thisDay;
-    }
-
-
     $(".dropdown-menu li").click(function () {
         var itemID = '#' + $(this).closest('div').find('a').attr("id");
         $(itemID).text($(this).text());
@@ -94,3 +75,21 @@ $(function () {
     });
 
 });
+
+function getDate(elementID) {
+    var thisDay, thisMonth, thisYear;
+    if (elementID != undefined) {
+        thisDay = $(dayID + elementID).text().trim();
+        thisMonth = $(monthID + elementID).text().trim();
+        thisYear = $(yearID + elementID).text().trim();
+    }
+    else {
+        thisDay = $(dayID).text().trim();
+        thisMonth = $(monthID).text().trim();
+        thisYear = $(yearID).text().trim();
+    }
+    if (thisDay == 'Day' || thisMonth == 'Month' || thisYear == 'Year') {
+        return undefined;
+    }
+    return thisYear + '-' + thisMonth + '-' + thisDay;
+}

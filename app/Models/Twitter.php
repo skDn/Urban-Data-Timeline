@@ -4,6 +4,7 @@ namespace Urban\Models;
 
 //use Illuminate\Database\Eloquent\Model;
 //use Urban\AbstractService as AbstractService;
+use Cache;
 
 class Twitter extends AbstractService
 {
@@ -33,7 +34,7 @@ class Twitter extends AbstractService
 
         $count = 0;
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            $count = $response['response']['serviceJson']['userSize'];
+            $count = $response['response']['serviceJson']['f_tweets'];
         }
         $returnArray = array(
             'date' => $this->dateToString($queryDate),
@@ -45,6 +46,16 @@ class Twitter extends AbstractService
 
     public function getData($queryDate, $start, $end)
     {
+        $cacheTag = 'twitterService'; //config timeline twitter
+        $cacheKey = $queryDate."-".$cacheTag;
+        $cacheLimit = 60;
+
+        //Cache::flush();
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $this->setPostDataDate($queryDate);
 
         $response = $this->sendRequest($this->getPostData());
@@ -67,6 +78,28 @@ class Twitter extends AbstractService
             }
         }
         //dd($returnArr);
+        if (count($returnArr)>0) {
+            Cache::put($cacheKey, $returnArr, $cacheLimit);
+        }
+        return $returnArr;
+    }
+
+    public function getInfo($queryDate)
+    {
+        $this->setPostDataDate($queryDate);
+        $response = $this->sendRequest($this->getPostData());
+        $returnArr = array();
+        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
+            $popularHTags = array_slice($response['response']['serviceJson']['hashtags'], 0, 5, true);
+            $returnArr = array(
+                "nTweets" => $response['response']['serviceJson']['f_tweets'],
+                "popularHTags" => $popularHTags,
+                "nTweetsForDay" => $response['response']['serviceJson']['tweets'],
+                "nUsers" => $response['response']['serviceJson']['userSize'],
+                "date" => $response['response']['date'],
+                "query" => $response['response']['query']
+                );
+        }
         return $returnArr;
     }
 

@@ -33,10 +33,11 @@ class SearchHelper
 
         $twit = new Twitter($query);
 
+
         $lat = $request->input('lat');
         $lng = $request->input('lng');
 
-
+        /* TODO: delayed service bug
         $trainStations = new TrainStations($lat, $lng);
         $stations = $trainStations->getData($date, 0, 10);
         // if there are any train stations nearby
@@ -47,19 +48,14 @@ class SearchHelper
                 $delayedService->getDate($station['tiploc']);
             }
         }
+        */
 
 
         $venues = new BusyVenues($lat, $lng);
 
-        //dd($venues->getVenueData(strtotime($date)));
-
-//        $firstElement = array(
-//            'id' => $this->firstID,
-//        );
         /**
          * sorting the array
          */
-        //dd($twit->getData(strtotime($date), 0, 10));
 
         $searchToken = $request->input('searchToken');
 
@@ -71,7 +67,7 @@ class SearchHelper
 //        dd($mergeQueries);
 
 
-        /*
+        /* SECTION FORMAT
     section => array(
         'id' => ,
         'events' => array (
@@ -80,21 +76,40 @@ class SearchHelper
             'text' => ,
             'created_at' => ,
         ) )
-
-
-*/
+        */
 
         $response = array(
-//            'elements' => array(
-//                'first' => $firstElement,
-//            ),
             'sections' => array(),
+            'info' => array(),
         );
         /* getting sections */
+        $response['sections'] = $this->generateSections($mergeQueries);
+
+
+        //$response['info'] = $twit->getInfo(strtotime($date));
+        $response['info']['twitter'] = $twit->getInfo(strtotime($date));
+
+        return $response;
+    }
+
+    function date_compare($a, $b)
+    {
+        $t1 = strtotime($a['dateString']);
+        $t2 = strtotime($b['dateString']);
+        return $t1 - $t2;
+    }
+
+    /**
+     * @param $mergeQueries
+     * @return array
+     */
+    private function generateSections($mergeQueries)
+    {
         $sectionDate = null;
         $currentDate = null;
         $section = null;
         $previousdiff = 0;
+        $response = array();
         foreach ($mergeQueries as $event) {
 
             $date = new DateTime($event['dateString']);
@@ -109,7 +124,7 @@ class SearchHelper
 
                 $sectionDate = $date->format(DATEASID);
 
-                array_push($response['sections'], $section);
+                array_push($response, $section);
                 $section = array(
                     'id' => $sectionDate,
                     'events' => array(),
@@ -138,12 +153,5 @@ class SearchHelper
             array_push($section['events'], $event);
         }
         return $response;
-    }
-
-    function date_compare($a, $b)
-    {
-        $t1 = strtotime($a['dateString']);
-        $t2 = strtotime($b['dateString']);
-        return $t1 - $t2;
     }
 }

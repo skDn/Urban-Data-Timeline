@@ -147,6 +147,14 @@ class BusyVenues extends AbstractService
 
     public function getVenueData($queryDate)
     {
+        $cacheTag = 'venueData'; //config timeline twitter
+        $cacheKey = $queryDate."-".$cacheTag;
+        $cacheLimit = 60;
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $this->setPostDataDate($queryDate);
         //dd($this->getPostData());
         $post = $this->getPostData();
@@ -186,7 +194,9 @@ class BusyVenues extends AbstractService
                 ));
             }
         }
-
+        if (count($returnArr)>0) {
+            Cache::put($cacheKey, $returnArr, $cacheLimit);
+        }
         //dd($returnArr);
         return $returnArr;
 
