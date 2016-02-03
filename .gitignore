@@ -3,3 +3,10 @@
 Homestead.yaml
 Homestead.json
 .env
+
+
+#ignoring intellij files
+.idea
+
+#ignoring composer files
+composer.lock 

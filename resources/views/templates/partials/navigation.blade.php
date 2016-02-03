@@ -36,9 +36,6 @@
                 <li>
                     <a href="{{ route('event') }}">Search</a>
                 </li>
-                <li>
-                    <a href="/">API</a>
-                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
