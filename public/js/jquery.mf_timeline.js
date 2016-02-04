@@ -61,6 +61,8 @@ $(document).ready(function () {
     //alignTwoTimelines(tlFstSelector,tlSecSelector);
 
 });
+
+//TODO: REFACTOR THIS
 $(function () { // document ready
     fixElement('.timeline_nav');
 });
@@ -79,6 +81,12 @@ function fixElement(elementClass) {
                 if (!$('#infoBox').hasClass('navbar-fixed-top')) {
                     $('#infoBox').toggleClass('navbar-fixed-top');
                     $('#infoBox').toggleClass('hidden');
+                    $('#infoBox').toggleClass('animated');
+                    $('#infoBox').toggleClass('fadeInDown');
+                    $(elementClass).toggleClass('hidden');
+                    $(elementClass).toggleClass('animated');
+                    $(elementClass).toggleClass('fadeInLeft');
+
                 }
                 //fixBootstrapNav('#infoBox');
             }
@@ -89,6 +97,11 @@ function fixElement(elementClass) {
                 if ($('#infoBox').hasClass('navbar-fixed-top')) {
                     $('#infoBox').removeClass('navbar-fixed-top');
                     $('#infoBox').addClass('hidden');
+                    $('#infoBox').removeClass('animated');
+                    $('#infoBox').removeClass('fadeInDown');
+                    $(elementClass).addClass('hidden');
+                    $(elementClass).removeClass('animated');
+                    $(elementClass).removeClass('fadeInLeft');
                     //console.log('removed');
                 }
             }

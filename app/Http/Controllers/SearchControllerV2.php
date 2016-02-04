@@ -82,6 +82,7 @@ class SearchControllerV2 extends Controller
                 'first' => $firstElement,
             ),
             'sections' => $response['sections'],
+            'info' => $response['info'],
         );
         //array_merge($responseToView,$response);
         //dd($responseToView);

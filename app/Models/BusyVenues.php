@@ -15,6 +15,8 @@
 
 namespace Urban\Models;
 
+use Cache;
+
 class BusyVenues extends AbstractService
 {
 
@@ -30,16 +32,11 @@ class BusyVenues extends AbstractService
                 "timestamp" => null,
             )
         );
-//        $this->responseData = array(
-//            "venues" => null,
-//        );
-        //$this->date = $d;
     }
 
 
     protected function setResponse($data)
     {
-        //$this->responseData['venues'] = $data;
         $this->responseData = $data;
     }
 
@@ -79,9 +76,20 @@ class BusyVenues extends AbstractService
     public function getData($queryDate, $start, $end)
     {
         $this->setPostDataDate($queryDate);
+        $post = $this->getPostData();
+        $cacheLat = $post['request']['lat'];
+        $cacheLon = $post['request']['lon'];
+        $cacheTag = 'venueData'; //config timeline twitter
+        $cacheKey = $cacheTag."-".$cacheLat."-".$cacheLon."-".$queryDate;
+        $cacheLimit = 15;
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $cmp_date1 = date("Y-m-d", $queryDate);
 
-        $response = $this->sendRequest($this->getPostData());
+        $response = $this->sendRequest($post);
         //dd($response['response']['results']);
         $modifiedData = array();
         $filter = array();
@@ -142,22 +150,25 @@ class BusyVenues extends AbstractService
 //        following code returns the response in format 'venues' => array()
 //        $this->setResponse($modifiedData);
 //        return $this->getResponse();
+        if (count($modifiedData)>0) {
+            Cache::put($cacheKey, $modifiedData, $cacheLimit);
+        }
         return $modifiedData;
     }
 
     public function getVenueData($queryDate)
     {
+        $this->setPostDataDate($queryDate);
+        $post = $this->getPostData();
+        $cacheLat = $post['request']['lat'];
+        $cacheLon = $post['request']['lon'];
         $cacheTag = 'venueData'; //config timeline twitter
-        $cacheKey = $queryDate."-".$cacheTag;
-        $cacheLimit = 60;
+        $cacheKey = $cacheTag."-".$cacheLat."-".$cacheLon."-".$queryDate;
+        $cacheLimit = 15;
 
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
         }
-
-        $this->setPostDataDate($queryDate);
-        //dd($this->getPostData());
-        $post = $this->getPostData();
         /**
          * TODO - change this not to 0
          */
@@ -211,6 +222,9 @@ class BusyVenues extends AbstractService
         //dd($this->getPostData());
         $post = $this->getPostData();
         $post['request']['radius'] = $radius;
+
+
+
         $response = $this->sendRequest($post);
 //        dd($response);
         $venueData = array_values($response['response']['results']['venuesData']);

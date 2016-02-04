@@ -5,6 +5,7 @@
     margin: 0px auto;
     padding: 0px;
     width: 100%;
+    margin-top: 15px;
 }
 
 .timeline a.timeline_spine {
@@ -91,6 +92,7 @@
     overflow: hidden;
     word-break: break-all;
     /*width: 80%;*/
+    min-width: 50%;
 }
 
 .timeline .section ol.events li.event .event_container p {
@@ -197,7 +199,7 @@
     position: absolute;
     list-style: none;
     /*fix for moving element to far right*/
-    right: 100%;
+    /*right: 100%;*/
     top: 45px;
     z-index: 100;
 }

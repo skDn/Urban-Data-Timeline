@@ -60,7 +60,8 @@ class SearchHelper
         $searchToken = $request->input('searchToken');
 
         $mergeQueries = array_merge((array)$twit->getData(strtotime($date), 0, 10),
-            ($searchToken && $searchToken === 'venue') ? (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0, 10),
+            ($searchToken && $searchToken === 'venue') ?
+                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0, 10),
             (array)$twitTimeline->getData(strtotime($date), 0, 10)
         );
         usort($mergeQueries, array($this, 'date_compare'));

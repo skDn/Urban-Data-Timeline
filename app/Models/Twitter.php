@@ -46,9 +46,12 @@ class Twitter extends AbstractService
 
     public function getData($queryDate, $start, $end)
     {
+        $this->setPostDataDate($queryDate);
+        $postData = $this->getPostData();
         $cacheTag = 'twitterService'; //config timeline twitter
-        $cacheKey = $queryDate."-".$cacheTag;
-        $cacheLimit = 60;
+        $query = $postData['request']['query'];
+        $cacheKey = $cacheTag . "-" . $query . "-" . $queryDate;
+        $cacheLimit = 15;
 
         //Cache::flush();
 
@@ -56,9 +59,7 @@ class Twitter extends AbstractService
             return Cache::get($cacheKey);
         }
 
-        $this->setPostDataDate($queryDate);
-
-        $response = $this->sendRequest($this->getPostData());
+        $response = $this->sendRequest($postData);
         //dd($response);
         //TODO: implement infinite scrolling
         $sliced = array();
@@ -78,7 +79,7 @@ class Twitter extends AbstractService
             }
         }
         //dd($returnArr);
-        if (count($returnArr)>0) {
+        if (count($returnArr) > 0) {
             Cache::put($cacheKey, $returnArr, $cacheLimit);
         }
         return $returnArr;
@@ -98,7 +99,7 @@ class Twitter extends AbstractService
                 "nUsers" => $response['response']['serviceJson']['userSize'],
                 "date" => $response['response']['date'],
                 "query" => $response['response']['query']
-                );
+            );
         }
         return $returnArr;
     }
