@@ -30,7 +30,7 @@
 
     @else
 
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-bottom: 15px">
             @include('templates.partials.lineGraph')
         </div>
         @if(config('view.version')!=2)
@@ -108,7 +108,7 @@
         @else
             <div id="timelineFirst" class="timeline col-lg-6 col-xs-6">
                 <a href="" class="timeline_spine"></a>
-                <ol class="timeline_nav" style="/*position: fixed;*/">
+                <ol class="timeline_nav is-hidden" style="/*position: fixed;*/">
                     @foreach ($data['responseFirst']['sections'] as $section)
                         <li id="menu_year_{{$section['id']}}">
                             <a type="button">{{$section['id']}}</a>

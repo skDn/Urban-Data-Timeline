@@ -1,25 +1,6 @@
 /**
  * Created by skDn on 19/11/2015.
  */
-/**
- * Global variabls
- */
-var drawChartWithData = 'twitter';
-var elem = 'page';
-var chartArray;
-var chart;
-var dataToDraw;
-var options = {
-    legend: {position: 'top', maxLines: 10},
-    vAxis: {title: ""},
-    hAxis: {title: "Date"},
-    seriesType: "bars",
-    series: {5: {type: "line"}},
-    animation: {
-        duration: 1000,
-        easing: 'out'
-    },
-};
 
 function sortDictionary(d, k) {
     return d.sort(function (x, y) {
@@ -107,7 +88,7 @@ function convertDataToChartArray(data) {
         $div.append('<a type="button" class="btn btn-default" name=' + k + ' onClick="a_onClick(this)">' + k.toUpperCase() + '</a>');
     }
 
-    $div.insertAfter($("#page"));
+    $div.insertAfter($("#"+googleChart));
 //            console.log(keys);
 //            console.log(convertDicToArray(dictionary, 'venues'));
 
@@ -125,7 +106,7 @@ function convertDataToChartArray(data) {
 function drawChart() {
     if (chartArray == undefined)
         chartArray = convertDataToChartArray(dataToDraw);
-    chart = new google.visualization.ComboChart(document.getElementById(elem));
+    chart = new google.visualization.ComboChart(document.getElementById(googleChart));
     var dataConv = google.visualization.arrayToDataTable(chartArray[drawChartWithData]);
     $("#loading-container").css('display', 'none');
     options['vAxis']['title'] = drawChartWithData;

@@ -196,11 +196,12 @@
 }
 
 .timeline ol.timeline_nav {
-    position: absolute;
+    position: fixed;
+    top: 140px;
+    left: 0;
     list-style: none;
     /*fix for moving element to far right*/
     /*right: 100%;*/
-    top: 45px;
     z-index: 100;
 }
 

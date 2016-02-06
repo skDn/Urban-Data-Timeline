@@ -33,7 +33,7 @@
         <div class="timeline">
             <a href="" class="timeline_spine"></a>
 
-            <ol class="timeline_nav" style="/*position: fixed;*/">
+            <ol class="timeline_nav is-hidden" style="/*position: fixed;*/">
                 @foreach ($data['sections'] as $section)
                     <li id="menu_year_{{$section['id']}}">
                         <a type="button">{{$section['id']}}</a>

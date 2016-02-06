@@ -1,5 +1,6 @@
 $(document).ready(function () {
     // $('.timeline .timeline_nav').stickyfloat({duration:400});
+    $('html, body').animate({scrollTop: ($('#' + googleChart).offset().top) - 150}, 1500);
 
     $('.timeline .section').each(function () {
         $(this).afterScroll(function () {
@@ -22,20 +23,68 @@ $(document).ready(function () {
         });
     });
 
+    var $timeline_nav = $('.timeline_nav');
+    var $infoBox = $('#infoBox');
+    //var $timeline = $('.timeline');
+    var $timeline = $('#' + googleChart);
+    var offset = 150;
+
+    //$timeline_nav.addClass('is-hidden');
+    //$infoBox.addClass('is-hidden');
+
     //on scolling, show/animate timeline blocks when enter the viewport
     $(window).on('scroll', function () {
         $timeline_block.each(function () {
             $timeline_elements.each(function () {
-                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.75 && $(this).hasClass('is-hidden')) {
+                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9 && $(this).hasClass('is-hidden')) {
                     $(this).removeClass('is-hidden').addClass('animated zoomIn');
                 }
             });
         });
+
+        if ($timeline.offset().top <= $(window).scrollTop() + offset) {
+            showHiddenWithAnimation($timeline_nav, 'fadeInLeft');
+            showHiddenWithAnimation($infoBox, 'fadeInDown');
+        }
+        else {
+            removeVisibleWithAnimation($timeline_nav, 'fadeOutLeft', 'fadeInLeft');
+            removeVisibleWithAnimation($infoBox, 'fadeOutUp', 'fadeInDown');
+        }
+
+
     });
 
     $(".timeline_nav li").click(function () {
-        $('html, body').animate({scrollTop: ($('#' + $(this).first().text().trim()).offset().top)-140}, 500);
+        $('html, body').animate({scrollTop: ($('#' + $(this).first().text().trim()).offset().top) - 140}, 500);
     });
+
+    function showHiddenWithAnimation(element, animation) {
+        if (element.hasClass('is-hidden')) {
+            element.removeClass('is-hidden').addClass('animated ' + animation);
+        }
+        if (element.hasClass('animated')) {
+
+            var classList = element.attr('class').split(/\s+/);
+
+            for (var i = 0; i < classList.length; i++) {
+                if (classList[i] === 'animated') {
+                    element.removeClass(classList[i]);
+                    element.removeClass(classList[i + 1]);
+                    break;
+                }
+            }
+            element.addClass('animated ' + animation);
+        }
+    }
+
+    function removeVisibleWithAnimation(element, newAnimation, oldAnimation) {
+        if (!element.hasClass('is-hidden')) {
+            element.removeClass(oldAnimation);
+            element.addClass(newAnimation);
+            //element.addClass('is-hidden');
+        }
+    }
+
 
     // check if in comparison view
     var tlFstSelector = $('#timelineFirst');
@@ -47,7 +96,7 @@ $(document).ready(function () {
         tlFstSelector.find('.section').each(function () {
             //console.log($(this).height())
             sectionId = $(this).attr('id');
-            corSection = tlSecSelector.find('#'+sectionId);
+            corSection = tlSecSelector.find('#' + sectionId);
             if ($(this).height() > corSection.height()) {
                 corSection.height($(this).height());
             }
@@ -57,103 +106,4 @@ $(document).ready(function () {
             //console.log($(this).attr('id'))
         });
     }
-    //function doesn't work
-    //alignTwoTimelines(tlFstSelector,tlSecSelector);
-
 });
-
-//TODO: REFACTOR THIS
-$(function () { // document ready
-    fixElement('.timeline_nav');
-});
-
-function fixElement(elementClass) {
-    if (!!$(elementClass).offset()) { // make sure ".sticky" element exists
-
-        var stickyTop = $(elementClass).offset().top; // returns number
-
-        $(window).scroll(function () { // scroll event
-
-            var windowTop = $(window).scrollTop(); // returns number
-
-            if (stickyTop < windowTop) {
-                $(elementClass).css({position: 'fixed', top: 140, left:0});
-                if (!$('#infoBox').hasClass('navbar-fixed-top')) {
-                    $('#infoBox').toggleClass('navbar-fixed-top');
-                    $('#infoBox').toggleClass('hidden');
-                    $('#infoBox').toggleClass('animated');
-                    $('#infoBox').toggleClass('fadeInDown');
-                    $(elementClass).toggleClass('hidden');
-                    $(elementClass).toggleClass('animated');
-                    $(elementClass).toggleClass('fadeInLeft');
-
-                }
-                //fixBootstrapNav('#infoBox');
-            }
-            else {
-                $(elementClass).css('position', 'absolute');
-                $(elementClass).css('top', '10px');
-                //fixBootstrapNav('#infoBox');
-                if ($('#infoBox').hasClass('navbar-fixed-top')) {
-                    $('#infoBox').removeClass('navbar-fixed-top');
-                    $('#infoBox').addClass('hidden');
-                    $('#infoBox').removeClass('animated');
-                    $('#infoBox').removeClass('fadeInDown');
-                    $(elementClass).addClass('hidden');
-                    $(elementClass).removeClass('animated');
-                    $(elementClass).removeClass('fadeInLeft');
-                    //console.log('removed');
-                }
-            }
-
-        });
-
-    }
-}
-
-function fixBootstrapNav(elementClass) {
-    if (!!$(elementClass).offset()) { // make sure ".sticky" element exists
-
-        var stickyTop = $(elementClass).offset().top; // returns number
-
-        $(window).scroll(function () { // scroll event
-
-            var windowTop = $(window).scrollTop(); // returns number
-
-            if (stickyTop < windowTop) {
-                if (!$(elementClass).hasClass('navbar-fixed-top')) {
-                    $(elementClass).toggleClass('navbar-fixed-top');
-                    $(elementClass).toggleClass('hidden');
-                }
-            }
-            else {
-                if ($(elementClass).hasClass('navbar-fixed-top')) {
-                    $(elementClass).removeClass('navbar-fixed-top');
-                    $(elementClass).addClass('hidden');
-                    //console.log('removed');
-                }
-            }
-
-        });
-
-    }
-}
-function alignTwoTimelines (tlFstSelector, tlSecSelector) {
-    var sectionId;
-    var corSection;
-
-    if (tlFstSelector.length && tlSecSelector.length) {
-        tlFstSelector.find('.section').each(function () {
-            //console.log($(this).height())
-            sectionId = $(this).attr('id');
-            corSection = tlSecSelector.find('#'+sectionId);
-            if ($(this).height() > corSection.height()) {
-                corSection.height($(this).height());
-            }
-            if ($(this).height() < corSection.height()) {
-                $(this).height(corSection.height());
-            }
-            //console.log($(this).attr('id'))
-        });
-    }
-}
