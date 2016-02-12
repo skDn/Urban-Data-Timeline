@@ -11,4 +11,8 @@ $('#googleMap').hover(function() {
     $('[data-toggle="popover"]').popover('show');
 }, function(){
     $('[data-toggle="popover"]').popover('hide');
+
+    $('[data-toggle="popover"]').popover({
+        container: '.popover'
+    });
 });

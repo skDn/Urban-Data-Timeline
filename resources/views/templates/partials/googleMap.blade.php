@@ -8,9 +8,10 @@
 <div id="googleMap" class="col-md-12 center-block"
      data-toggle="popover" data-placement="bottom"
      title="Hints"
-     data-content="1. You can drag the main marker.&#13;&#10;
-                   2. The main marker show current location. &#13;&#10;
-                   3. The other markers indicate venues nearby.&#13;&#10;
+     data-html="true"
+     data-content="1. You can drag the main marker <br/>
+                   2. The main marker show current location. <br/>
+                   3. The other markers indicate venues nearby. <br/>
                    4. By clicking on a venue, you can get its timeseries."
         ></div>
 
