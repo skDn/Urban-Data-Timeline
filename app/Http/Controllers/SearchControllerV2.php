@@ -9,16 +9,9 @@
 namespace Urban\Http\Controllers;
 
 
-
+use Illuminate\Http\Request;
 use Urban\Http\Middleware\SearchHelper;
 use Validator;
-use Illuminate\Http\Request;
-use Urban\Http\Controllers\Controller;
-
-use Urban\Models\BusyVenues;
-use Urban\Models\Twitter;
-use Urban\Models\TwitterTimeline;
-use \DateTime as DateTime;
 
 class SearchControllerV2 extends Controller
 {
@@ -35,10 +28,11 @@ class SearchControllerV2 extends Controller
             )
         );
     }
+
     private function rules()
     {
         return [
-            'query'.$this->firstID => 'max:100|alpha_dash',
+            'query' . $this->firstID => 'max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
             'lat' => 'required',
@@ -48,30 +42,18 @@ class SearchControllerV2 extends Controller
 
     public function getResults(Request $request)
     {
-        // create the validation rules ------------------------
-//        $this->validate($request, [
-//            'title' => 'required|unique|max:255',
-//            'body' => 'required',
-//        ]);
-
         $validator = Validator::make($request->all(), $this->rules());
 
         if ($validator->fails()) {
-//            dd($validator->errors()->all());
             return redirect()->route('event')
                 ->withErrors($validator)
                 ->withInput();
         }
 
-
-        //dd($response);
-//        dd(Input::all());
-//        dd($request->all());
-//$twitterAccount = $request->input('twitterAccount');
         $query = $request->input('query' . $this->firstID);
 
         $helper = new SearchHelper();
-        $response = $helper->getResultsForEvent($query,$request);
+        $response = $helper->getResultsForEvent($request);
 
         $firstElement = array(
             'id' => $this->firstID,
@@ -84,9 +66,6 @@ class SearchControllerV2 extends Controller
             'sections' => $response['sections'],
             'info' => $response['info'],
         );
-        //array_merge($responseToView,$response);
-        //dd($responseToView);
-
         return view('search.resultV2')->with('data', $responseToView)->withInput($request->all());
     }
 }

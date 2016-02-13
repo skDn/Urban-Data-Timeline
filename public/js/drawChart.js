@@ -9,11 +9,11 @@ function sortDictionary(d, k) {
 }
 
 function convertDicToArray(dict, value) {
-    retArray = [];
-    for (key in dict[value]) {
-        record = [];
+    var retArray = [];
+    for (var key in dict[value]) {
+        var record = [];
         record.push(convertStringDate(key));
-        for (i in dict[value][key]) {
+        for (var i in dict[value][key]) {
             record.push(dict[value][key][i]);
         }
         retArray.push(record);
@@ -26,7 +26,7 @@ function convertStringDate(date) {
 }
 
 function a_onClick(el) {
-    drawChartWithData = el.name;
+    var drawChartWithData = el.name;
     drawChart();
 }
 
@@ -39,33 +39,29 @@ function convertDataToChartArray(data) {
 
     var dictionary = {};
 
-    for (query in data) {
+    for (var query in data) {
 
-        for (partial in data[query]) {
+        for (var partial in data[query]) {
             // yesscotland
             var sub_key = partial;
             // push yesscotland
             header.push(partial);
             var sub_val = data[query][partial];
-            //console.log(sub_key);
 
-            for (sub in data[query][partial]) {
-                if (dictionary[sub] == undefined) {
+            for (var sub in data[query][partial]) {
+                if (dictionary[sub] === undefined) {
                     dictionary[sub] = {};
                 }
                 // twitter
                 sub_key = sub;
                 sub_val = data[query][partial][sub];
-                //console.log(sub_key);
-                for (sub1 in data[query][partial][sub]) {
-                    //console.log(data[query][partial][sub][sub1]['date']);
-                    if (dictionary[sub][data[query][partial][sub][sub1]['date']] == undefined) {
+                for (var sub1 in data[query][partial][sub]) {
+                    if (dictionary[sub][data[query][partial][sub][sub1]['date']] === undefined) {
                         dictionary[sub][data[query][partial][sub][sub1]['date']] = [];
                     }
                     dictionary[sub][data[query][partial][sub][sub1]['date']].push(data[query][partial][sub][sub1]['count']);
 
                     sub_val = data[query][partial][sub][sub1];
-                    //console.log(sub_val);
                 }
             }
 
@@ -73,14 +69,6 @@ function convertDataToChartArray(data) {
 
 
     }
-    //var $listOfButtons = $('<ul class="chartButtons"></ul>');
-    //for (var k in dictionary) {
-    //    keys.push(k);
-    //    options['vAxis']['title'] = k;
-    //    $listOfButtons.append('<li><a type="button" class="btn btn-default" name=' + k + ' onClick="a_onClick(this)">' + k.toUpperCase() + '</a></li>');
-    //}
-    //var $div = $('<div class="btn-group btn-group-justified" role="group"></div>');
-    //$div.append($listOfButtons);
     var $div = $('<div class="center-block col-lg-8 btn-group btn-group-justified" style="margin-top: 15px;" role="group"></div>');
     for (var k in dictionary) {
         keys.push(k);
@@ -88,9 +76,7 @@ function convertDataToChartArray(data) {
         $div.append('<a type="button" class="btn btn-default" name=' + k + ' onClick="a_onClick(this)">' + k.toUpperCase() + '</a>');
     }
 
-    $div.insertAfter($("#"+googleChart));
-//            console.log(keys);
-//            console.log(convertDicToArray(dictionary, 'venues'));
+    $div.insertAfter($("#" + googleChart));
 
     retArr.push(header);
     var con;
@@ -99,7 +85,6 @@ function convertDataToChartArray(data) {
         con = convertDicToArray(dictionary, keys[i]);
         retDict[keys[i]] = retArr.concat(con);
     }
-    //return retArr.concat(con);
     return retDict;
 }
 
@@ -114,20 +99,17 @@ function drawChart() {
 }
 
 
-
 $(document).ready(function () {
     function getSearchSpace() {
         var searchSpace = [];
-        var lat = $('#'+latInput).val();
-        var lng = $('#'+lngInput).val();
+        var lat = $('#' + latInput).val();
+        var lng = $('#' + lngInput).val();
         $('input').each(function () {
             var itemID = $(this).attr('id');
             if (itemID != undefined) {
                 if (itemID.indexOf('query') > -1) {
                     var searchIt = {};
                     // uncomment if use more than one date picker
-                    //var index = itemID.split('_')[1];
-                    //searchIt['date'] = getDate(index);
                     searchIt['date'] = getDate();
                     searchIt['query'] = $(this).val();
                     searchIt['lat'] = lat;
@@ -138,11 +120,12 @@ $(document).ready(function () {
         });
         return searchSpace;
     }
+
     function foo(queries) {
         var resp = [];
         var percentage;
         var loadingcontainer = $('#loading-container');
-        for (i = 0; i < queries.length; i++) {
+        for (var i = 0; i < queries.length; i++) {
             $.ajax({
                 type: "GET",
                 url: "search/count",
@@ -152,9 +135,9 @@ $(document).ready(function () {
                 success: function (res) {
                     resp.push(res);
                     // changing loading bar width
-                    percentage = (resp.length*100)/queries.length;
-                    loadingcontainer.children().css( "width",  percentage + "%" );
-                    loadingcontainer.children().text( percentage + "%" );
+                    percentage = (resp.length * 100) / queries.length;
+                    loadingcontainer.children().css("width", percentage + "%");
+                    loadingcontainer.children().text(percentage + "%");
                     //
                     if (resp.length == queries.length) {
                         dataToDraw = resp;
@@ -164,5 +147,6 @@ $(document).ready(function () {
             });
         }
     }
+
     foo(getSearchSpace());
 });

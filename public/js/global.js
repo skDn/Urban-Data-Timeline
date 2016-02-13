@@ -18,5 +18,7 @@ var options = {
     animation: {
         duration: 1000,
         easing: 'out'
-    },
+    }
 };
+var firstQuery = '#query_First';
+var secondQuery = '#query_Second';

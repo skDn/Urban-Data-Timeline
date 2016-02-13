@@ -37,14 +37,12 @@ class CountController extends Controller
         $lng = $request->input('lng');
         $venues = new BusyVenues($lat, $lng);
 
-        //return $twit->getCount($this->getDateObject($day, $month, $year));
         $returnData = array(
             $query => array(
                 'twitter' => $twit->getCountForRange($dateStart, $dateEnd),
                 'venues' => $venues->getCountForRange($dateStart, $dateEnd),
             )
         );
-        //dd(json_encode($returnData));
         return json_encode($returnData);
     }
 }

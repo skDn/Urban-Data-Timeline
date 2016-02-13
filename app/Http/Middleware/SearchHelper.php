@@ -7,27 +7,18 @@
  */
 namespace Urban\Http\Middleware;
 
+use DateTime as DateTime;
 use Illuminate\Http\Request;
-
 use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 use Urban\Models\TwitterTimeline;
-use Urban\Models\TrainStations;
-use Urban\Models\DelayedServices;
-
-use \DateTime as DateTime;
 
 class SearchHelper
 {
-    public function getResultsForEvent($query, Request $request)
+    public function getResultsForEvent(Request $request)
     {
-        //$query = $request->input('query' . $this->firstID);
-        // use this if more than one date picker
-        //$date = $request->input('date' . $this->firstID);
         $date = $request->input('date');
-//        if (!$query) {
-//            return redirect()->route('event');
-//        }
+        $query = ($request->input('queryFirst')) ? $request->input('queryFirst') : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
         $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
 
@@ -65,19 +56,6 @@ class SearchHelper
             (array)$twitTimeline->getData(strtotime($date), 0, 10)
         );
         usort($mergeQueries, array($this, 'date_compare'));
-//        dd($mergeQueries);
-
-
-        /* SECTION FORMAT
-    section => array(
-        'id' => ,
-        'events' => array (
-            'name' => ,
-            'screen_name' => ,
-            'text' => ,
-            'created_at' => ,
-        ) )
-        */
 
         $response = array(
             'sections' => array(),
@@ -86,9 +64,10 @@ class SearchHelper
         /* getting sections */
         $response['sections'] = $this->generateSections($mergeQueries);
 
-
-        //$response['info'] = $twit->getInfo(strtotime($date));
-        $response['info']['twitter'] = $twit->getInfo(strtotime($date));
+        $twitterInfo = $twit->getInfo(strtotime($date));
+        if (count($twitterInfo) > 0) {
+            $response['info']['twitter'] = $twitterInfo;
+        }
 
         return $response;
     }
@@ -109,7 +88,7 @@ class SearchHelper
         $sectionDate = null;
         $currentDate = null;
         $section = null;
-        $previousdiff = 0;
+        $previousDifference = 0;
         $response = array();
         foreach ($mergeQueries as $event) {
 
@@ -134,25 +113,21 @@ class SearchHelper
 
             if (USEDIFF) {
                 $diff = ($currentDate === null) ? 0 : $date->diff($currentDate);
-                $diff = (!is_object($diff) || ($diff->y == 0 && $diff->m == 0 && $diff->d == 0 &&
-                        $diff->h == 0 && $diff->i == 0)) ? $previousdiff : round(log($diff->i + $diff->h * 60 + $diff->d * 3600, 2));
+                $diff = (!is_object($diff) || $this->my_first_condition())
+                    ? $previousDifference : round(log($diff->i + $diff->h * 60 + $diff->d * 3600, 2));
             } else {
                 $diff = 0;
             }
-//
-//            $tweet = array(
-//                'name' => $tweet->user->name,
-//                'screen_name' => $tweet->user->screen_name,
-//                'text' => Twitter::linkify($tweet->text),
-//                'created_at' => $date->format(DATEASCONTENT),
-//                /* trying to smooth the distance between two events */
-//                'diff' => $diff,
-//                'original' => Twitter::linkTweet($tweet),
-//            );
             $currentDate = $date;
-            $previousdiff = $diff;
+            $previousDifference = $diff;
             array_push($section['events'], $event);
         }
         return $response;
+    }
+
+    private function my_first_condition($diff)
+    {
+        return $diff->y == 0 && $diff->m == 0 && $diff->d == 0 &&
+        $diff->h == 0 && $diff->i == 0;
     }
 }

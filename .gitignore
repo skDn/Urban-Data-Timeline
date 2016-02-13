@@ -10,3 +10,7 @@ Homestead.json
 
 #ignoring composer files
 composer.lock 
+
+phpunit-*
+/reports
+.sonar

@@ -10,15 +10,14 @@ namespace Urban\Models;
 
 
 //define("DATEASID",     "M-d-hA");
-define("DATEASID",     "ha");
-define("DATEASCONTENT",     "Y-m-d h:i");
-define("USEDIFF" , false);
+define("DATEASID", "ha");
+define("DATEASCONTENT", "Y-m-d h:i");
+define("USEDIFF", false);
 
 use Cache;
-
-
+use DateTime as DateTime;
 use Thujohn\Twitter\Facades\Twitter;
-use \DateTime as DateTime;
+
 
 class TwitterTimeline extends AbstractService
 {
@@ -26,17 +25,9 @@ class TwitterTimeline extends AbstractService
     {
         // getting username
         $this->query = $q;
-//        $this->url = config('services.twitter.url');
-//        $this->postData = array(
-//            "request" => array(
-//                "query" => $this->query,
-//                "date" => null,
-//            )
-//        );
         $this->responseData = array(
             "twitterTimeline" => array(),
         );
-        //$this->date = $d;
     }
 
     protected function getURL()
@@ -68,7 +59,7 @@ class TwitterTimeline extends AbstractService
     public function getData($queryDate, $start, $end)
     {
         // TODO:  queryDate is not used. Convert everyting to DateTime
-        $qDate = new DateTime(date(DATEASCONTENT,$queryDate));
+        $qDate = new DateTime(date(DATEASCONTENT, $queryDate));
 
 
         $tweets = $this->sendRequest($this->query);
@@ -78,8 +69,6 @@ class TwitterTimeline extends AbstractService
             $date = new DateTime($tweet->created_at);
             $interval = $qDate->diff($date);
             $date = $date->sub(new \DateInterval($interval->format('P%aD')));
-            //$date = $date->sub(new DateInterval($interval->format('%R%a days'));
-            //dd($date);
 
             $tweet = array(
                 'class' => 'tweetFromTimeline',
@@ -93,24 +82,21 @@ class TwitterTimeline extends AbstractService
             );
             array_push($this->responseData['twitterTimeline'], $tweet);
         }
-        //dd($this->responseData);
         return $this->responseData['twitterTimeline'];
     }
 
-    public function sendRequest ($username) {
+    public function sendRequest($username)
+    {
         $user = $username;
         $cacheTag = 'twitterTimeline'; //config timeline twitter
-        $cacheKey = $user."-".$cacheTag;
+        $cacheKey = $user . "-" . $cacheTag;
         $cacheLimit = 15;
         $tweets = null;
 
         /* caching */
-
-        // $john = Cache::tags(['people', 'artists'])->get('John');
         if (Cache::has($cacheKey)) {
             $tweets = Cache::get($cacheKey);
-        }
-        else {
+        } else {
             $tweets = Twitter::getUserTimeline(['screen_name' => $user, 'count' => 10, 'format' => 'object']);
             Cache::put($cacheKey, $tweets, $cacheLimit);
         }

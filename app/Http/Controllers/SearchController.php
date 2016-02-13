@@ -8,13 +8,10 @@
 
 namespace Urban\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
-use Urban\Http\Controllers\Controller;
-
 use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
-use Urban\Models\TwitterTimeline;
+use Validator;
 
 class SearchController extends Controller
 {
@@ -31,10 +28,11 @@ class SearchController extends Controller
             )
         );
     }
+
     private function rules()
     {
         return [
-            'query'.$this->firstID => 'max:100|alpha_dash',
+            'query' . $this->firstID => 'max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
             'lat' => 'required',
@@ -44,24 +42,15 @@ class SearchController extends Controller
 
     public function getResults(Request $request)
     {
-        // create the validation rules ------------------------
-//        $this->validate($request, [
-//            'title' => 'required|unique|max:255',
-//            'body' => 'required',
-//        ]);
-
         $validator = Validator::make($request->all(), $this->rules());
 
         if ($validator->fails()) {
-//            dd($validator->errors()->all());
             return redirect()->route('event')
                 ->withErrors($validator)
                 ->withInput();
         }
 
         $query = $request->input('query' . $this->firstID);
-        // use this if more than one date picker
-        //$date = $request->input('date' . $this->firstID);
         $date = $request->input('date');
         if (!$query) {
             return redirect()->route('event');
@@ -75,7 +64,6 @@ class SearchController extends Controller
         $venues = new BusyVenues($lat, $lng);
 
 
-
         $firstElement = array(
             'id' => $this->firstID,
         );
@@ -84,20 +72,13 @@ class SearchController extends Controller
          */
         $mergeQueries = array_merge($twit->getData(strtotime($date), 0, 10), $venues->getData(strtotime($date), 0, 20));
         usort($mergeQueries, array($this, 'date_compare'));
-        //dd($mergeQueries);
 
         $response = array(
             'elements' => array(
                 'first' => $firstElement,
             ),
             'response' => $mergeQueries,
-//            'response' => array(
-//                'twitter' => $twit->getData(strtotime($date), 0, 10),
-//                'venues' => $venues->getData(strtotime($date), 0 , 20),
-//            )
         );
-//        dd(Input::all());
-//        dd($request->all());
         return view('search.result')->with('data', $response)->withInput($request->all());
     }
 }

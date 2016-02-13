@@ -15,7 +15,6 @@
 
 namespace Urban\Models;
 
-//{"request": {"lat": 55.8580 , "lon":-4.2590, "radius": 1.0}}
 class TrainStations extends AbstractService
 {
     function __construct($lat, $lon)
@@ -31,7 +30,6 @@ class TrainStations extends AbstractService
         $this->responseData = array(
             "trainStations" => null,
         );
-        //$this->date = $d;
     }
 
     public function getResponse()
@@ -48,11 +46,6 @@ class TrainStations extends AbstractService
     {
         // TODO: Implement setPostDataDate() method.
     }
-
-//	protected function dateToString($date)
-//	{
-//		// TODO: Implement dateToString() method.
-//	}
 
     public function getCount($queryDate)
     {
@@ -84,7 +77,6 @@ class TrainStations extends AbstractService
         $this->setPostDataDate($queryDate);
         // sending request
         $response = $this->sendRequest($this->getPostData());
-        //dd($response);
         $returnArr = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             foreach ($response['response']['trainStations'] as $trainStation) {
@@ -97,7 +89,6 @@ class TrainStations extends AbstractService
                 ));
             }
         }
-        //dd($returnArr);
         return $returnArr;
 
     }

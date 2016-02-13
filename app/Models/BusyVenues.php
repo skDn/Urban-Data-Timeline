@@ -1,18 +1,5 @@
 <?php
 
-//The response object returned by this end point contains the following properties
-//- status when this property has the value "OK", it means that the request is successful and the results are valid. Otherwise, there is an error.
-//- results an array of reslut objects ordered by their score. Each object represent a place (FouSquare venue) and would contain the following properties:
-//	- id the FourSquare ID of the venue
-//- score the score of the venue in the ranked list
-//    - displayName the display name of the venue
-//- venuesTimeSeries a Json object which maps each venue ID in the results above to a time-series of historical and future checkins for the venue. The time-series is an array of JSON objects:
-//	- timeInMilis a long value representing the standard epoch timestamp of the time point in the series
-//- dateString a string representation of the time point in the series
-//- value a number representing the attendance of the venue in the corresponding time series
-//- venuesData an array of objects. Each contains information about the venues in the results. Full details about the fields in these objects can be obtaine here: https://developer.foursquare.com/docs/responses/venue
-/* {request: {lat: 55.8748 , lon:-4.2929, radius:0.05, timestamp: "2015-07-01 14:00:00"}} */
-
 namespace Urban\Models;
 
 use Cache;
@@ -20,15 +7,45 @@ use Cache;
 class BusyVenues extends AbstractService
 {
 
+    const RADIUS = "radius";
+
+    const RESPONSE = 'response';
+
+    const STATUS = 'status';
+
+    const RESULTS = 'results';
+
+    const Y_M_D = "Y-m-d";
+
+    const Y_M_D_H_I = "Y-m-d H:i";
+
+    const VENUE_TIME_SERIES = 'venueTimeSeries';
+
+    const ID = 'id';
+
+    const VENUES_DATA = 'venuesData';
+
+    const REQUEST = 'request';
+
+    const LAT = 'lat';
+
+    const LON = 'lon';
+
+    const OK = 'OK';
+
+    const CACHE_TAG_VENUE_DATA = 'venueData';
+
+    const VENUE_CACHE_LIMIT = 15;
+
     function __construct($lat, $lon)
     {
 
         $this->url = config('services.busyVenues.url');
         $this->postData = array(
-            "request" => array(
-                "lat" => $lat,
-                "lon" => $lon,
-                "radius" => config('controls.venuesRange'),
+            self::REQUEST => array(
+                self::LAT => $lat,
+                self::LON => $lon,
+                self::RADIUS => config('controls.venuesRange'),
                 "timestamp" => null,
             )
         );
@@ -42,7 +59,7 @@ class BusyVenues extends AbstractService
 
     protected function setPostDataDate($date)
     {
-        $this->postData['request']['timestamp'] = $this->dateToString($date);
+        $this->postData[self::REQUEST]['timestamp'] = $this->dateToString($date);
     }
 
     protected function dateToString($date)
@@ -58,44 +75,41 @@ class BusyVenues extends AbstractService
         $response = $this->sendRequest($this->getPostData());
 
         $count = 0;
-        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            foreach ($response['response']['results']['results'] as $venue) {
+        if (isset($response[self::RESPONSE][self::STATUS]) && $response[self::RESPONSE][self::STATUS] == self::OK) {
+            foreach ($response[self::RESPONSE][self::RESULTS][self::RESULTS] as $venue) {
                 if ($venue['score'] > 0.0) {
                     $count++;
                 }
             }
         }
-        $returnArray = array(
+        return array(
             'date' => $this->dateToString($queryDate),
             'count' => $count,
         );
-
-        return $returnArray;
     }
 
     public function getData($queryDate, $start, $end)
     {
         $this->setPostDataDate($queryDate);
         $post = $this->getPostData();
-        $cacheLat = $post['request']['lat'];
-        $cacheLon = $post['request']['lon'];
-        $cacheTag = 'venueData'; //config timeline twitter
-        $cacheKey = $cacheTag."-".$cacheLat."-".$cacheLon."-".$queryDate;
-        $cacheLimit = 15;
+        $cacheLat = $post[self::REQUEST][self::LAT];
+        $cacheLon = $post[self::REQUEST][self::LON];
+        $cacheTag = self::CACHE_TAG_VENUE_DATA; //config timeline twitter
+        $cacheKey = $cacheTag . "-" . $cacheLat . "-" . $cacheLon . "-" . $queryDate;
+        $cacheLimit = self::VENUE_CACHE_LIMIT;
 
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
         }
 
-        $cmp_date1 = date("Y-m-d", $queryDate);
+        $cmp_date1 = date(self::Y_M_D, $queryDate);
 
         $response = $this->sendRequest($post);
-        //dd($response['response']['results']);
         $modifiedData = array();
         $filter = array();
         //TODO: implement infinite scrolling
-        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            foreach ($response['response']['results']['results'] as $venue) {
+        if (isset($response[self::RESPONSE][self::STATUS]) && $response[self::RESPONSE][self::STATUS] == self::OK) {
+            foreach ($response[self::RESPONSE][self::RESULTS][self::RESULTS] as $venue) {
                 if ($venue['score'] > 0.0) {
                     array_push($filter, $venue);
                 }
@@ -110,30 +124,27 @@ class BusyVenues extends AbstractService
 //                        array_push($timeSeries,$timeSeriesIter);
 //                    }
 //                }
-                $randint = rand(0, count($response['response']['results']['venueTimeSeries'][$venue['id']]) - 1);
-                //dd($response['response']['results']['venueTimeSeries'][$venue['id']]);
+                $randint = rand(0, count($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]]) - 1);
                 // getting a random record from the time series
-                $timeSeries = array_values($response['response']['results']['venueTimeSeries'][$venue['id']])[$randint];
-                //dd($timeSeries);
-                $originalDate = $timeSeries['dateString'];
-                $newDate = date("Y-m-d H:i", strtotime($originalDate));
+                $timeSeries = array_values($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]])[$randint];
+                $originalDate = $timeSeries[KEY_DATE_STRING];
+                $newDate = date(self::Y_M_D_H_I, strtotime($originalDate));
 
                 $venueInformation = array();
                 // getting info for each venue
-                foreach ($response['response']['results']['venuesData'] as $entryInfo) {
-                    $originalDate = $timeSeries['dateString'];
+                foreach ($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA] as $entryInfo) {
+                    $originalDate = $timeSeries[KEY_DATE_STRING];
 
-                    $cmp_date2 = date("Y-m-d", strtotime($originalDate));
+                    $cmp_date2 = date(self::Y_M_D, strtotime($originalDate));
 
-                    //dd($entryInfo);
-                    if ($entryInfo['id'] == $venue['id']) {
+                    if ($entryInfo[self::ID] == $venue[self::ID]) {
                         if ($cmp_date1 == $cmp_date2) {
 
-                            $newDate = date("Y-m-d H:i", strtotime($originalDate));
+                            $newDate = date(self::Y_M_D_H_I, strtotime($originalDate));
                             array_push($modifiedData, array(
-                                'class' => 'venue',
-                                'venue' => $venue['displayName'],
-                                'dateString' => $newDate,
+                                KEY_CLASS => KEY_VENUE,
+                                KEY_VENUE => $venue['displayName'],
+                                KEY_DATE_STRING => $newDate,
                                 'users' => $entryInfo['stats']['usersCount'],
                                 'checkins' => $entryInfo['stats']['checkinsCount'],
                                 'location' => $entryInfo['location']['country'],
@@ -145,12 +156,9 @@ class BusyVenues extends AbstractService
 
 
             }
-            //return array_slice($response['response']['serviceJson']['users'], $start, $end, true);
         }
 //        following code returns the response in format 'venues' => array()
-//        $this->setResponse($modifiedData);
-//        return $this->getResponse();
-        if (count($modifiedData)>0) {
+        if (count($modifiedData) > 0) {
             Cache::put($cacheKey, $modifiedData, $cacheLimit);
         }
         return $modifiedData;
@@ -160,55 +168,49 @@ class BusyVenues extends AbstractService
     {
         $this->setPostDataDate($queryDate);
         $post = $this->getPostData();
-        $cacheLat = $post['request']['lat'];
-        $cacheLon = $post['request']['lon'];
-        $cacheTag = 'venueData'; //config timeline twitter
-        $cacheKey = $cacheTag."-".$cacheLat."-".$cacheLon."-".$queryDate;
-        $cacheLimit = 15;
-
-        if (Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
-        }
+        $cacheLat = $post[self::REQUEST][self::LAT];
+        $cacheLon = $post[self::REQUEST][self::LON];
+        $cacheTag = self::CACHE_TAG_VENUE_DATA; //config timeline twitter
+        $cacheKey = $cacheTag . "-" . $cacheLat . "-" . $cacheLon . "-" . $queryDate;
+        $cacheLimit = self::VENUE_CACHE_LIMIT;
+//
+//        if (Cache::has($cacheKey)) {
+//            return Cache::get($cacheKey);
+//        }
         /**
          * TODO - change this not to 0
          */
         // if searchtoken is venue
-        $post['request']['radius'] = 0;
+        $post[self::REQUEST][self::RADIUS] = 0;
         // else radius is 0.5 or 1
         $response = $this->sendRequest($post);
-//        dd($response);
-        $cmp_date1 = date("Y-m-d", $queryDate);
-        //dd($response);
-        $venueTime = array_values($response['response']['results']['venueTimeSeries'])[0];
-        $venueData = array_values($response['response']['results']['venuesData'])[0];
+        $cmp_date1 = date(self::Y_M_D, $queryDate);
+        $venueTime = array_values($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES])[0];
+        $venueData = array_values($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA])[0];
 
         $returnArr = array();
         foreach ($venueTime as $timeSeries) {
-            $originalDate = $timeSeries['dateString'];
+            $originalDate = $timeSeries[KEY_DATE_STRING];
 
-            $cmp_date2 = date("Y-m-d", strtotime($originalDate));
-            //dd($cmp_date1 . " " .$cmp_date2);
+            $cmp_date2 = date(self::Y_M_D, strtotime($originalDate));
             if ($cmp_date1 == $cmp_date2) {
 
-                $newDate = date("Y-m-d H:i", strtotime($originalDate));
+                $newDate = date(self::Y_M_D_H_I, strtotime($originalDate));
                 array_push($returnArr, array(
-                    'class' => 'venueTimeSeries',
-                    'dateString' => $newDate,
+                    KEY_CLASS => self::VENUE_TIME_SERIES,
+                    KEY_DATE_STRING => $newDate,
                     'value' => $timeSeries['value'],
                     'name' => $venueData['name'],
                     'phone' => array_key_exists('formattedPhone', $venueData['contact']) ? $venueData['contact']['formattedPhone'] : null,
                     'location' => array_key_exists('address', $venueData['location']) ? $venueData['location']['address'] : null,
-                    //'menuURL' => $venueData['menu']['url'],
-                    //'twitter' => $venueData['contact']['twitter'],
-                    'lat' => $venueData['location']['lat'],
+                    self::LAT => $venueData['location'][self::LAT],
                     'lng' => $venueData['location']['lng'],
                 ));
             }
         }
-        if (count($returnArr)>0) {
+        if (count($returnArr) > 0) {
             Cache::put($cacheKey, $returnArr, $cacheLimit);
         }
-        //dd($returnArr);
         return $returnArr;
 
     }
@@ -219,25 +221,21 @@ class BusyVenues extends AbstractService
          * TODO - change this date to config date
          */
         $this->setPostDataDate(strtotime('2015-07-01'));
-        //dd($this->getPostData());
         $post = $this->getPostData();
-        $post['request']['radius'] = $radius;
-
+        $post[self::REQUEST][self::RADIUS] = $radius;
 
 
         $response = $this->sendRequest($post);
-//        dd($response);
-        $venueData = array_values($response['response']['results']['venuesData']);
+        $venueData = array_values($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA]);
         $returnArr = array();
         foreach ($venueData as $venue) {
-            //dd($venue);
             array_push($returnArr, array(
                 'name' => $venue['name'],
                 'phone' => array_key_exists('formattedPhone', $venue['contact']) ? $venue['contact']['formattedPhone'] : null,
                 'location' => array_key_exists('address', $venue['location']) ? $venue['location']['address'] : null,
                 'postalCode' => array_key_exists('postalCode', $venue['location']) ? $venue['location']['postalCode'] : null,
                 'twitter' => array_key_exists('twitter', $venue['contact']) ? $venue['contact']['twitter'] : '',
-                'lat' => $venue['location']['lat'],
+                self::LAT => $venue['location'][self::LAT],
                 'lng' => $venue['location']['lng'],
             ));
         }

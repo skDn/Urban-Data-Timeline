@@ -2,7 +2,7 @@
 
 namespace Urban\Models;
 
-class DelayedServices extends AbstractService
+class DelaysTimeSeries extends AbstractService
 {
     protected function getURL()
     {
@@ -14,7 +14,7 @@ class DelayedServices extends AbstractService
         // TODO: Implement getPostData() method.
     }
 
-    protected function getResponse()
+    public function getResponse()
     {
         // TODO: Implement getResponse() method.
     }

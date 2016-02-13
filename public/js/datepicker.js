@@ -23,16 +23,18 @@ $(function () {
         template = '<li><a type="button" class="btn btn-default">' + i + '</a></li>';
         $(dayDropDownId).append(template);
     }
-    for (var i = 1; i < 13; i++) {
+    for (i = 1; i < 13; i++) {
         template = '<li><a type="button" class="btn btn-default">' + i + '</a></li>';
         $(monthDropDownId).append(template);
     }
-    for (var i = startYear; i < endYear + 1; i++) {
+    for (i = startYear; i < endYear + 1; i++) {
         template = '<li><a type="button" class="btn btn-default">' + i + '</a></li>';
         $(yearDropDownId).append(template);
     }
     //end of population
+});
 
+$(function () {
     $(".dropdown-menu li").click(function () {
         var itemID = '#' + $(this).closest('div').find('a').attr("id");
         $(itemID).text($(this).text());
@@ -41,10 +43,7 @@ $(function () {
         $(this).css({'width': $(this).parent().width()});
     });
     $(".btn-group-justified a").click(function () {
-        //console.log($(this).attr('data-action'));
-        //console.log($(this).attr('data-action') );
         if ($(this).attr('data-action') === 'decrementDays' || $(this).attr('data-action') === 'incrementDays') {
-            //var aID = $(this).attr("id").split('_')[1];
             var aID = '';
             var dayInputID = dayID + aID;
             var monthInputID = monthID + aID;
@@ -66,19 +65,19 @@ $(function () {
             $(dayInputID).text(d.getDate());
             $(monthInputID).text(d.getMonth() + 1);
             $(yearInputID).text(d.getFullYear());
-
         }
-
     });
-    $('form').submit(function (event) {
+});
+
+$(function () {
+    $('form').submit(function () {
         $(dateInputId).val(getDate());
     });
-
 });
 
 function getDate(elementID) {
     var thisDay, thisMonth, thisYear;
-    if (elementID != undefined) {
+    if (elementID !== undefined) {
         thisDay = $(dayID + elementID).text().trim();
         thisMonth = $(monthID + elementID).text().trim();
         thisYear = $(yearID + elementID).text().trim();
@@ -88,7 +87,7 @@ function getDate(elementID) {
         thisMonth = $(monthID).text().trim();
         thisYear = $(yearID).text().trim();
     }
-    if (thisDay == 'Day' || thisMonth == 'Month' || thisYear == 'Year') {
+    if (thisDay === 'Day' || thisMonth === 'Month' || thisYear === 'Year') {
         return undefined;
     }
     return thisYear + '-' + thisMonth + '-' + thisDay;

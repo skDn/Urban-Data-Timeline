@@ -7,6 +7,13 @@
  */
 namespace Urban\Models;
 
+
+const KEY_CLASS = 'class';
+
+const KEY_VENUE = 'venue';
+
+const KEY_DATE_STRING = 'dateString';
+
 abstract class AbstractService
 {
 
@@ -18,15 +25,10 @@ abstract class AbstractService
 
     protected $responseData;
 
-    // Force Extending class to define this method
     protected function getURL()
     {
         return $this->url;
     }
-
-//    abstract protected function getPostData();
-
-//    abstract protected function getResponse();
 
     abstract protected function setResponse($data);
 
@@ -36,10 +38,7 @@ abstract class AbstractService
 
     abstract public function getCount($queryDate);
 
-    //abstract public function getCountForRange($startDate, $endDate);
-
     abstract public function getData($queryDate, $start, $end);
-    //abstract protected function prefixValue($prefix);
 
     // Common method
     public function sendRequest($arrayToSend)
@@ -63,7 +62,6 @@ abstract class AbstractService
 
         // Decode the response
         $responseData = json_decode($response, TRUE);
-        //return array_slice($responseData['response']['serviceJson']['users'], 0, 20,true);
         return $responseData;
     }
 
@@ -74,13 +72,6 @@ abstract class AbstractService
 
     public function getResponse()
     {
-//        if(is_null($this->responseData))
-//        {
-//            // TODO - add default date to config file
-//            $this->setPostDataDate(strtotime('2015-08-08'));
-//            dd($this->sendRequest($this->getPostData()));
-//            return $this->sendRequest($this->getPostData());
-//        }
         return $this->responseData;
     }
 
@@ -100,17 +91,15 @@ abstract class AbstractService
                 $startDate = strtotime('+1 days', $startDate);
             }
         }
-//        $this->setResponse($response);
-//        return $this->getResponse();
         return $response;
     }
 
     protected function getRandomTimeOfDay($date)
     {
-        $startdate = $date;
-        $enddate = strtotime('+ 23 hours', $date);
+        $startDate = $date;
+        $endDate = strtotime('+ 23 hours', $date);
 
-        $randDate = rand($startdate, $enddate);
+        $randDate = rand($startDate, $endDate);
 
         return date('Y-m-d H:i', $randDate);
     }

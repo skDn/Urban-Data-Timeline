@@ -2,8 +2,6 @@
 
 namespace Urban\Models;
 
-//use Illuminate\Database\Eloquent\Model;
-//use Urban\AbstractService as AbstractService;
 use Cache;
 
 class Twitter extends AbstractService
@@ -21,12 +19,10 @@ class Twitter extends AbstractService
         $this->responseData = array(
             "twitter" => null,
         );
-        //$this->date = $d;
     }
 
     public function getCount($queryDate)
     {
-        //dd($this->getRandomTimeOfDay($queryDate));
         // init request parameters
         $this->setPostDataDate($queryDate);
         // sending request
@@ -53,14 +49,12 @@ class Twitter extends AbstractService
         $cacheKey = $cacheTag . "-" . $query . "-" . $queryDate;
         $cacheLimit = 15;
 
-        //Cache::flush();
 
         if (Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
         }
 
         $response = $this->sendRequest($postData);
-        //dd($response);
         //TODO: implement infinite scrolling
         $sliced = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
@@ -68,7 +62,6 @@ class Twitter extends AbstractService
         }
         // creating the return array
         // adding random timestamp to each tweet
-//        dd($response);
         $returnArr = array();
         if (count($sliced) > 0) {
             foreach ($sliced as $arr) {
@@ -78,7 +71,6 @@ class Twitter extends AbstractService
                     ));
             }
         }
-        //dd($returnArr);
         if (count($returnArr) > 0) {
             Cache::put($cacheKey, $returnArr, $cacheLimit);
         }

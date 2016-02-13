@@ -1,7 +1,5 @@
 <?php
 
-//{"request":{"tiploc":"GLGQHL","shortDate":"2015-04-01","minimumDelay":"5"}}
-
 namespace Urban\Models;
 
 class DelayedServices extends AbstractService
@@ -18,10 +16,6 @@ class DelayedServices extends AbstractService
                 "tiploc" => null,
             )
         );
-//        $this->responseData = array(
-//            "venues" => null,
-//        );
-        //$this->date = $d;
     }
 
     public function getResponse()
@@ -58,13 +52,14 @@ class DelayedServices extends AbstractService
     {
 
     }
+
     public function getDate($tiploc)
     {
 
         $this->postData['request']['tiploc'] = $tiploc;
         $response = $this->sendRequest($this->getPostData());
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            $response = json_decode($response['response']['jsonResponse'],TRUE);
+            $response = json_decode($response['response']['jsonResponse'], TRUE);
             dd(array_values($response)[0]);
         }
 

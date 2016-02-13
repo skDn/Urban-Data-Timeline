@@ -7,10 +7,10 @@
  */
 namespace Urban\Http\Controllers\REST;
 
-use Validator;
 use Illuminate\Http\Request;
-use Urban\Models\BusyVenues;
 use Urban\Http\Controllers\Controller;
+use Urban\Models\BusyVenues;
+use Validator;
 
 class NearbyVenues extends Controller
 {
@@ -23,7 +23,6 @@ class NearbyVenues extends Controller
         );
 
         if ($validator->fails()) {
-            //dd($validator->errors()->all());
             $response['status'] = 'failed';
             $response['message'] = $validator->errors()->all();
             return json_encode($response);
