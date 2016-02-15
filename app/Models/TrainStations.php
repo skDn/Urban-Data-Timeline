@@ -47,7 +47,7 @@ class TrainStations extends AbstractService
         // TODO: Implement setPostDataDate() method.
     }
 
-    public function getCount($queryDate)
+    public function getCount($queryDate,$resp)
     {
         $this->setPostDataDate($queryDate);
         // sending request
@@ -72,7 +72,7 @@ class TrainStations extends AbstractService
         // TODO: Implement getCountForRange() method.
     }
 
-    public function getData($queryDate, $start, $end)
+    public function getData($queryDate, $resp, $start, $end)
     {
         $this->setPostDataDate($queryDate);
         // sending request

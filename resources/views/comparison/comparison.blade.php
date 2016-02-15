@@ -30,7 +30,7 @@
         <form class="col-md-12 center-block" role="search" action="{{ route('comparison.results') }} " methond="get"
               id="searchForm">
             <div class="row">
-                @foreach ($data['elements'] as $element)
+                @foreach ($comparisonData['elements'] as $element)
                     <div class="col-lg-6">
                         <div class="inner-addon left-addon form-search form-inline">
                             <i class="glyphicon glyphicon-search"></i>

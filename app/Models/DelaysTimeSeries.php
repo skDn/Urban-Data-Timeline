@@ -4,14 +4,18 @@ namespace Urban\Models;
 
 class DelaysTimeSeries extends AbstractService
 {
-    protected function getURL()
-    {
-        // TODO: Implement getURL() method.
-    }
 
-    protected function getPostData()
+    function __construct($date)
     {
-        // TODO: Implement getPostData() method.
+
+        $this->url = config('services.delaysTimeSeries.url');
+        $this->postData = array(
+            "request" => array(
+                "minimumDelay" => config('controls.delayedServicesMinDelay'),
+                "shortDate" => date("Y-m-d", strtotime($date)),
+                "tiploc" => null,
+            )
+        );
     }
 
     public function getResponse()
@@ -34,7 +38,7 @@ class DelaysTimeSeries extends AbstractService
         // TODO: Implement dateToString() method.
     }
 
-    public function getCount($queryDate)
+    public function getCount($queryDate, $resp)
     {
         // TODO: Implement getCount() method.
     }
@@ -44,8 +48,30 @@ class DelaysTimeSeries extends AbstractService
         // TODO: Implement getCountForRange() method.
     }
 
-    public function getData($queryDate, $start, $end)
+    public function getData($queryDate, $resp, $start, $end)
     {
-        // TODO: Implement getData() method.
+
+    }
+
+    public function getDate($tiploc, $resp)
+    {
+
+        $this->postData['request']['tiploc'] = $tiploc;
+        $response = $this->sendRequest($this->getPostData());
+//        dd($this->getPostData());
+//        dd($response);
+        $returnArr = null;
+        if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
+            $returnArr = array();
+            $cmpDate1 = $this->getPostData()['request']['shortDate'];
+            foreach ($response['response']['ts']['timeseries'] as $timeSeries) {
+                $cmpDate2 = date(Y_M_D, strtotime($timeSeries[KEY_DATE_STRING]));
+                if ($cmpDate1 == $cmpDate2) {
+                    array_push($returnArr, $timeSeries);
+                }
+            }
+        }
+        return $returnArr;
+
     }
 }

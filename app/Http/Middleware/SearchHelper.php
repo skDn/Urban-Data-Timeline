@@ -10,15 +10,18 @@ namespace Urban\Http\Middleware;
 use DateTime as DateTime;
 use Illuminate\Http\Request;
 use Urban\Models\BusyVenues;
+use Urban\Models\DelayedServices;
 use Urban\Models\Twitter;
 use Urban\Models\TwitterTimeline;
+use Urban\Models\TrainStations;
+use Urban\Models\DelaysTimeSeries;
 
 class SearchHelper
 {
-    public function getResultsForEvent(Request $request)
+    public function getResultsForEvent($query, Request $request)
     {
         $date = $request->input('date');
-        $query = ($request->input('queryFirst')) ? $request->input('queryFirst') : $request->input('twitterAccount');
+        $query = ($query) ? $query : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
         $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
 
@@ -28,6 +31,11 @@ class SearchHelper
         $lat = $request->input('lat');
         $lng = $request->input('lng');
 
+        // if there are any train stations nearby
+//        $delayedService = new DelaysTimeSeries($date);
+//        $delayedService = new DelayedServices($date);
+//        $delayedService->getDate('GLGQHL');
+        //dd($stations);
         /* TODO: delayed service bug
         $trainStations = new TrainStations($lat, $lng);
         $stations = $trainStations->getData($date, 0, 10);
@@ -50,10 +58,10 @@ class SearchHelper
 
         $searchToken = $request->input('searchToken');
 
-        $mergeQueries = array_merge((array)$twit->getData(strtotime($date), 0, 10),
+        $mergeQueries = array_merge((array)$twit->getData(strtotime($date),null, 0, 10),
             ($searchToken && $searchToken === 'venue') ?
-                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0, 10),
-            (array)$twitTimeline->getData(strtotime($date), 0, 10)
+                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date),null, 0, 10),
+            (array)$twitTimeline->getData(strtotime($date), null, 0, 10)
         );
         usort($mergeQueries, array($this, 'date_compare'));
 
@@ -113,7 +121,7 @@ class SearchHelper
 
             if (USEDIFF) {
                 $diff = ($currentDate === null) ? 0 : $date->diff($currentDate);
-                $diff = (!is_object($diff) || $this->my_first_condition())
+                $diff = (!is_object($diff) || $this->my_first_condition($diff))
                     ? $previousDifference : round(log($diff->i + $diff->h * 60 + $diff->d * 3600, 2));
             } else {
                 $diff = 0;

@@ -58,7 +58,7 @@ class ComparisonController extends Controller
 
 
         $response = $this->prepareDataForView($request);
-        return view('comparison.result')->with('data', $response);
+        return view('comparison.result')->with('comparisonData', $response);
     }
 
     private function prepareDataForView($request)

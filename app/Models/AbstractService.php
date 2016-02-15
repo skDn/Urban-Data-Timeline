@@ -14,6 +14,8 @@ const KEY_VENUE = 'venue';
 
 const KEY_DATE_STRING = 'dateString';
 
+const Y_M_D = "Y-m-d";
+
 abstract class AbstractService
 {
 
@@ -36,9 +38,9 @@ abstract class AbstractService
 
     abstract protected function dateToString($date);
 
-    abstract public function getCount($queryDate);
+    abstract public function getCount($queryDate, $resp);
 
-    abstract public function getData($queryDate, $start, $end);
+    abstract public function getData($queryDate, $resp, $start, $end);
 
     // Common method
     public function sendRequest($arrayToSend)
@@ -78,7 +80,7 @@ abstract class AbstractService
     public function getCountForRange($startDate, $endDate)
     {
         if ($startDate == $endDate) {
-            $response = $this->getCount($startDate);
+            $response = $this->getCount($startDate,null);
         } else {
             if ($startDate > $endDate) {
                 $start = $endDate;
@@ -87,7 +89,7 @@ abstract class AbstractService
             }
             $response = array();
             while ($startDate <= $endDate) {
-                array_push($response, $this->getCount($startDate));
+                array_push($response, $this->getCount($startDate, null));
                 $startDate = strtotime('+1 days', $startDate);
             }
         }

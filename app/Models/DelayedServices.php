@@ -11,7 +11,8 @@ class DelayedServices extends AbstractService
         $this->url = config('services.delayedServices.url');
         $this->postData = array(
             "request" => array(
-                "minDelay" => config('controls.delayedServicesMinDelay'),
+                "minimumDelay" => config('controls.delayedServicesMinDelay'),
+//                "shortDate" => date("Y-m-d", strtotime($date)),
                 "shortDate" => date("Y-m-d", strtotime($date)),
                 "tiploc" => null,
             )
@@ -38,7 +39,7 @@ class DelayedServices extends AbstractService
         // TODO: Implement dateToString() method.
     }
 
-    public function getCount($queryDate)
+    public function getCount($queryDate, $resp)
     {
         // TODO: Implement getCount() method.
     }
@@ -48,7 +49,7 @@ class DelayedServices extends AbstractService
         // TODO: Implement getCountForRange() method.
     }
 
-    public function getData($queryDate, $start, $end)
+    public function getData($queryDate, $resp, $start, $end)
     {
 
     }
@@ -58,8 +59,11 @@ class DelayedServices extends AbstractService
 
         $this->postData['request']['tiploc'] = $tiploc;
         $response = $this->sendRequest($this->getPostData());
+//        dd($this->getPostData());
+        dd($response);
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $response = json_decode($response['response']['jsonResponse'], TRUE);
+            dd($response);
             dd(array_values($response)[0]);
         }
 

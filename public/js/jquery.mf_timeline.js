@@ -24,7 +24,7 @@ $(document).ready(function () {
     });
 
     var $timeline_nav = $('.timeline_nav');
-    var $infoBox = $('#infoBox');
+    var $infoBox = $('.infoBox');
     //var $timeline = $('.timeline');
     var $timeline = $('#' + googleChart);
     var offset = 150;

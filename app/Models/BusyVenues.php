@@ -15,7 +15,7 @@ class BusyVenues extends AbstractService
 
     const RESULTS = 'results';
 
-    const Y_M_D = "Y-m-d";
+
 
     const Y_M_D_H_I = "Y-m-d H:i";
 
@@ -35,11 +35,12 @@ class BusyVenues extends AbstractService
 
     const CACHE_TAG_VENUE_DATA = 'venueData';
 
+    const CACHE_TAG_VENUE_TIME = 'venueTimeSeries';
+
     const VENUE_CACHE_LIMIT = 15;
 
     function __construct($lat, $lon)
     {
-
         $this->url = config('services.busyVenues.url');
         $this->postData = array(
             self::REQUEST => array(
@@ -67,7 +68,7 @@ class BusyVenues extends AbstractService
         return date("Y-m-d 12:00:00", $date);
     }
 
-    public function getCount($queryDate)
+    public function getCount($queryDate, $resp)
     {
         // init request parameters
         $this->setPostDataDate($queryDate);
@@ -88,7 +89,7 @@ class BusyVenues extends AbstractService
         );
     }
 
-    public function getData($queryDate, $start, $end)
+    public function getData($queryDate, $resp, $start, $end)
     {
         $this->setPostDataDate($queryDate);
         $post = $this->getPostData();
@@ -98,13 +99,14 @@ class BusyVenues extends AbstractService
         $cacheKey = $cacheTag . "-" . $cacheLat . "-" . $cacheLon . "-" . $queryDate;
         $cacheLimit = self::VENUE_CACHE_LIMIT;
 
-        if (Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
-        }
+//        if (Cache::has($cacheKey)) {
+//            return Cache::get($cacheKey);
+//        }
 
-        $cmp_date1 = date(self::Y_M_D, $queryDate);
+        $cmp_date1 = date(Y_M_D, $queryDate);
 
         $response = $this->sendRequest($post);
+//        dd($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES]['4dd242367d8b4c6585e723c9']);
         $modifiedData = array();
         $filter = array();
         //TODO: implement infinite scrolling
@@ -135,7 +137,7 @@ class BusyVenues extends AbstractService
                 foreach ($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA] as $entryInfo) {
                     $originalDate = $timeSeries[KEY_DATE_STRING];
 
-                    $cmp_date2 = date(self::Y_M_D, strtotime($originalDate));
+                    $cmp_date2 = date(Y_M_D, strtotime($originalDate));
 
                     if ($entryInfo[self::ID] == $venue[self::ID]) {
                         if ($cmp_date1 == $cmp_date2) {
@@ -153,8 +155,6 @@ class BusyVenues extends AbstractService
                         }
                     }
                 }
-
-
             }
         }
 //        following code returns the response in format 'venues' => array()
@@ -170,13 +170,13 @@ class BusyVenues extends AbstractService
         $post = $this->getPostData();
         $cacheLat = $post[self::REQUEST][self::LAT];
         $cacheLon = $post[self::REQUEST][self::LON];
-        $cacheTag = self::CACHE_TAG_VENUE_DATA; //config timeline twitter
+        $cacheTag = self::CACHE_TAG_VENUE_TIME; //config timeline twitter
         $cacheKey = $cacheTag . "-" . $cacheLat . "-" . $cacheLon . "-" . $queryDate;
         $cacheLimit = self::VENUE_CACHE_LIMIT;
-//
-//        if (Cache::has($cacheKey)) {
-//            return Cache::get($cacheKey);
-//        }
+
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
         /**
          * TODO - change this not to 0
          */
@@ -184,7 +184,7 @@ class BusyVenues extends AbstractService
         $post[self::REQUEST][self::RADIUS] = 0;
         // else radius is 0.5 or 1
         $response = $this->sendRequest($post);
-        $cmp_date1 = date(self::Y_M_D, $queryDate);
+        $cmp_date1 = date(Y_M_D, $queryDate);
         $venueTime = array_values($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES])[0];
         $venueData = array_values($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA])[0];
 
@@ -192,7 +192,7 @@ class BusyVenues extends AbstractService
         foreach ($venueTime as $timeSeries) {
             $originalDate = $timeSeries[KEY_DATE_STRING];
 
-            $cmp_date2 = date(self::Y_M_D, strtotime($originalDate));
+            $cmp_date2 = date(Y_M_D, strtotime($originalDate));
             if ($cmp_date1 == $cmp_date2) {
 
                 $newDate = date(self::Y_M_D_H_I, strtotime($originalDate));

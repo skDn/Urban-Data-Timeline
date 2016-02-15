@@ -53,7 +53,7 @@ class SearchControllerV2 extends Controller
         $query = $request->input('query' . $this->firstID);
 
         $helper = new SearchHelper();
-        $response = $helper->getResultsForEvent($request);
+        $response = $helper->getResultsForEvent($query, $request);
 
         $firstElement = array(
             'id' => $this->firstID,

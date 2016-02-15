@@ -26,7 +26,7 @@ function convertStringDate(date) {
 }
 
 function a_onClick(el) {
-    var drawChartWithData = el.name;
+    drawChartWithData = el.name;
     drawChart();
 }
 

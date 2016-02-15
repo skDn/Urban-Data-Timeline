@@ -55,3 +55,8 @@ Route::get('/event/compare', [
     'uses' => '\Urban\Http\Controllers\ComparisonController@compareTwoEvents',
     'as' => 'comparison.results',
 ]);
+
+Route::get('/infinite/single', [
+    'uses' => '\Urban\Http\Controllers\REST\InfiniteScroll@getSectionToPopulate',
+    'as' => 'infinite.getSectionToPopulate',
+]);

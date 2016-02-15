@@ -50,13 +50,13 @@ class TwitterTimeline extends AbstractService
         // TODO: Implement dateToString() method.
     }
 
-    public function getCount($queryDate)
+    public function getCount($queryDate, $resp)
     {
         $tweets = $this->sendRequest($this->query);
         return count($tweets);
     }
 
-    public function getData($queryDate, $start, $end)
+    public function getData($queryDate, $resp, $start, $end)
     {
         // TODO:  queryDate is not used. Convert everyting to DateTime
         $qDate = new DateTime(date(DATEASCONTENT, $queryDate));

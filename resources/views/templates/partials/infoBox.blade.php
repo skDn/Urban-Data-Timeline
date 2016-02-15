@@ -28,8 +28,7 @@
     {{--    {!! Html::script('js/fixingOnScroll.js')  !!}--}}
     {{--{!! Html::script('js/getWeatherData.js')  !!}--}}
 @stop
-
-<nav id="infoBox" class="navbar navbar-default navbar-fixed-top container is-hidden"
+<nav id="infoBox" class="navbar navbar-default navbar-fixed-top container is-hidden infoBox"
      style="padding-left: 0;padding-right: 0">
     @if (array_key_exists("twitter",$data['info']))
         <table class="table table-condensed" style="margin-bottom: 0">

@@ -21,16 +21,21 @@ class Twitter extends AbstractService
         );
     }
 
-    public function getCount($queryDate)
+    public function getCount($queryDate, $resp)
     {
         // init request parameters
         $this->setPostDataDate($queryDate);
         // sending request
-        $response = $this->sendRequest($this->getPostData());
+        $response = ($resp) ? $resp : $this->sendRequest($this->getPostData());
+        //$response = $this->sendRequest($this->getPostData());
+
 
         $count = 0;
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $count = $response['response']['serviceJson']['f_tweets'];
+        }
+        else {
+            return null;
         }
         $returnArray = array(
             'date' => $this->dateToString($queryDate),
@@ -40,7 +45,7 @@ class Twitter extends AbstractService
         return $returnArray;
     }
 
-    public function getData($queryDate, $start, $end)
+    public function getData($queryDate, $resp, $start, $end)
     {
         $this->setPostDataDate($queryDate);
         $postData = $this->getPostData();
@@ -50,11 +55,11 @@ class Twitter extends AbstractService
         $cacheLimit = 15;
 
 
-        if (Cache::has($cacheKey)) {
-            return Cache::get($cacheKey);
-        }
+//        if (Cache::has($cacheKey)) {
+//            return Cache::get($cacheKey);
+//        }
 
-        $response = $this->sendRequest($postData);
+        $response = ($resp) ? $resp : $this->sendRequest($this->getPostData());
         //TODO: implement infinite scrolling
         $sliced = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
@@ -84,6 +89,7 @@ class Twitter extends AbstractService
         $returnArr = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $popularHTags = array_slice($response['response']['serviceJson']['hashtags'], 0, 5, true);
+            array_shift($popularHTags);
             $returnArr = array(
                 "nTweets" => $response['response']['serviceJson']['f_tweets'],
                 "popularHTags" => $popularHTags,

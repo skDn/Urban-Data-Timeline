@@ -3,15 +3,15 @@
 @section('styles')
     @parent
     {{--@if(config('view.version')!=2)--}}
-        {{--<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>--}}
-        {{--<script src="{{ URL::to('js/index.js') }}" type="text/javascript"></script>--}}
+    {{--<script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>--}}
+    {{--<script src="{{ URL::to('js/index.js') }}" type="text/javascript"></script>--}}
     {{--@else--}}
-        <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css"/>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-        {!! Html::style('css/testStyle.css')  !!}
-        {!! Html::style('css/animate.css')  !!}
+    {!! Html::style('css/testStyle.css')  !!}
+    {!! Html::style('css/animate.css')  !!}
     {{--@endif--}}
 @stop
 
@@ -25,7 +25,7 @@
 
 @section('results')
 
-    @if (!count($data))
+    @if (!count($comparisonData))
         <p> No results found </p>
 
     @else
@@ -36,7 +36,7 @@
         @if(config('view.version')!=2)
             {{--<style> .is-hidden {display: none} </style>--}}
             <section id="cd-timelineFirst" class="cd-container col-lg-6 col-xs-6">
-                @foreach ($data['responseFirst'] as $event)
+                @foreach ($comparisonData['responseFirst'] as $event)
                     <div class="cd-timeline-block">
                         @if ($event['class'] == 'tweet')
                             <div class="cd-timeline-img cd-tweet">
@@ -70,7 +70,7 @@
             </section>
 
             <section id="cd-timelineSecond" class="cd-container col-lg-6">
-                @foreach ($data['responseSecond'] as $event)
+                @foreach ($comparisonData['responseSecond'] as $event)
                     <div class="cd-timeline-block">
                         @if ($event['class'] == 'tweet')
                             <div class="cd-timeline-img cd-tweet">
@@ -109,19 +109,19 @@
             <div id="timelineFirst" class="timeline col-lg-6 col-xs-6">
                 <a href="" class="timeline_spine"></a>
                 <ol class="timeline_nav is-hidden" style="/*position: fixed;*/">
-                    @foreach ($data['responseFirst']['sections'] as $section)
+                    @foreach ($comparisonData['responseFirst']['sections'] as $section)
                         <li id="menu_year_{{$section['id']}}">
                             <a type="button">{{$section['id']}}</a>
                         </li>
                     @endforeach
                 </ol>
-                @foreach ($data['responseFirst']['sections'] as $section)
+                @foreach ($comparisonData['responseFirst']['sections'] as $section)
                     @include('templates.partials.section')
                 @endforeach
             </div>
             <div id="timelineSecond" class="timeline col-lg-6 col-xs-6">
                 <a href="" class="timeline_spine"></a>
-                @foreach ($data['responseSecond']['sections'] as $section)
+                @foreach ($comparisonData['responseSecond']['sections'] as $section)
                     @include('templates.partials.section')
                 @endforeach
             </div>
