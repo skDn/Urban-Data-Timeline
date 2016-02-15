@@ -8,9 +8,6 @@ var map;
 var infowindow;
 var marker;
 var markers = [];
-var mapDiv = 'googleMap';
-var latInput = 'latInput';
-var lngInput = 'lonInput';
 var markerInput;
 var lat = document.getElementById(latInput);
 var lng = document.getElementById(lngInput);
@@ -258,7 +255,7 @@ function codeAddress(address) {
     });
 }
 //loading google maps
-window.onload = start;
+//window.onload = start;
 
 function submitVenueSearch() {
      $('<input>').attr({

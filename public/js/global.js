@@ -22,3 +22,7 @@ var options = {
 };
 var firstQuery = '#query_First';
 var secondQuery = '#query_Second';
+
+var mapDiv = 'googleMap';
+var latInput = 'latInput';
+var lngInput = 'lonInput';

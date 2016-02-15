@@ -16,6 +16,7 @@ class InfiniteScroll extends Controller
 {
     public function getSectionToPopulate(Request $request) {
 
-        return json_encode(array('value'=>'test'));
+        //return json_encode(array('value'=>'test'));
+        return json_encode($request->all());
     }
 }
