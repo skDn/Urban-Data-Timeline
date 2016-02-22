@@ -1,30 +1,40 @@
+function animateEvenets() {
+    $(window).on('scroll', function () {
+        $timeline_block.each(function () {
+            $timeline_elements.each(function () {
+                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9 && $(this).hasClass('is-hidden')) {
+                    $(this).removeClass('is-hidden').addClass('animated zoomIn');
+                }
+            });
+        });
+    });
+}
 $(document).ready(function () {
     // $('.timeline .timeline_nav').stickyfloat({duration:400});
     $('html, body').animate({scrollTop: ($('#' + googleChart).offset().top) - 150}, 1500);
 
 
-    $( document ).ajaxComplete(function( event, xhr, settings ) {
-        $('.timeline .section').each(function () {
-            $(this).afterScroll(function () {
-                // After we have scolled past the top
-                var year = $(this).attr('id');
-                $('ol.timeline_nav li').removeClass('current');
-                $('ol.timeline_nav li#menu_year_' + year).addClass('current');
+    //hide timeline blocks which are outside the viewport
+    function makeNonVisibleEventsHidden() {
+        $timeline_block.each(function () {
+            $timeline_elements.each(function () {
+                if ($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
+                    if (!$(this).hasClass('is-hidden')) {
+                        $(this).addClass('is-hidden');
+                    }
+                    if (!$(this).hasClass('loading')) {
+                        console.log('here');
+                    }
+
+                }
             });
         });
-    });
+    }
 
+    makeNonVisibleEventsHidden();
 
-    var $timeline_block = $('.section');
-    var $timeline_elements = $('.event');
-
-    //hide timeline blocks which are outside the viewport
-    $timeline_block.each(function () {
-        $timeline_elements.each(function () {
-            if ($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
-                $(this).addClass('is-hidden');
-            }
-        });
+    $('document').on('event:success', function () {
+        console.log('good event');
     });
 
     var $timeline_nav = $('.timeline_nav');
@@ -35,16 +45,10 @@ $(document).ready(function () {
 
     //$timeline_nav.addClass('is-hidden');
     //$infoBox.addClass('is-hidden');
-
+    animateEvenets();
     //on scolling, show/animate timeline blocks when enter the viewport
     $(window).on('scroll', function () {
-        $timeline_block.each(function () {
-            $timeline_elements.each(function () {
-                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9 && $(this).hasClass('is-hidden')) {
-                    $(this).removeClass('is-hidden').addClass('animated zoomIn');
-                }
-            });
-        });
+
 
         if ($timeline.offset().top <= $(window).scrollTop() + offset) {
             showHiddenWithAnimation($timeline_nav, 'fadeInLeft');
@@ -110,4 +114,20 @@ $(document).ready(function () {
             //console.log($(this).attr('id'))
         });
     }
+
+
+    $(document).ajaxComplete(function (event, xhr, settings) {
+        if (settings.url.indexOf('infinite') > -1) {
+            $('.timeline .section').each(function () {
+                $(this).afterScroll(function () {
+                    // After we have scolled past the top
+                    var year = $(this).attr('id');
+                    $('ol.timeline_nav li').removeClass('current');
+                    $('ol.timeline_nav li#menu_year_' + year).addClass('current');
+                });
+            });
+            //makeNonVisibleEventsHidden();
+            //animateEvenets();
+        }
+    });
 });

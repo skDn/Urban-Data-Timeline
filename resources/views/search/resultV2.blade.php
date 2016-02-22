@@ -25,11 +25,12 @@
         <p> No results found </p>
 
     @else
-
-        @include('templates.partials.lineGraph')
+        <div class="formatter">
+            @include('templates.partials.lineGraph')
+        </div>
         @include('templates.partials.infoBox')
         {{--<style> .is-hidden {display: none} </style>--}}
-        <div class="timeline">
+        <div class="timeline formatter">
             <a href="" class="timeline_spine"></a>
 
             <ol class="timeline_nav is-hidden" style="/*position: fixed;*/">
@@ -44,11 +45,11 @@
             @endforeach
 
         </div>
-        <div id="loading" class="row text-center">
-            <img src="https://www.musicianswithoutborders.org/wp-content/themes/mwb/images/ajax-loader-light.gif"
-                 width="32"
-                 height="32" alt="tweet loader"/>
-        </div>
+        {{--<div id="loading" class="row text-center">--}}
+            {{--<img src="https://www.musicianswithoutborders.org/wp-content/themes/mwb/images/ajax-loader-light.gif"--}}
+                 {{--width="32"--}}
+                 {{--height="32" alt="tweet loader"/>--}}
+        {{--</div>--}}
         <!-- cd-timeline -->
 
         {{--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>--}}

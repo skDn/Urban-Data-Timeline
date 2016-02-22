@@ -255,7 +255,7 @@ function codeAddress(address) {
     });
 }
 //loading google maps
-window.onload = start;
+//window.onload = start;
 
 function submitVenueSearch() {
      $('<input>').attr({

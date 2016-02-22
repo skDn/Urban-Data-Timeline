@@ -28,3 +28,15 @@ var latInput = 'latInput';
 var lngInput = 'lonInput';
 
 var countRangePlusMinus = 2;
+
+
+
+var $timeline_block = $('.section');
+var $timeline_elements = $('.event');
+
+
+var $timeline_nav = $('.timeline_nav');
+var $infoBox = $('.infoBox');
+//var $timeline = $('.timeline');
+var $timeline = $('#' + googleChart);
+var offset = 150;

@@ -21,12 +21,12 @@
             $win.scroll(function () {
                 /* Top of element */
                 // haven't scrolled past yet
-                if (!scrolled && $win.scrollTop() + $win.height() >= elTopPos) {
+                if (!scrolled && $win.scrollTop() + $win.height()+1000 >= elTopPos) {
                     after_top.apply(t)
                     scrolled = true
                 }
                 // have scrolled past yet
-                else if (scrolled && $win.scrollTop() + $win.height() < elTopPos) {
+                else if (scrolled && $win.scrollTop() + $win.height()+1000 < elTopPos) {
                     before_top.apply(t)
                     scrolled = false
                 }
@@ -34,12 +34,12 @@
 
                 /* Bottom of element*/
                 // haven't scrolled past yet
-                if (!scrolled && $win.scrollTop() + $win.height() >= elBottomPos) {
+                if (!scrolled && $win.scrollTop() + $win.height()+1000 >= elBottomPos) {
                     after_bottom.apply(t)
                     scrolled = true
                 }
                 // have scrolled past yet
-                else if (scrolled && $win.scrollTop() + $win.height() < elBottomPos) {
+                else if (scrolled && $win.scrollTop() + $win.height()+1000 < elBottomPos) {
                     before_bottom.apply(t)
                     scrolled = false
                 }
@@ -72,93 +72,101 @@ $(function () {
             prevSection = sectionID;
         });
     });
-});
 
 
-function getInputs(id) {
-    var dict = {};
+    function getInputs(id) {
+        var dict = {};
 
-    $("form").find(':input').each(function () {
-        if ($(this).attr('name') === 'date') {
-            dict['date'] = getDate();
-        }
-        else {
-            dict[$(this).attr('name')] = $(this).val()
-        }
-    });
-    dict['sectionID'] = id;
-    return dict;
-}
-
-function ajaxCall(id) {
-    $loading.show();
-    $.ajax({
-        url: '/infinite/single',
-        method: 'get',
-        data: getInputs(id),
-        dataType: 'json',
-        success: function (data) {
-            $loading.hide();
-            if (data != '') {
-                getEventsHtmlRepresentation(data, $('#' + id + ' ol.events'));
-            } else {
-                $loading.hide();
+        $("form").find(':input').each(function () {
+            if ($(this).attr('name') === 'date') {
+                dict['date'] = getDate();
             }
-        }
-    });
-}
+            else {
+                dict[$(this).attr('name')] = $(this).val()
+            }
+        });
+        dict['sectionID'] = id;
+        return dict;
+    }
 
-function getEventsHtmlRepresentation(data, objectToAppend) {
-            for (var event in data) {
-                if (data[event].class === 'tweet') {
-                    for (var i = 0; i<10; i++)
-                    objectToAppend.append(getHtmlForTweet(data[event]));
+    function ajaxCall(id) {
+        $loading.show();
+        var marker;
+        $.ajax({
+            url: '/infinite/single',
+            method: 'get',
+            data: getInputs(id),
+            dataType: 'json',
+            success: function (data) {
+                //$loading.hide();
+                if (data != '') {
+                    marker = $('#' + id + ' ol.events');
+                    hideLoadingEvenetsFromSection(marker);
+                    getEventsHtmlRepresentation(data, marker);
+                } else {
+                    $loading.hide();
                 }
             }
-}
-function getHtmlForTweet(event) {
-    return eventStart +
-        '<div class="event_title">' +
-        '<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
+        });
+    }
 
-        '<h3>' + event['screen_name'] + '</h3>' +
-        '<span class="subtitle">@' + event.screen_name + '</span>' +
-        '</div>' +
-        '   <!-- end of event title -->' +
-        '<div class="event_content">' +
-        '<p>Count:' + event.count + '</p>' +
-        '</div>' +
-        '  <!-- event timestamp -->' +
-        '<span class="next_to_title"><i' +
-        'class="fa fa-clock-o fa-1x"></i>' + event.dateString + '</span>' +
-        '<!-- end of event timestamp -->'
-        + eventEnd;
-}
+    function hideLoadingEvenetsFromSection(marker) {
+        marker.children(".loading").removeClass('zoomIn').addClass('zoomOut').hide();
+    }
 
-function getHtmlForTwitterTimeLine(event) {
-    return eventStart +
-        '<div class="event_title">' +
-        '<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
+    function getEventsHtmlRepresentation(data, objectToAppend) {
+        for (var event in data) {
+            if (data[event].class === 'tweet') {
+                for (var i = 0; i < 10; i++)
+                    objectToAppend.append(getHtmlForTweet(data[event]));
+            }
+        }
+    }
 
-        '<h3>' + event['screen_name'] + '</h3>' +
-        '<span class="subtitle">@' + event.screen_name + '</span>' +
-        '</div>' +
-        '   <!-- end of event title -->' +
-        '<div class="event_content">' +
-        '<p>Count:' + event.count + '</p>' +
-        '<p>' + event['text'] + '</p>' +
-        ' <!-- adding link to original tweet -->' +
-        '<br>' +
+    function getHtmlForTweet(event) {
+        return eventStart +
+            '<div class="event_title">' +
+            '<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
 
-        '<p>' +
-        '<strong>Original Tweet:</strong>' +
-        '<a href="' + event['original'] + '">' + event['original'] + '</a>' +
-        ' </p>' +
-        '    <!-- end of link to original tweet -->' +
-        '</div>' +
-        '  <!-- event timestamp -->' +
-        '<span class="next_to_title"><i' +
-        'class="fa fa-clock-o fa-1x"></i>' + event.dateString + '</span>' +
-        '<!-- end of event timestamp -->'
-        + eventEnd;
-}
+            '<h3>' + event['screen_name'] + '</h3>' +
+            '<span class="subtitle">@' + event.screen_name + '</span>' +
+            '</div>' +
+            '   <!-- end of event title -->' +
+            '<div class="event_content">' +
+            '<p>Count:' + event.count + '</p>' +
+            '</div>' +
+            '  <!-- event timestamp -->' +
+            '<span class="next_to_title"><i' +
+            'class="fa fa-clock-o fa-1x"></i>' + event.dateString + '</span>' +
+            '<!-- end of event timestamp -->'
+            + eventEnd;
+    }
+
+    function getHtmlForTwitterTimeLine(event) {
+        return eventStart +
+            '<div class="event_title is-hidden">' +
+            '<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
+
+            '<h3>' + event['screen_name'] + '</h3>' +
+            '<span class="subtitle">@' + event.screen_name + '</span>' +
+            '</div>' +
+            '   <!-- end of event title -->' +
+            '<div class="event_content">' +
+            '<p>Count:' + event.count + '</p>' +
+            '<p>' + event['text'] + '</p>' +
+            ' <!-- adding link to original tweet -->' +
+            '<br>' +
+
+            '<p>' +
+            '<strong>Original Tweet:</strong>' +
+            '<a href="' + event['original'] + '">' + event['original'] + '</a>' +
+            ' </p>' +
+            '    <!-- end of link to original tweet -->' +
+            '</div>' +
+            '  <!-- event timestamp -->' +
+            '<span class="next_to_title"><i' +
+            'class="fa fa-clock-o fa-1x"></i>' + event.dateString + '</span>' +
+            '<!-- end of event timestamp -->'
+            + eventEnd;
+    }
+});

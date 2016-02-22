@@ -1,6 +1,7 @@
 .topnav {
     /*font-size: 14px;*/
 }
+
 body,
 h1,
 h2,
@@ -8,10 +9,16 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 700;
 }
 
-.popover{
+.popover {
     max-width: 100%; /* Max Width of the popover (depending on the container!) */
+}
+
+.formatter {
+    background-color: #e9eaed;
+    padding: 10px;
+    margin-bottom: 20px;
 }

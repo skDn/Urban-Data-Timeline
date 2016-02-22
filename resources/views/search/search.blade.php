@@ -34,7 +34,7 @@
     {{--{{Input::get('date')}}<br>--}}
     {{--@endforeach--}}
     <div class="container">
-        <div style="background-color: #e9eaed; padding: 10px;">
+        <div class="formatter">
             @foreach ($data['elements'] as $element)
                 @include('templates.partials.searchbox')
             @endforeach
