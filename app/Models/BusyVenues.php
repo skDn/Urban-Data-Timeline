@@ -39,17 +39,19 @@ class BusyVenues extends AbstractService
 
     const VENUE_CACHE_LIMIT = 15;
 
-    function __construct($lat, $lon)
+    function __construct($lat, $lon, $date, $radius)
     {
         $this->url = config('services.busyVenues.url');
+        $this->queryDate = strtotime($date); // strtotime
         $this->postData = array(
             self::REQUEST => array(
                 self::LAT => $lat,
                 self::LON => $lon,
-                self::RADIUS => config('controls.venuesRange'),
-                "timestamp" => null,
+                self::RADIUS => ($radius) ? $radius : config('controls.venuesRange'),
+                "timestamp" => $this->dateToString($this->queryDate),
             )
         );
+        $this->response = $this->sendRequest($this->postData);
     }
 
 
@@ -61,6 +63,7 @@ class BusyVenues extends AbstractService
     protected function setPostDataDate($date)
     {
         $this->postData[self::REQUEST]['timestamp'] = $this->dateToString($date);
+        $this->setQueryDate($date);
     }
 
     protected function dateToString($date)
@@ -68,12 +71,12 @@ class BusyVenues extends AbstractService
         return date("Y-m-d 12:00:00", $date);
     }
 
-    public function getCount($queryDate, $resp)
+    public function getCount()
     {
         // init request parameters
-        $this->setPostDataDate($queryDate);
+//        $this->setPostDataDate($this->getQueryDate());
         // sending request
-        $response = $this->sendRequest($this->getPostData());
+        $response = $this->getResponse();
 
         $count = 0;
         if (isset($response[self::RESPONSE][self::STATUS]) && $response[self::RESPONSE][self::STATUS] == self::OK) {
@@ -84,28 +87,28 @@ class BusyVenues extends AbstractService
             }
         }
         return array(
-            'date' => $this->dateToString($queryDate),
+            'date' => date(Y_M_D,$this->getQueryDate()),
             'count' => $count,
         );
     }
 
-    public function getData($queryDate, $resp, $start, $end)
+    public function getData()
     {
-        $this->setPostDataDate($queryDate);
-        $post = $this->getPostData();
-        $cacheLat = $post[self::REQUEST][self::LAT];
-        $cacheLon = $post[self::REQUEST][self::LON];
-        $cacheTag = self::CACHE_TAG_VENUE_DATA; //config timeline twitter
-        $cacheKey = $cacheTag . "-" . $cacheLat . "-" . $cacheLon . "-" . $queryDate;
-        $cacheLimit = self::VENUE_CACHE_LIMIT;
+//        $this->setPostDataDate($this->getQueryDate());
+//        $post = $this->getPostData();
+//        $cacheLat = $post[self::REQUEST][self::LAT];
+//        $cacheLon = $post[self::REQUEST][self::LON];
+//        $cacheTag = self::CACHE_TAG_VENUE_DATA; //config timeline twitter
+//        $cacheKey = $cacheTag . "-" . $cacheLat . "-" . $cacheLon . "-" . $this->getQueryDate();
+//        $cacheLimit = self::VENUE_CACHE_LIMIT;
 
 //        if (Cache::has($cacheKey)) {
 //            return Cache::get($cacheKey);
 //        }
 
-        $cmp_date1 = date(Y_M_D, $queryDate);
+        $cmp_date1 = date(Y_M_D, $this->getQueryDate());
 
-        $response = $this->sendRequest($post);
+        $response = $this->getResponse();
 //        dd($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES]['4dd242367d8b4c6585e723c9']);
         $modifiedData = array();
         $filter = array();
@@ -127,6 +130,7 @@ class BusyVenues extends AbstractService
 //                    }
 //                }
                 $randint = rand(0, count($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]]) - 1);
+//                dd($randint);
                 // getting a random record from the time series
                 $timeSeries = array_values($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]])[$randint];
                 $originalDate = $timeSeries[KEY_DATE_STRING];
@@ -138,7 +142,6 @@ class BusyVenues extends AbstractService
                     $originalDate = $timeSeries[KEY_DATE_STRING];
 
                     $cmp_date2 = date(Y_M_D, strtotime($originalDate));
-
                     if ($entryInfo[self::ID] == $venue[self::ID]) {
                         if ($cmp_date1 == $cmp_date2) {
 
@@ -158,9 +161,9 @@ class BusyVenues extends AbstractService
             }
         }
 //        following code returns the response in format 'venues' => array()
-        if (count($modifiedData) > 0) {
-            Cache::put($cacheKey, $modifiedData, $cacheLimit);
-        }
+//        if (count($modifiedData) > 0) {
+//            Cache::put($cacheKey, $modifiedData, $cacheLimit);
+//        }
         return $modifiedData;
     }
 
@@ -215,17 +218,9 @@ class BusyVenues extends AbstractService
 
     }
 
-    public function getVenuesNearBy($radius)
+    public function getVenuesNearBy()
     {
-        /**
-         * TODO - change this date to config date
-         */
-        $this->setPostDataDate(strtotime('2015-07-01'));
-        $post = $this->getPostData();
-        $post[self::REQUEST][self::RADIUS] = $radius;
-
-
-        $response = $this->sendRequest($post);
+        $response = $this->getResponse();
         $venueData = array_values($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA]);
         $returnArr = array();
         foreach ($venueData as $venue) {

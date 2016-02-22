@@ -34,9 +34,9 @@ class NearbyVenues extends Controller
          * making radius an optional parameter
          */
         $radius = $request->has('radius') ? $request->get('radius') : 0.05;
-        $venues = new BusyVenues($lat,$lng);
+        $venues = new BusyVenues($lat,$lng,'2015-07-01',$radius);
 
-        $message = $venues->getVenuesNearBy($radius);
+        $message = $venues->getVenuesNearBy();
         if(count($message) == 0 )
         {
             $response['status'] = 'failed';

@@ -16,16 +16,41 @@ use Urban\Models\TwitterTimeline;
 use Urban\Models\TrainStations;
 use Urban\Models\DelaysTimeSeries;
 
+use Cache;
+
+define("DATEASID", "ha");
+define("USEDIFF", false);
+
+
 class SearchHelper
 {
     public function getResultsForEvent($query, Request $request)
     {
+
+        $cacheTag = 'fullResponse'; //config timeline twitter
+
+        $cacheKey = '';
+
+        $cacheLimit = 15;
+
+        $requestParameters = array_values($request->all());
+        array_pop($requestParameters);
+
+        foreach ($requestParameters as $value) {
+            $cacheKey.=$value;
+        }
+
+//        dd($cacheKey);
+//        if (Cache::has($cacheKey)) {
+//            return Cache::get($cacheKey);
+//        }
+
         $date = $request->input('date');
         $query = ($query) ? $query : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
-        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
+//        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
 
-        $twit = new Twitter($query);
+        $twit = new Twitter($query,$date);
 
 
         $lat = $request->input('lat');
@@ -50,7 +75,7 @@ class SearchHelper
         */
 
 
-        $venues = new BusyVenues($lat, $lng);
+        $venues = new BusyVenues($lat, $lng, $date, null);
 
         /**
          * sorting the array
@@ -58,10 +83,10 @@ class SearchHelper
 
         $searchToken = $request->input('searchToken');
 
-        $mergeQueries = array_merge((array)$twit->getData(strtotime($date),null, 0, 10),
+        $mergeQueries = array_merge((array)$twit->getData(),
             ($searchToken && $searchToken === 'venue') ?
-                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date),null, 0, 10),
-            (array)$twitTimeline->getData(strtotime($date), null, 0, 10)
+                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData()//,
+//            (array)$twitTimeline->getData(strtotime($date), null, 0, 10)
         );
         usort($mergeQueries, array($this, 'date_compare'));
 
@@ -72,9 +97,13 @@ class SearchHelper
         /* getting sections */
         $response['sections'] = $this->generateSections($mergeQueries);
 
-        $twitterInfo = $twit->getInfo(strtotime($date));
+        $twitterInfo = $twit->getInfo();
         if (count($twitterInfo) > 0) {
             $response['info']['twitter'] = $twitterInfo;
+        }
+
+        if (count($response['sections']) > 0) {
+            Cache::put($cacheKey, $response, $cacheLimit);
         }
 
         return $response;

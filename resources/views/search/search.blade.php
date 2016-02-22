@@ -30,16 +30,18 @@
 
 @section('content')
     {{--@foreach (Input::old() as $key=>$error)--}}
-{{--        {{ head($errors->get('date')) }}<br>--}}
-        {{--{{Input::get('date')}}<br>--}}
+    {{--        {{ head($errors->get('date')) }}<br>--}}
+    {{--{{Input::get('date')}}<br>--}}
     {{--@endforeach--}}
     <div class="container">
-        @foreach ($data['elements'] as $element)
-            @include('templates.partials.searchbox')
-        @endforeach
+        <div style="background-color: #e9eaed; padding: 10px;">
+            @foreach ($data['elements'] as $element)
+                @include('templates.partials.searchbox')
+            @endforeach
+        </div>
 
-    @include('templates.partials.scrollTop')
+        @include('templates.partials.scrollTop')
 
-    @yield('results')
+        @yield('results')
     </div>
 @stop

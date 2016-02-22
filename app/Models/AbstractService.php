@@ -25,11 +25,27 @@ abstract class AbstractService
 
     protected $postData;
 
-    protected $responseData;
+    public $queryDate;
+
+    public $response;
+
+    public function getResponse()
+    {
+        return $this->response;
+    }
 
     protected function getURL()
     {
         return $this->url;
+    }
+
+    public function getQueryDate ()
+    {
+        return $this->queryDate;
+    }
+
+    public function setQueryDate($date) {
+        $this->queryDate = $date;
     }
 
     abstract protected function setResponse($data);
@@ -38,9 +54,9 @@ abstract class AbstractService
 
     abstract protected function dateToString($date);
 
-    abstract public function getCount($queryDate, $resp);
+    abstract public function getCount();
 
-    abstract public function getData($queryDate, $resp, $start, $end);
+    abstract public function getData();
 
     // Common method
     public function sendRequest($arrayToSend)
@@ -72,15 +88,12 @@ abstract class AbstractService
         return $this->postData;
     }
 
-    public function getResponse()
-    {
-        return $this->responseData;
-    }
+
 
     public function getCountForRange($startDate, $endDate)
     {
         if ($startDate == $endDate) {
-            $response = $this->getCount($startDate,null);
+            $response = $this->getCount();
         } else {
             if ($startDate > $endDate) {
                 $start = $endDate;
@@ -89,7 +102,9 @@ abstract class AbstractService
             }
             $response = array();
             while ($startDate <= $endDate) {
-                array_push($response, $this->getCount($startDate, null));
+                $this->setPostDataDate($startDate);
+                $this->response = $this->sendRequest($this->getPostData());
+                array_push($response, $this->getCount());
                 $startDate = strtotime('+1 days', $startDate);
             }
         }

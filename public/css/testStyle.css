@@ -1,11 +1,12 @@
 .timeline {
-    /*background: #e7ebf2;*/
+    background-color: #e9eaed;
+    padding: 15px;
     font-family: "lucida grande", tahoma, verdana, arial, sans-serif !important;
     position: relative;
     margin: 0px auto;
-    padding: 0px;
+    /*padding: 0px;*/
     width: 100%;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 .timeline a.timeline_spine {
@@ -15,7 +16,7 @@
     height: 100%;
     left: 50%;
     position: absolute;
-    top: 0px;
+    /*top: 0px;*/
 }
 
 .timeline .section {
@@ -230,7 +231,7 @@
 }
 
 .timeline ol.timeline_nav li a {
-    color: #c7d0e3;
+    color: #b7c0d1;
     font-size: 11px;
     font-size: 0.786em;
     text-decoration: none;

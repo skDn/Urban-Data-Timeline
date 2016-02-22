@@ -90,5 +90,11 @@ function getDate(elementID) {
     if (thisDay === 'Day' || thisMonth === 'Month' || thisYear === 'Year') {
         return undefined;
     }
+    if(thisMonth.length == 1) {
+        thisMonth = '0' + thisMonth;
+    }
+    if(thisDay.length == 1) {
+        thisDay = '0' + thisDay;
+    }
     return thisYear + '-' + thisMonth + '-' + thisDay;
 }

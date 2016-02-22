@@ -23,7 +23,7 @@ class ComparisonController extends Controller
         $secondElement = array(
             'id' => $this->secondID,
         );
-        return view('comparison.comparison')->with('data',
+        return view('comparison.comparison')->with('comparisonData',
             array(
                 'elements' => array(
                     'first' => $firstElement,

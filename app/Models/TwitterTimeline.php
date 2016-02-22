@@ -21,10 +21,11 @@ use Thujohn\Twitter\Facades\Twitter;
 
 class TwitterTimeline extends AbstractService
 {
-    function __construct($q)
+    function __construct($q, $date)
     {
         // getting username
         $this->query = $q;
+        $this->queryDate = $date;
         $this->responseData = array(
             "twitterTimeline" => array(),
         );
@@ -50,16 +51,16 @@ class TwitterTimeline extends AbstractService
         // TODO: Implement dateToString() method.
     }
 
-    public function getCount($queryDate, $resp)
+    public function getCount()
     {
         $tweets = $this->sendRequest($this->query);
         return count($tweets);
     }
 
-    public function getData($queryDate, $resp, $start, $end)
+    public function getData()
     {
         // TODO:  queryDate is not used. Convert everyting to DateTime
-        $qDate = new DateTime(date(DATEASCONTENT, $queryDate));
+        $qDate = new DateTime(date(DATEASCONTENT, $this->getQueryDate()));
 
 
         $tweets = $this->sendRequest($this->query);

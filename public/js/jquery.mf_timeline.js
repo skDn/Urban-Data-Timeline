@@ -2,14 +2,18 @@ $(document).ready(function () {
     // $('.timeline .timeline_nav').stickyfloat({duration:400});
     $('html, body').animate({scrollTop: ($('#' + googleChart).offset().top) - 150}, 1500);
 
-    $('.timeline .section').each(function () {
-        $(this).afterScroll(function () {
-            // After we have scolled past the top
-            var year = $(this).attr('id');
-            $('ol.timeline_nav li').removeClass('current');
-            $('ol.timeline_nav li#menu_year_' + year).addClass('current');
+
+    $( document ).ajaxComplete(function( event, xhr, settings ) {
+        $('.timeline .section').each(function () {
+            $(this).afterScroll(function () {
+                // After we have scolled past the top
+                var year = $(this).attr('id');
+                $('ol.timeline_nav li').removeClass('current');
+                $('ol.timeline_nav li#menu_year_' + year).addClass('current');
+            });
         });
     });
+
 
     var $timeline_block = $('.section');
     var $timeline_elements = $('.event');

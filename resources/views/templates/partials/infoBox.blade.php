@@ -10,12 +10,12 @@
 
         td, th {
             text-align: center;
-            border: 2px solid #ddd;
+            border: 2px solid #c7c7c7;
             border-top-width: 0;
         }
 
         th {
-            background-color: #ddd;
+            background-color: #c7c7c7;
         }
 
     </style>

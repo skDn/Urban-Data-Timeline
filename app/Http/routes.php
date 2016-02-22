@@ -41,7 +41,7 @@ Route::group(['predix' => 'user'], function(){
     }
 });
 
-Route::get('/event/search/count', [
+Route::get('/rest/count', [
     'uses' => '\Urban\Http\Controllers\CountController@getUserCount',
     'as' => 'search.count',
 ]);

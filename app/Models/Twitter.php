@@ -6,91 +6,61 @@ use Cache;
 
 class Twitter extends AbstractService
 {
-    function __construct($q)
+//    private $responseData;
+
+    function __construct($q, $date)
     {
         $this->query = $q;
+        $this->queryDate = strtotime($date);
         $this->url = config('services.twitter.url');
         $this->postData = array(
             "request" => array(
                 "query" => $this->query,
-                "date" => null,
+                "date" => $date,
             )
         );
-        $this->responseData = array(
-            "twitter" => null,
-        );
+        $this->response = $this->sendRequest($this->getPostData());
     }
 
-    public function getCount($queryDate, $resp)
+    public function getCount()
     {
-        // init request parameters
-        $this->setPostDataDate($queryDate);
-        // sending request
-        $response = ($resp) ? $resp : $this->sendRequest($this->getPostData());
-        //$response = $this->sendRequest($this->getPostData());
+        $response = $this->getResponse();
 
-
-        $count = 0;
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            $count = $response['response']['serviceJson']['f_tweets'];
+            return array(
+                'date' => $response['response']['date'],
+                'count' => $response['response']['serviceJson']['f_tweets']
+            );
         }
-        else {
-            return null;
-        }
-        $returnArray = array(
-            'date' => $this->dateToString($queryDate),
-            'count' => $count,
-        );
+        return null;
 
-        return $returnArray;
     }
 
-    public function getData($queryDate, $resp, $start, $end)
+    public function getData()
     {
-        $this->setPostDataDate($queryDate);
-        $postData = $this->getPostData();
-        $cacheTag = 'twitterService'; //config timeline twitter
-        $query = $postData['request']['query'];
-        $cacheKey = $cacheTag . "-" . $query . "-" . $queryDate;
-        $cacheLimit = 15;
 
-
-//        if (Cache::has($cacheKey)) {
-//            return Cache::get($cacheKey);
-//        }
-
-        $response = ($resp) ? $resp : $this->sendRequest($this->getPostData());
+        $response = $this->getResponse();
         //TODO: implement infinite scrolling
-        $sliced = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
-            $sliced = array_slice($response['response']['serviceJson']['users'], $start, $end, true);
-        }
-        // creating the return array
-        // adding random timestamp to each tweet
-        $returnArr = array();
-        if (count($sliced) > 0) {
-            foreach ($sliced as $arr) {
+            $returnArr = array();
+            foreach ($response['response']['serviceJson']['users'] as $arr) {
                 array_push($returnArr, $arr + array(
-                        'dateString' => $this->getRandomTimeOfDay($queryDate),
+                        'dateString' => $this->getRandomTimeOfDay($this->getQueryDate()),
                         'class' => 'tweet',
                     ));
             }
+            return $returnArr;
         }
-        if (count($returnArr) > 0) {
-            Cache::put($cacheKey, $returnArr, $cacheLimit);
-        }
-        return $returnArr;
+        return null;
     }
 
-    public function getInfo($queryDate)
+    public function getInfo()
     {
-        $this->setPostDataDate($queryDate);
-        $response = $this->sendRequest($this->getPostData());
-        $returnArr = array();
+        $response = $this->getResponse();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $popularHTags = array_slice($response['response']['serviceJson']['hashtags'], 0, 5, true);
             array_shift($popularHTags);
-            $returnArr = array(
+            return array(
                 "nTweets" => $response['response']['serviceJson']['f_tweets'],
                 "popularHTags" => $popularHTags,
                 "nTweetsForDay" => $response['response']['serviceJson']['tweets'],
@@ -99,7 +69,7 @@ class Twitter extends AbstractService
                 "query" => $response['response']['query']
             );
         }
-        return $returnArr;
+        return null;
     }
 
     protected function setPostDataDate($date)

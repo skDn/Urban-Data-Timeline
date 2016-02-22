@@ -26,3 +26,5 @@ var secondQuery = '#query_Second';
 var mapDiv = 'googleMap';
 var latInput = 'latInput';
 var lngInput = 'lonInput';
+
+var countRangePlusMinus = 2;

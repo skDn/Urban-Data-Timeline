@@ -38,37 +38,38 @@ function convertDataToChartArray(data) {
     var keys = [];
 
     var dictionary = {};
+    for (var q in data)
+        for (var query in data[q]) {
 
-    for (var query in data) {
-
-        for (var partial in data[query]) {
-            // yesscotland
-            var sub_key = partial;
-            // push yesscotland
-            header.push(partial);
-            var sub_val = data[query][partial];
-
-            for (var sub in data[query][partial]) {
-                if (dictionary[sub] === undefined) {
-                    dictionary[sub] = {};
+            for (var partial in data[q][query]) {
+                // yesscotland
+                var sub_key = partial;
+                // push yesscotland
+                if (header.indexOf(partial) < 0) {
+                    header.push(partial);
                 }
-                // twitter
-                sub_key = sub;
-                sub_val = data[query][partial][sub];
-                for (var sub1 in data[query][partial][sub]) {
-                    if (dictionary[sub][data[query][partial][sub][sub1]['date']] === undefined) {
-                        dictionary[sub][data[query][partial][sub][sub1]['date']] = [];
+                var sub_val = data[q][query][partial];
+
+                for (var sub in data[q][query][partial]) {
+                    if (dictionary[sub] === undefined) {
+                        dictionary[sub] = {};
                     }
-                    dictionary[sub][data[query][partial][sub][sub1]['date']].push(data[query][partial][sub][sub1]['count']);
+                    // twitter
+                    sub_key = sub;
+                    sub_val = data[q][query][partial][sub];
+                    console.log(data[q][query][partial][sub]['date']);
+                    if (dictionary[sub][data[q][query][partial][sub]['date']] === undefined) {
+                        dictionary[sub][data[q][query][partial][sub]['date']] = [];
+                    }
+                    dictionary[sub][data[q][query][partial][sub]['date']].push(data[q][query][partial][sub]['count']);
 
-                    sub_val = data[query][partial][sub][sub1];
+                    sub_val = data[q][query][partial][sub];
                 }
+
             }
 
+
         }
-
-
-    }
     var $div = $('<div class="center-block col-lg-8 btn-group btn-group-justified" style="margin-top: 15px;" role="group"></div>');
     for (var k in dictionary) {
         keys.push(k);
@@ -98,6 +99,12 @@ function drawChart() {
     chart.draw(dataConv, options);
 }
 
+function compareDates(date1, date2) {
+    return date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear();
+}
+
 
 $(document).ready(function () {
     function getSearchSpace() {
@@ -123,29 +130,58 @@ $(document).ready(function () {
 
     function foo(queries) {
         var resp = [];
+        var queryResponses = [];
+        var counter = 0;
         var percentage;
         var loadingcontainer = $('#loading-container');
+        // configuring date range for getting the count
+        var queryDate = queries[0]['date'];
+        var startD = new Date(queryDate);
+        var month;
+        startD.setDate(startD.getDate() - countRangePlusMinus);
+
+        var endD = new Date(queryDate);
+        endD.setDate(endD.getDate() + countRangePlusMinus + 1);
+
         for (var i = 0; i < queries.length; i++) {
-            $.ajax({
-                type: "GET",
-                url: "search/count",
-                async: 'false',
-                data: queries[i],
-                dataType: 'json',
-                success: function (res) {
-                    resp.push(res);
-                    // changing loading bar width
-                    percentage = (resp.length * 100) / queries.length;
-                    loadingcontainer.children().css("width", percentage + "%");
-                    loadingcontainer.children().text(percentage + "%");
-                    //
-                    if (resp.length == queries.length) {
-                        dataToDraw = resp;
-                        drawChart();
+            queryResponses = [];
+            do {
+                // setting range to 1
+                queries[i]['range'] = 1;
+                month = (startD.getMonth() + 1 < 10) ? '0' + (startD.getMonth() + 1) : startD.getMonth() + 1;
+                queries[i]['date'] = startD.getFullYear() + '-' + month + '-' + startD.getDate();
+                $.ajax({
+                    type: "GET",
+                    url: "../rest/count",
+                    async: 'false',
+                    data: queries[i],
+                    dataType: 'json',
+                    success: function (res) {
+                        queryResponses.push(res);
+                        counter++;
+                        if (queryResponses.length === 2 * countRangePlusMinus + 1) {
+                            resp.push(queryResponses);
+                            queryResponses = [];
+                        }
+                        // changing loading bar width
+                        percentage = (counter * 100) / (queries.length * (2 * countRangePlusMinus + 1));
+                        loadingcontainer.children().css("width", percentage + "%");
+                        loadingcontainer.children().text(percentage + "%");
+                        //
+                        if (percentage === 100) {
+                            dataToDraw = resp;
+                            //convertDataToChartArray(resp);
+                            drawChart();
+                        }
                     }
-                }
-            });
+                });
+                // incrementing the date
+                startD.setDate(startD.getDate() + 1);
+            } while (!compareDates(startD, endD));
+            startD = new Date(queryDate);
+            startD.setDate(startD.getDate() - countRangePlusMinus);
         }
+
     }
 
     foo(getSearchSpace());

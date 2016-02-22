@@ -16,26 +16,32 @@ class CountController extends Controller
 {
     public function getUserCount(Request $request)
     {
+
+        // add validator
         $query = $request->input('query');
         if (!$query) {
             $query = $request->input('queryFirst');
         }
-        $date = strtotime($request->input('date'));
+        $date = $request->input('date');
 
-        $range = floor(config('controls.countReportRange') / 2);
+        $rangeFromRequest = $request->input('range');
 
-        $dateStart = strtotime('-' . $range . ' days', $date);
-        $dateEnd = strtotime('+' . $range . ' days', $date);
+        $range = ($rangeFromRequest) ? $rangeFromRequest : floor(config('controls.countReportRange') / 2);
 
-        if (!$query) {
-            return redirect()->route('event');
+        if ($range == 1) {
+            $dateStart = $dateEnd = strtotime($date);
+        } else {
+            $range /=2;
+            $range = floor($range);
+            $dateStart = strtotime('-' . $range . ' days', strtotime($date));
+            $dateEnd = strtotime('+' . $range . ' days', strtotime($date));
         }
 
-        $twit = new Twitter($query);
+        $twit = new Twitter($query, $date);
 
         $lat = $request->input('lat');
         $lng = $request->input('lng');
-        $venues = new BusyVenues($lat, $lng);
+        $venues = new BusyVenues($lat, $lng, $date, null);
 
         $returnData = array(
             $query => array(
