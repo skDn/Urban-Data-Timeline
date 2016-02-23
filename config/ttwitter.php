@@ -14,8 +14,8 @@ return [
 	'REQUEST_TOKEN_URL'   => 'https://api.twitter.com/oauth/request_token',
 	'USE_SSL'             => true,
 
-	'CONSUMER_KEY'        => function_exists('env') ? env('TWITTER_CONSUMER_KEY', 'awpkgjnYx7f69Ye8LRW7LPg0K') : '',
-	'CONSUMER_SECRET'     => function_exists('env') ? env('TWITTER_CONSUMER_SECRET', 'iwYtjbMuFVOOWpfdnHYq8OpLBQMvElXSlsUGgUrSduNcE3MdvI') : '',
-	'ACCESS_TOKEN'        => function_exists('env') ? env('TWITTER_ACCESS_TOKEN', '3762104783-CmyoLwNXlnH9hGruJVx43aP7035I9YuKU7mofED') : '',
-	'ACCESS_TOKEN_SECRET' => function_exists('env') ? env('TWITTER_ACCESS_TOKEN_SECRET', 'jnxHvvtSSYE2ECi9mg3AaaSZ1d8MKZbrWZWg6HTG3LCL1') : '',
+	'CONSUMER_KEY'        => function_exists('env') ? env('TWITTER_CONSUMER_KEY', '1zi1F3Df6gCihKTEtZoCQyUb6') : '',
+	'CONSUMER_SECRET'     => function_exists('env') ? env('TWITTER_CONSUMER_SECRET', 'gnIyfkzM4YDP8DB3vA1EsgsjL1dzDpVBEZmQorAVNR60dv7y21') : '',
+	'ACCESS_TOKEN'        => function_exists('env') ? env('TWITTER_ACCESS_TOKEN', '3762104783-yJxf20PBpOEdjVHOotJBwPuMOAUn0asenlCE3Wr') : '',
+	'ACCESS_TOKEN_SECRET' => function_exists('env') ? env('TWITTER_ACCESS_TOKEN_SECRET', 'aEOV5XHhPZiltMasjkIiZeqb90rFskq8UgP5lWkYNpbIy') : '',
 ];

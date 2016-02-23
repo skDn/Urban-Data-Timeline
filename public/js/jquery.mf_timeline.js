@@ -1,37 +1,37 @@
-function animateEvenets() {
-    $(window).on('scroll', function () {
-        $timeline_block.each(function () {
-            $timeline_elements.each(function () {
-                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9 && $(this).hasClass('is-hidden')) {
-                    $(this).removeClass('is-hidden').addClass('animated zoomIn');
-                }
-            });
-        });
-    });
-}
+//function animateEvenets() {
+//    $(window).on('scroll', function () {
+//        $timeline_block.each(function () {
+//            $timeline_elements.each(function () {
+//                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9 && $(this).hasClass('is-hidden')) {
+//                    $(this).removeClass('is-hidden').addClass('animated zoomIn');
+//                }
+//            });
+//        });
+//    });
+//}
 $(document).ready(function () {
     // $('.timeline .timeline_nav').stickyfloat({duration:400});
     $('html, body').animate({scrollTop: ($('#' + googleChart).offset().top) - 150}, 1500);
 
 
     //hide timeline blocks which are outside the viewport
-    function makeNonVisibleEventsHidden() {
-        $timeline_block.each(function () {
-            $timeline_elements.each(function () {
-                if ($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
-                    if (!$(this).hasClass('is-hidden')) {
-                        $(this).addClass('is-hidden');
-                    }
-                    if (!$(this).hasClass('loading')) {
-                        console.log('here');
-                    }
+    //function makeNonVisibleEventsHidden() {
+    //    $timeline_block.each(function () {
+    //        $timeline_elements.each(function () {
+    //            if ($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
+    //                if (!$(this).hasClass('is-hidden')) {
+    //                    $(this).addClass('is-hidden');
+    //                }
+    //                if (!$(this).hasClass('loading')) {
+    //                    console.log('here');
+    //                }
+    //
+    //            }
+    //        });
+    //    });
+    //}
 
-                }
-            });
-        });
-    }
-
-    makeNonVisibleEventsHidden();
+    //makeNonVisibleEventsHidden();
 
     $('document').on('event:success', function () {
         console.log('good event');
@@ -45,7 +45,7 @@ $(document).ready(function () {
 
     //$timeline_nav.addClass('is-hidden');
     //$infoBox.addClass('is-hidden');
-    animateEvenets();
+    //animateEvenets();
     //on scolling, show/animate timeline blocks when enter the viewport
     $(window).on('scroll', function () {
 

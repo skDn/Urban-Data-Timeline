@@ -27,7 +27,7 @@ var mapDiv = 'googleMap';
 var latInput = 'latInput';
 var lngInput = 'lonInput';
 
-var countRangePlusMinus = 2;
+var countRangePlusMinus = 1;
 
 
 

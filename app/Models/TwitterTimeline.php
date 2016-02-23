@@ -10,9 +10,9 @@ namespace Urban\Models;
 
 
 //define("DATEASID",     "M-d-hA");
-define("DATEASID", "ha");
+//define("DATEASID", "ha");
 define("DATEASCONTENT", "Y-m-d h:i");
-define("USEDIFF", false);
+//define("USEDIFF", false);
 
 use Cache;
 use DateTime as DateTime;
@@ -25,7 +25,7 @@ class TwitterTimeline extends AbstractService
     {
         // getting username
         $this->query = $q;
-        $this->queryDate = $date;
+        $this->queryDate = strtotime($date);
         $this->responseData = array(
             "twitterTimeline" => array(),
         );
@@ -62,23 +62,25 @@ class TwitterTimeline extends AbstractService
         // TODO:  queryDate is not used. Convert everyting to DateTime
         $qDate = new DateTime(date(DATEASCONTENT, $this->getQueryDate()));
 
-
         $tweets = $this->sendRequest($this->query);
 
         foreach ($tweets as $tweet) {
 
             $date = new DateTime($tweet->created_at);
+
             $interval = $qDate->diff($date);
             $date = $date->sub(new \DateInterval($interval->format('P%aD')));
-
+            // TODO: fix this
+//            $date = $date->sub(new \DateInterval('P1D'));
             $tweet = array(
                 'class' => 'tweetFromTimeline',
                 'name' => $tweet->user->name,
                 'screen_name' => $tweet->user->screen_name,
-                'text' => Twitter::linkify($tweet->text),
+//                'text' => Twitter::linkify($tweet->text),
+                'text' => $tweet->text,
                 'dateString' => $date->format(DATEASCONTENT),
                 /* trying to smooth the distance between two events */
-                'diff' => null,
+//                'diff' => null,
                 'original' => Twitter::linkTweet($tweet),
             );
             array_push($this->responseData['twitterTimeline'], $tweet);

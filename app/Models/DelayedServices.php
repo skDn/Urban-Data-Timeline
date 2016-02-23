@@ -39,7 +39,7 @@ class DelayedServices extends AbstractService
         // TODO: Implement dateToString() method.
     }
 
-    public function getCount($queryDate, $resp)
+    public function getCount()
     {
         // TODO: Implement getCount() method.
     }
@@ -49,7 +49,7 @@ class DelayedServices extends AbstractService
         // TODO: Implement getCountForRange() method.
     }
 
-    public function getData($queryDate, $resp, $start, $end)
+    public function getData()
     {
 
     }
