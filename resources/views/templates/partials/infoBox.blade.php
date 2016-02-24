@@ -34,7 +34,7 @@
         <table class="table table-condensed" style="margin-bottom: 0">
             <thead>
             <tr>
-                <th><i class="fa fa-search fa-1"></i> Query</th>
+                <th><i class="fa fa-search fa-1"></i> Hashtag</th>
                 <th><i class="fa fa-calendar fa-1"></i> Date</th>
                 <th><i class="fa fa-twitter fa-1"></i> Twitter Users</th>
                 <th><i class="fa fa-twitter fa-1"></i> All Tweets for query</th>
