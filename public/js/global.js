@@ -34,6 +34,8 @@ var countRangePlusMinus = 1;
 var $timeline_block = $('.section');
 var $timeline_elements = $('.event');
 
+//var $timeline_block_first = ($'#queryFirst .section')
+
 
 var $timeline_nav = $('.timeline_nav');
 var $infoBox = $('.infoBox');

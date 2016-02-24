@@ -53,7 +53,7 @@ const eventStart = '<li class="event">' +
     '<i class="event_pointer"></i>' +
 
     '<div class="event_container">';
-const eventEnd = '</li>' + '</div>';
+const eventEnd = '</div>' + '</li>';
 
 $(function () {
     var prevSection;
@@ -65,18 +65,21 @@ $(function () {
             counter++;
         }
     });
-    $(window).on('scroll', function () {
-        $timeline_block.each(function () {
+    $(document).on('scroll', function () {
+        $timeline_block.each(function (event) {
             //$timeline_elements.each(function () {
             if (counter >= countRangePlusMinus + 1) {
                 if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9) {
-                    console.log($(this).attr('id'));
+                    //console.log($(this).attr('id'));
                     var sectionID = $(this).attr('id');
                     if (prevSection !== sectionID && $.inArray(sectionID, listOfFilledSections) === -1) {
                         listOfFilledSections.push(sectionID);
+                        console.log(sectionID);
                         /// substitude with ajax calls;
                         ajaxCall(sectionID);
-
+                        //marker = $('#' + sectionID + ' ol.events');
+                        //data = getInputs(sectionID);
+                        //marker.load('/infinite/single', data);
                     }
                     prevSection = sectionID;
                 }
@@ -96,8 +99,26 @@ $(function () {
                 dict[$(this).attr('name')] = $(this).val()
             }
         });
+        var searchToken = getParameterByName('searchToken');
+        var twitterAccount = getParameterByName('twitterAccount');
+        if (twitterAccount !== null) {
+            dict['twitterAccount'] = twitterAccount;
+        }
+        if (searchToken !== null) {
+            dict['searchToken'] = searchToken;
+        }
         dict['sectionID'] = id;
         return dict;
+    }
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
     function ajaxCall(id) {
@@ -216,7 +237,7 @@ $(function () {
             '</div>' +
             '   <!-- end of event title -->' +
             '<div class="event_content">' +
-            '<p>Count:' + event.count + '</p>' +
+            '<p>' + event.text + '</p>' +
             '</div>' +
             '  <!-- event timestamp -->' +
             '<span class="next_to_title"><i' +
