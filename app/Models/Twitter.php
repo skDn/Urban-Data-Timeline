@@ -20,6 +20,7 @@ class Twitter extends AbstractService
             )
         );
         $this->response = $this->sendRequest($this->getPostData());
+//        dd($this->response);
     }
 
     public function getCount()
@@ -43,10 +44,18 @@ class Twitter extends AbstractService
         //TODO: implement infinite scrolling
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $returnArr = array();
-            foreach ($response['response']['serviceJson']['users'] as $arr) {
-                array_push($returnArr, $arr + array(
+//            foreach ($response['response']['serviceJson']['users'] as $arr) {
+//                array_push($returnArr, $arr + array(
+//                        'dateString' => $this->getRandomTimeOfDay($this->getQueryDate()),
+//                        'class' => 'tweet',
+//                    ));
+//            }
+            foreach ($response['response']['serviceJson']['tweet'] as $arr) {
+                array_push($returnArr, array(
                         'dateString' => $this->getRandomTimeOfDay($this->getQueryDate()),
                         'class' => 'tweet',
+                        'screen_name' => $this->getQuery(),
+                        'text' => $arr['text'],
                     ));
             }
             return $returnArr;
