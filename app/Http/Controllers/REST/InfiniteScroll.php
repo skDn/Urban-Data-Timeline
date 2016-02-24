@@ -15,10 +15,11 @@ use Cache;
 
 class InfiniteScroll extends Controller
 {
-    public function getSectionToPopulate(Request $request) {
+    public function getSectionToPopulate(Request $request)
+    {
 
-        //return json_encode(array('value'=>'test'));
-        $cacheTag = 'fullResponse'; //config timeline twitter
+//        return json_encode(array('value'=>'test'));
+//        $cacheTag = 'fullResponse'; //config timeline twitter
 
         $cacheKey = '';
 
@@ -27,16 +28,13 @@ class InfiniteScroll extends Controller
         array_pop($requestParameters);
 
         foreach ($requestParameters as $value) {
-            $cacheKey.=$value;
+            $cacheKey .= $value;
         }
-//        dd($cacheKey);
 
         $fullResponse = Cache::get($cacheKey);
 
-//        dd($fullResponse);
         foreach ($fullResponse['sections'] as $section) {
             if ($section['id'] === $id) {
-//                dd($section['events']);
                 return json_encode($section['events']);
             }
         }

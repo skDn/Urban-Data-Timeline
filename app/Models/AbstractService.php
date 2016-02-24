@@ -8,57 +8,94 @@
 namespace Urban\Models;
 
 
+/**
+ * const storing the array key for class
+ */
 const KEY_CLASS = 'class';
 
+/**
+ * const storing the class of a venue
+ */
 const KEY_VENUE = 'venue';
 
+/**
+ * const storing the array key for the date.
+ */
 const KEY_DATE_STRING = 'dateString';
 
+/**
+ * const storing the expression that will convert a string
+ * to specific format.
+ */
 const Y_M_D = "Y-m-d";
 
+/**
+ * Class AbstractService
+ * @package Urban\Models
+ */
 abstract class AbstractService
 {
 
+    /**
+     * @var String
+     */
     protected $url;
 
+    /**
+     * @var String
+     */
     protected $query;
 
+    /**
+     * @var array
+     */
     protected $postData;
 
+    /**
+     * @var int
+     */
     public $queryDate;
 
+    /**
+     * @var array
+     */
     public $response;
 
-    public function getResponse()
-    {
-        return $this->response;
-    }
 
-    protected function getURL()
-    {
-        return $this->url;
-    }
-
-    public function getQueryDate ()
-    {
-        return $this->queryDate;
-    }
-
-    public function setQueryDate($date) {
-        $this->queryDate = $date;
-    }
-
+    /**
+     * @param $data
+     * @return mixed
+     */
     abstract protected function setResponse($data);
 
+    /**
+     * @param $date
+     * @return mixed
+     */
     abstract protected function setPostDataDate($date);
 
+    /**
+     * @param $date
+     * @return mixed
+     */
     abstract protected function dateToString($date);
 
+    /**
+     * @return array
+     */
     abstract public function getCount();
 
+    /**
+     * @return array
+     */
     abstract public function getData();
 
+
     // Common method
+    /**
+     * @param $arrayToSend
+     * @return mixed|string
+     */
     public function sendRequest($arrayToSend)
     {
 
@@ -83,13 +120,20 @@ abstract class AbstractService
         return $responseData;
     }
 
+    /**
+     * @return mixed
+     */
     protected function getPostData()
     {
         return $this->postData;
     }
 
 
-
+    /**
+     * @param $startDate
+     * @param $endDate
+     * @return array|mixed
+     */
     public function getCountForRange($startDate, $endDate)
     {
         if ($startDate == $endDate) {
@@ -111,6 +155,10 @@ abstract class AbstractService
         return $response;
     }
 
+    /**
+     * @param $date
+     * @return bool|string
+     */
     protected function getRandomTimeOfDay($date)
     {
         $startDate = $date;
@@ -120,4 +168,45 @@ abstract class AbstractService
 
         return date('Y-m-d H:i', $randDate);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getURL()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getQueryDate()
+    {
+        return $this->queryDate;
+    }
+
+    /**
+     * @param $date
+     */
+    public function setQueryDate($date)
+    {
+        $this->queryDate = $date;
+    }
+
 }

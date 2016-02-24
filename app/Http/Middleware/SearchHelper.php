@@ -7,16 +7,12 @@
  */
 namespace Urban\Http\Middleware;
 
+use Cache;
 use DateTime as DateTime;
 use Illuminate\Http\Request;
 use Urban\Models\BusyVenues;
-use Urban\Models\DelayedServices;
 use Urban\Models\Twitter;
 use Urban\Models\TwitterTimeline;
-use Urban\Models\TrainStations;
-use Urban\Models\DelaysTimeSeries;
-
-use Cache;
 
 define("DATEASID", "ha");
 define("USEDIFF", false);
@@ -37,7 +33,7 @@ class SearchHelper
         array_pop($requestParameters);
 
         foreach ($requestParameters as $value) {
-            $cacheKey.=$value;
+            $cacheKey .= $value;
         }
 
 //        dd($cacheKey);
@@ -50,7 +46,7 @@ class SearchHelper
         $twitterAccount = $request->input('twitterAccount');
         $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount, $date) : new TwitterTimeline($query, $date);
 //        dd($twitTimeline->getData());
-        $twit = new Twitter($query,$date);
+        $twit = new Twitter($query, $date);
 
 
         $lat = $request->input('lat');
@@ -73,7 +69,6 @@ class SearchHelper
             }
         }
         */
-
 
         $venues = new BusyVenues($lat, $lng, $date, null);
 
@@ -102,10 +97,9 @@ class SearchHelper
             $response['info']['twitter'] = $twitterInfo;
         }
 
-        if (count($response['sections']) > 0) {
+        if (count($response['sections']) > 0) { //&& !is_null(Cache::get($cacheKey))) {
             Cache::put($cacheKey, $response, $cacheLimit);
         }
-//        dd(array_shift($response['sections']));
 
         return $response;
     }

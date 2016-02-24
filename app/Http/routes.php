@@ -60,3 +60,7 @@ Route::get('/infinite/single', [
     'uses' => '\Urban\Http\Controllers\REST\InfiniteScroll@getSectionToPopulate',
     'as' => 'infinite.getSectionToPopulate',
 ]);
+//Route::post('/infinite/single', [
+//    'uses' => '\Urban\Http\Controllers\REST\InfiniteScroll@getSectionToPopulateTest',
+//    'as' => 'infinite.getSectionToPopulate',
+//]);
