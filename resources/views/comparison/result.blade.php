@@ -17,7 +17,6 @@
 
 @section('scripts')
     @parent
-
     {!! Html::script('js/infinite.js') !!}
     {!! Html::script('js/jquery.afterscroll.js')  !!}
     {!! Html::script('js/jquery.mf_timeline.js')  !!}
@@ -31,7 +30,7 @@
 
     @else
 
-        <div class="col-lg-12" style="margin-bottom: 15px">
+        <div class="formatter">
             @include('templates.partials.lineGraph')
         </div>
         @if(config('view.version')!=2)
@@ -107,26 +106,27 @@
 
             {{--<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>--}}
         @else
-            <div id="timelineFirst" class="timeline col-lg-6 col-xs-6">
-                <a href="" class="timeline_spine"></a>
-                <ol class="timeline_nav is-hidden" style="/*position: fixed;*/">
+            <div class="row">
+                <div id="timelineFirst" class="timeline formatter col-lg-6 col-xs-6">
+                    <a href="" class="timeline_spine"></a>
+                    <ol class="timeline_nav is-hidden" style="/*position: fixed;*/">
+                        @foreach ($comparisonData['responseFirst']['sections'] as $section)
+                            <li id="menu_year_{{$section['id']}}">
+                                <a type="button">{{$section['id']}}</a>
+                            </li>
+                        @endforeach
+                    </ol>
                     @foreach ($comparisonData['responseFirst']['sections'] as $section)
-                        <li id="menu_year_{{$section['id']}}">
-                            <a type="button">{{$section['id']}}</a>
-                        </li>
+                        @include('templates.partials.section')
                     @endforeach
-                </ol>
-                @foreach ($comparisonData['responseFirst']['sections'] as $section)
-                    @include('templates.partials.section')
-                @endforeach
+                </div>
+                <div id="timelineSecond" class="timeline formatter col-lg-6 col-xs-6">
+                    <a href="" class="timeline_spine"></a>
+                    @foreach ($comparisonData['responseSecond']['sections'] as $section)
+                        @include('templates.partials.section')
+                    @endforeach
+                </div>
             </div>
-            <div id="timelineSecond" class="timeline col-lg-6 col-xs-6">
-                <a href="" class="timeline_spine"></a>
-                @foreach ($comparisonData['responseSecond']['sections'] as $section)
-                    @include('templates.partials.section')
-                @endforeach
-            </div>
-
         @endif
 
     @endif
