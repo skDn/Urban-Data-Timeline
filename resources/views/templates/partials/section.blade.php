@@ -4,10 +4,9 @@
     </div>
     {{--http://www.i4vegas.com/img/i4content/process_barnew.gif--}}
     <ol class="events">
-        @for($int = 0; $int<4; $int++)
+        @for($int = 0; $int<2; $int++)
             <li class="event loading">
                 <i class="event_pointer"></i>
-
                 <div class="event_container">
                     <!-- event title -->
                     <div class="event_title">
@@ -20,14 +19,7 @@
                         </h3>
                     </div>
                     <!-- end of event title -->
-                    <div class="event_content">
-                        <p>
-                            <img src="http://www.i4vegas.com/img/i4content/process_barnew.gif"/>
-                        </p>
-                        <!-- adding link to original tweet -->
-                        <!-- end of link to original tweet -->
-                        <!-- <a data-readmore-toggle="" aria-controls="info">Read more</a> -->
-                    </div>
+                    {{--<div class="event_content"/>--}}
                     <!-- event timestamp -->
                 <span class='next_to_title'>
                     <img src="http://www.i4vegas.com/img/i4content/process_barnew.gif" width="30%"/>
