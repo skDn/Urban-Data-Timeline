@@ -33,10 +33,29 @@ class InfiniteScroll extends Controller
 
         $fullResponse = Cache::get($cacheKey);
 
-        foreach ($fullResponse['sections'] as $section) {
-            if ($section['id'] === $id) {
-                return json_encode($section['events']);
+
+        if (array_key_exists('sections', $fullResponse)) {
+            foreach ($fullResponse['sections'] as $section) {
+                if ($section['id'] === $id) {
+                    return json_encode($section['events']);
+                }
             }
+        } else if (array_key_exists('responseFirst', $fullResponse)) {
+            $returnJson = array(
+                'first' => null,
+                'second' => null
+            );
+            foreach ($fullResponse['responseFirst']['sections'] as $section) {
+                if ($section['id'] === $id) {
+                    $returnJson['first'] = $section['events'];
+                }
+            }
+            foreach ($fullResponse['responseSecond']['sections'] as $section) {
+                if ($section['id'] === $id) {
+                    $returnJson['second'] = $section['events'];
+                }
+            }
+            return json_encode($returnJson);
         }
         return '';
     }

@@ -8,6 +8,7 @@
 
 namespace Urban\Http\Controllers;
 
+use Cache;
 use DateTime as DateTime;
 use Illuminate\Http\Request;
 use Urban\Http\Middleware\SearchHelper;
@@ -120,6 +121,21 @@ class ComparisonController extends Controller
             )
         );
         //dd($response);
+        $cacheKey = '';
+
+        $cacheLimit = 15;
+
+        $requestParameters = array_values($request->all());
+        array_pop($requestParameters);
+
+
+        foreach ($requestParameters as $value) {
+            $cacheKey .= $value;
+        }
+        if (count($response['elements']['first']) > 0 || count($response['elements']['second']) > 0 ) {
+            Cache::put($cacheKey, $response, $cacheLimit);
+        }
+
         return $response;
 
     }

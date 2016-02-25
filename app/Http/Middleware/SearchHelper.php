@@ -32,9 +32,22 @@ class SearchHelper
         $requestParameters = array_values($request->all());
         array_pop($requestParameters);
 
+
         foreach ($requestParameters as $value) {
             $cacheKey .= $value;
         }
+//
+//        foreach ($requestParameters as $value) {
+//            if ($this->isFirst($query, $request)) {
+//                if ($value !== $request->input("querySecond")) {
+//                    $cacheKey .= $value;
+//                }
+//            } else {
+//                if ($value !== $request->input("queryFirst")) {
+//                    $cacheKey .= $value;
+//                }
+//            }
+//        }
 
 //        dd($cacheKey);
 //        if (Cache::has($cacheKey)) {
@@ -97,7 +110,7 @@ class SearchHelper
             $response['info']['twitter'] = $twitterInfo;
         }
 
-        if (count($response['sections']) > 0) { //&& !is_null(Cache::get($cacheKey))) {
+        if (count($response['sections']) > 0 && $request->input('querySecond') == null) { //&& !is_null(Cache::get($cacheKey))) {
             Cache::put($cacheKey, $response, $cacheLimit);
         }
 
@@ -161,5 +174,13 @@ class SearchHelper
     {
         return $diff->y == 0 && $diff->m == 0 && $diff->d == 0 &&
         $diff->h == 0 && $diff->i == 0;
+    }
+
+    private function isFirst($query, $request)
+    {
+        if ($request->input('queryFirst') === $query) {
+            return true;
+        }
+        return false;
     }
 }

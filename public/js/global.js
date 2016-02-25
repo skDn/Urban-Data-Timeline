@@ -23,11 +23,14 @@ var options = {
 var firstQuery = '#query_First';
 var secondQuery = '#query_Second';
 
+var timelineFirst = '#timelineFirst';
+var timelineSecond = '#timelineSecond';
+
 var mapDiv = 'googleMap';
 var latInput = 'latInput';
 var lngInput = 'lonInput';
 
-var countRangePlusMinus = 1;
+var countRangePlusMinus = 0;
 
 
 
