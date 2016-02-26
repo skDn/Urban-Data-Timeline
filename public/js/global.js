@@ -33,7 +33,6 @@ var lngInput = 'lonInput';
 var countRangePlusMinus = 0;
 
 
-
 var $timeline_block = $('.section');
 var $timeline_elements = $('.event');
 
@@ -45,3 +44,23 @@ var $infoBox = $('.infoBox');
 //var $timeline = $('.timeline');
 var $timeline = $('#' + googleChart);
 var offset = 150;
+
+
+// calculating user clicks and time taken
+var number = 0;
+var lastClick = 0;
+var startTimer;
+var startTime = 0;
+
+document.onclick = function () {
+    number++;
+    if (startTimer === undefined) {
+        startTimer = new Date();
+        startTime = startTimer.getTime();
+    }
+    var d = new Date();
+    var t = d.getTime();
+    console.log('Click: ' + number + ' Time taken: ' + (t - lastClick) / 1000 + ' Total time: ' + (t - startTime) / 1000);
+    lastClick = t;
+
+};

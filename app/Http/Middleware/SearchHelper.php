@@ -57,7 +57,7 @@ class SearchHelper
         $date = $request->input('date');
         $query = ($query) ? $query : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
-        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount, $date) : new TwitterTimeline($query, $date);
+//        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount, $date) : new TwitterTimeline($query, $date);
 //        dd($twitTimeline->getData());
         $twit = new Twitter($query, $date);
 
@@ -93,8 +93,8 @@ class SearchHelper
 
         $mergeQueries = array_merge((array)$twit->getData(),
             ($searchToken && $searchToken === 'venue') ?
-                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(),
-            (array)$twitTimeline->getData()
+                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData()//,
+//            (array)$twitTimeline->getData()
         );
         usort($mergeQueries, array($this, 'date_compare'));
 
