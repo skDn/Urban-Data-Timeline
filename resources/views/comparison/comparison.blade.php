@@ -96,5 +96,5 @@
         </div>
         @yield('results')
     </div>
-    @include('templates.partials.scrollTop')
+    {{--@include('templates.partials.scrollTop')--}}
 @stop

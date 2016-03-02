@@ -30,9 +30,9 @@
 
     @else
 
-        <div class="col-lg-12" style="margin-bottom: 15px">
-            @include('templates.partials.lineGraph')
-        </div>
+        {{--<div class="col-lg-12" style="margin-bottom: 15px">--}}
+            {{--@include('templates.partials.lineGraph')--}}
+        {{--</div>--}}
         @if(config('view.version')!=2)
             {{--<style> .is-hidden {display: none} </style>--}}
             <section id="cd-timelineFirst" class="cd-container col-lg-6 col-xs-6">

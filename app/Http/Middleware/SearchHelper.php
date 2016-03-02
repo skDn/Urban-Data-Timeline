@@ -13,6 +13,10 @@ use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 use Urban\Models\TwitterTimeline;
 
+define("DATEASID", "ha");
+define("DATEASCONTENT", "Y-m-d h:i");
+define("USEDIFF", false);
+
 class SearchHelper
 {
     public function getResultsForEvent(Request $request)
@@ -20,7 +24,7 @@ class SearchHelper
         $date = $request->input('date');
         $query = ($request->input('queryFirst')) ? $request->input('queryFirst') : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
-        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
+//        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount) : new TwitterTimeline($query);
 
         $twit = new Twitter($query);
 
@@ -52,8 +56,8 @@ class SearchHelper
 
         $mergeQueries = array_merge((array)$twit->getData(strtotime($date), 0, 10),
             ($searchToken && $searchToken === 'venue') ?
-                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0, 10),
-            (array)$twitTimeline->getData(strtotime($date), 0, 10)
+                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(strtotime($date), 0, 10)//,
+//            (array)$twitTimeline->getData(strtotime($date), 0, 10)
         );
         usort($mergeQueries, array($this, 'date_compare'));
 

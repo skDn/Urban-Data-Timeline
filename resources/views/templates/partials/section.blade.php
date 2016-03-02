@@ -1,7 +1,7 @@
 <div class="section" id="{{$section['id']}}">
-    <div class="title">
-        <a>{{$section['id']}}</a>
-    </div>
+    {{--<div class="title">--}}
+        {{--<a>{{$section['id']}}</a>--}}
+    {{--</div>--}}
 
     <ol class="events">
         @foreach($section['events'] as $event)

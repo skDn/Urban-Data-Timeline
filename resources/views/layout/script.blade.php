@@ -5,6 +5,6 @@
         crossorigin="anonymous"></script>
 {{--{{ HTML::script('packages/bs/js/bootstrap.min.js') }}--}}
 {!! Html::script('js/global.js') !!}
-{!! Html::script('js/toolTips.js') !!}
+{{--{!! Html::script('js/toolTips.js') !!}--}}
 
 @yield('scripts')

@@ -87,8 +87,8 @@ class ComparisonController extends Controller
         );
 
         $helper = new SearchHelper();
-        $mergeQueries1 = $helper->getResultsForEvent($queryFirst, $request);
-        $mergeQueries2 = $helper->getResultsForEvent($querySecond, $request);
+        $mergeQueries1 = $helper->getResultsForEvent($request);
+        $mergeQueries2 = $helper->getResultsForEvent($request);
 
         foreach ($mergeQueries1['sections'] as $element1) {
             if (!$this->containsSectionWithId($mergeQueries2['sections'], $element1['id'])) {
