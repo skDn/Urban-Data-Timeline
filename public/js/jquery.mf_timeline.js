@@ -9,6 +9,7 @@
 //        });
 //    });
 //}
+
 $(document).ready(function () {
     // $('.timeline .timeline_nav').stickyfloat({duration:400});
     $('html, body').animate({scrollTop: ($('#' + googleChart).offset().top) - 150}, 1500);
@@ -116,16 +117,21 @@ $(document).ready(function () {
     }
 
 
+    function changeCurrentInNavBar() {
+        $('.timeline .section').each(function () {
+            $(this).afterScroll(function () {
+                // After we have scolled past the top
+                var year = $(this).attr('id');
+                $('ol.timeline_nav li').removeClass('current');
+                $('ol.timeline_nav li#menu_year_' + year).addClass('current');
+            });
+        });
+    }
+    changeCurrentInNavBar();
+
     $(document).ajaxComplete(function (event, xhr, settings) {
         if (settings.url.indexOf('infinite') > -1) {
-            $('.timeline .section').each(function () {
-                $(this).afterScroll(function () {
-                    // After we have scolled past the top
-                    var year = $(this).attr('id');
-                    $('ol.timeline_nav li').removeClass('current');
-                    $('ol.timeline_nav li#menu_year_' + year).addClass('current');
-                });
-            });
+            changeCurrentInNavBar();
             //makeNonVisibleEventsHidden();
             //animateEvenets();
         }

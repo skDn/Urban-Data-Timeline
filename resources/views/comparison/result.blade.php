@@ -17,7 +17,7 @@
 
 @section('scripts')
     @parent
-    {!! Html::script('js/infinite.js') !!}
+    {{--{!! Html::script('js/infinite.js') !!}--}}
     {!! Html::script('js/jquery.afterscroll.js')  !!}
     {!! Html::script('js/jquery.mf_timeline.js')  !!}
 
