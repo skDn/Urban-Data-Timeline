@@ -52,6 +52,7 @@ var lastClick = 0;
 var startTimer;
 var startTime = 0;
 
+console.log('click,timeperclick,totaltime');
 document.onclick = function () {
     number++;
     if (startTimer === undefined) {
@@ -60,7 +61,12 @@ document.onclick = function () {
     }
     var d = new Date();
     var t = d.getTime();
-    console.log('Click: ' + number + ' Time taken: ' + (t - lastClick) / 1000 + ' Total time: ' + (t - startTime) / 1000);
+    if (lastClick === 0) {
+        console.log(number + ',' + 0 + ',' + (t - startTime) / 1000);
+    }
+    else {
+        console.log(number + ',' + (t - lastClick) / 1000 + ',' + (t - startTime) / 1000);
+    }
     lastClick = t;
 
 };
