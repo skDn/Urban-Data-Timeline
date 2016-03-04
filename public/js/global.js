@@ -29,8 +29,8 @@ var lastClick = (Cookies.get('lastClick') === undefined) ? 0 : Cookies.get('last
 var startTimer;
 var startTime = (Cookies.get('startTime') === undefined) ? 0 : Cookies.get('startTime');
 
-console.log('click,timeperclick,totaltime');
-document.onclick = function () {
+console.log('click,timeperclick,totaltime,xPosition,yPosition');
+document.onclick = function (e) {
     number++;
     if (startTimer === undefined && startTime === 0) {
         startTimer = new Date();
@@ -43,7 +43,7 @@ document.onclick = function () {
         console.log(number + ',' + 0 + ',' + (t - startTime) / 1000);
     }
     else {
-        console.log(number + ',' + (t - lastClick) / 1000 + ',' + (t - startTime) / 1000);
+        console.log(number + ',' + (t - lastClick) / 1000 + ',' + (t - startTime) / 1000 + ',' + e.pageX + ',' + e.pageY);
     }
     lastClick = t;
 
