@@ -47,20 +47,30 @@ var offset = 150;
 
 
 // calculating user clicks and time taken
-var number = 0;
-var lastClick = 0;
+var number = (Cookies.get('number') === undefined) ? 0 : Cookies.get('number');
+var lastClick = (Cookies.get('lastClick') === undefined) ? 0 : Cookies.get('lastClick');
 var startTimer;
-var startTime = 0;
+var startTime = (Cookies.get('startTime') === undefined) ? 0 : Cookies.get('startTime');
 
-document.onclick = function () {
+console.log('click,timeperclick,totaltime,xPosition,yPosition');
+document.onclick = function (e) {
     number++;
-    if (startTimer === undefined) {
+    if (startTimer === undefined && startTime === 0) {
         startTimer = new Date();
         startTime = startTimer.getTime();
+        Cookies.set('startTime', startTime);
     }
     var d = new Date();
     var t = d.getTime();
-    console.log('Click: ' + number + ' Time taken: ' + (t - lastClick) / 1000 + ' Total time: ' + (t - startTime) / 1000);
+    if (lastClick === 0) {
+        console.log(number + ',' + 0 + ',' + (t - startTime) / 1000);
+    }
+    else {
+        console.log(number + ',' + (t - lastClick) / 1000 + ',' + (t - startTime) / 1000 + ',' + e.pageX + ',' + e.pageY);
+    }
     lastClick = t;
+
+    Cookies.set('number', number);
+    Cookies.set('lastClick', lastClick);
 
 };
