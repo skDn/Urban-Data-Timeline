@@ -24,17 +24,18 @@ var firstQuery = '#query_First';
 var secondQuery = '#query_Second';
 
 // calculating user clicks and time taken
-var number = 0;
-var lastClick = 0;
+var number = (Cookies.get('number') === undefined) ? 0 : Cookies.get('number');
+var lastClick = (Cookies.get('lastClick') === undefined) ? 0 : Cookies.get('lastClick');
 var startTimer;
-var startTime = 0;
+var startTime = (Cookies.get('startTime') === undefined) ? 0 : Cookies.get('startTime');
 
 console.log('click,timeperclick,totaltime');
 document.onclick = function () {
     number++;
-    if (startTimer === undefined) {
+    if (startTimer === undefined && startTime === 0) {
         startTimer = new Date();
         startTime = startTimer.getTime();
+        Cookies.set('startTime', startTime);
     }
     var d = new Date();
     var t = d.getTime();
@@ -45,5 +46,8 @@ document.onclick = function () {
         console.log(number + ',' + (t - lastClick) / 1000 + ',' + (t - startTime) / 1000);
     }
     lastClick = t;
+
+    Cookies.set('number', number);
+    Cookies.set('lastClick', lastClick);
 
 };
