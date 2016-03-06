@@ -2,6 +2,8 @@
 
 \documentclass{l4proj}
 \usepackage{url}
+\usepackage{subcaption}
+
 %
 % put any packages here
 %
@@ -56,11 +58,11 @@ Describe what a web application is
 
 \section{Aims}
 
-This project aims to build a tool for the fusion and visualisation of timely data collected from the UBDC for their project, described earlier (iMCD). Past data from various urban data streams, such as social media posts, news, blogs, traffic information, environmental sensors and many more has been provided. The tool should be able to query all this data and come up with a timeline representation of observations that might be of interest to the user. This application is initially build to be used by the \textbf{general public} but may as all be valuable to local researchers who follow or compare people’s opinions, businessmen who want to know how their business is developing, media that want to report what is the general public impressions about an important event and even politicians while running their campaigns.   
+This project aims to build a tool for the fusion and visualisation of timely data collected from the UBDC for their project, described earlier (iMCD). Past data from various urban data streams, such as social media posts, news, blogs, traffic information, environmental sensors and many more has been provided. The tool should be able to query all this data and come up with a timeline representation of observations that might be of interest to the user. This application is initially build to be used by the \textbf{general public} but may as all be valuable to local researchers who follow or compare people’s opinions, businessmen who want to know how their business is developing, media that want to report what are the public impressions about an important event and even politicians while running their campaigns.   
 
 \section{Motivations}
 
-Smart cities bring a lot of advantages. They can opt for better urban planning and development by making more efficient use of the infrastructure to improve productivity and services but also to reduce the waste of fuel and energy. Furthermore their intelligence can change and enhance the way authorities respond to changing circumstances. On the other hand, achieving all these goals is a challenging process. All these huge amounts of information, created by social feeds, environmental sensors, traffic information, news and many more, have to be gathered, stored and analysed. This project aims to combine and visualise all these data strands so that some can look at the cities from a different angle and possibly extract new tendencies and patterns, not possible to discover if following only a single resource. This will help us identify problems or challenges that we had not been aware of and provide effective solutions that we all as citizens can only benefit from. (maybe add something for releasing this data to the general public)
+Smart cities bring a lot of advantages. They can opt for better urban planning and development by making more efficient use of the infrastructure to improve productivity and services but also to reduce the waste of fuel and energy. Furthermore their intelligence can change and enhance the way authorities respond to changing circumstances. On the other hand, achieving all these goals is a challenging process. Huge amounts of information, created by social feeds, environmental sensors, traffic, news and many more, have to be gathered, stored and analysed. This project aims to combine and visualise all these data strands so that some can look at the cities from a different angle and possibly extract new tendencies and patterns, not possible to discover by following only a single resource. This will help us identify problems or challenges that we had not been aware of and provide effective solutions that we all as citizens can only benefit from. (maybe add something for releasing this tool to the general public)
 
 \chapter{Related Work}
 There are applications that have been developed to accomplish similar if not the same goals, but most of them are concentrating on a single data stream. This chapter is presenting a short description of related products, along with key differences and correlations in comparison with the goals of this project.   
@@ -101,6 +103,46 @@ All social media websites in the likes of Twitter and Facebook use some sort of 
 
 Despite of the fact that social media applications has as a main goal the delivery of a secure and reliable tool for communication, they also provide their users with the ability to visualize their personal data streams like photos, events, group activities and accomplishments. Both Facebook and Twitter use a vertical timeline and allow for searching based on keywords. One of the key features is infinite scrolling that make the illusion of one endless stream of events by making use of the million users, posting every day. 
 
+\chapter{Project Planning}
+
+\section{Project Management}
+
+When a new product is developed, it is not clear how it will end up and if it will fulfil the user's requirements. The developers can see the first steps but there are plenty of problems or challenges that can not be predicted from the beginning (Figure \ref{projectInitial}). That is true for any project, no matter how much planning is put in. However there is a possibility that everything is done the right way but there is a high probability to drift away from the initial target (Figure \ref{projectStart}). 
+
+This project follows the Agile methodology (Figure \ref{projectAgile}) for software development. It is an interactive
+approach that splits the work into a number of iterations (sprints). Each of these sprints last one
+week. It starts with a meeting and demonstration of the work done in the previous sprint. As an
+outcome of these meetings feedback from the project supervisors is received, based on the
+extent to which their requirements are met. Moreover, these meetings allow discussions of the issues
+that are experienced and compare the available workarounds. At the end of a meeting, it is agreed
+upon exactly what work will be done during the next sprint. Following this scenario, at least one new
+feature is introduced after each sprint and changes to previous features are performed as early as possible. By the end of this project, 23 iterations are to be performed.
+
+\begin{figure}
+\begin{subfigure}{.3\textwidth}
+	\centering
+	\includegraphics[height=5cm,width=5cm]{images/projectInitial}
+	\caption{Start of a project.}
+	\label{projectInitial}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+	\centering
+	\includegraphics[height=5cm,width=5cm]{images/projectStart}
+	\caption{Waterfall methodology.}
+	\label{projectStart}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+	\centering
+	\includegraphics[height=5cm,width=5cm]{images/projectAgile}
+	\caption{Agile methodology.}
+	\label{projectAgile}
+\end{subfigure}
+\end{figure}
+
+\section{Requirements}
+
+\chapter{Design}
+The quick brown fox jumped over the lazy dog.
 
 \chapter{Solution}
 The quick brown fox jumped over the lazy dog.
