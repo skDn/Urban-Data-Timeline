@@ -57,7 +57,6 @@ function convertDataToChartArray(data) {
                     // twitter
                     sub_key = sub;
                     sub_val = data[q][query][partial][sub];
-                    console.log(data[q][query][partial][sub]['date']);
                     if (dictionary[sub][data[q][query][partial][sub]['date']] === undefined) {
                         dictionary[sub][data[q][query][partial][sub]['date']] = [];
                     }

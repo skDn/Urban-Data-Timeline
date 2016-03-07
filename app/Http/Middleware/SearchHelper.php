@@ -97,7 +97,6 @@ class SearchHelper
 //            (array)$twitTimeline->getData()
         );
         usort($mergeQueries, array($this, 'date_compare'));
-
         $response = array(
             'sections' => array(),
             'info' => array(),

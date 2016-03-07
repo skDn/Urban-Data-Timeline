@@ -120,7 +120,7 @@ class ComparisonController extends Controller
                 'second' => $secondElement,
             )
         );
-        //dd($response);
+//        dd($response);
         $cacheKey = '';
 
         $cacheLimit = 15;
@@ -129,12 +129,12 @@ class ComparisonController extends Controller
         array_pop($requestParameters);
 
 
-        foreach ($requestParameters as $value) {
-            $cacheKey .= $value;
-        }
-        if (count($response['elements']['first']) > 0 || count($response['elements']['second']) > 0 ) {
-            Cache::put($cacheKey, $response, $cacheLimit);
-        }
+//        foreach ($requestParameters as $value) {
+//            $cacheKey .= $value;
+//        }
+//        if (count($response['elements']['first']) > 0 || count($response['elements']['second']) > 0 ) {
+//            Cache::put($cacheKey, $response, $cacheLimit);
+//        }
 
         return $response;
 

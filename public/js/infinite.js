@@ -70,17 +70,11 @@ $(function () {
                 //$timeline_elements.each(function () {
                 if (counter >= countRangePlusMinus + 1) {
                     if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9) {
-                        //console.log($(this).attr('id'));
                         var sectionID = $(this).attr('id');
                         if (prevSection !== sectionID && $.inArray(sectionID, listOfFilledSections) === -1) {
                             listOfFilledSections.push(sectionID);
-                            console.log(sectionID);
-                            //console.log($('#timelineFirst #12am'));
                             /// substitude with ajax calls;
                             ajaxCall(sectionID);
-                            //marker = $('#' + sectionID + ' ol.events');
-                            //data = getInputs(sectionID);
-                            //marker.load('/infinite/single', data);
                         }
                         prevSection = sectionID;
                     }
@@ -247,8 +241,8 @@ $(function () {
         function getHtmlForTweet(event) {
             return eventStart +
                 '<div class="event_title">' +
-                '<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
-
+                //'<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
+                '<i class="profile_image"> <img src="'+ event.image +'"> </i>' +
                 '<h3>' + event['screen_name'] + '</h3>' +
                 '<span class="subtitle">@' + event.screen_name + '</span>' +
                 '</div>' +

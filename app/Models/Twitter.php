@@ -15,12 +15,12 @@ class Twitter extends AbstractService
         $this->url = config('services.twitter.url');
         $this->postData = array(
             "request" => array(
-                "query" => $this->query,
+                "query" => '#'.$this->query,
                 "date" => $date,
+
             )
         );
         $this->response = $this->sendRequest($this->getPostData());
-//        dd($this->response);
     }
 
     public function getCount()
@@ -51,11 +51,13 @@ class Twitter extends AbstractService
 //                    ));
 //            }
             foreach ($response['response']['serviceJson']['tweet'] as $arr) {
+                $date = \DateTime::createFromFormat('jmY His', $arr['time']);
                 array_push($returnArr, array(
-                        'dateString' => $this->getRandomTimeOfDay($this->getQueryDate()),
+                        'dateString' => $date->format('Y-m-d H:i' ),//$this->getRandomTimeOfDay($this->getQueryDate()),
                         'class' => 'tweet',
-                        'screen_name' => $this->getQuery(),
+                        'screen_name' => $arr['screen_name'],
                         'text' => $arr['text'],
+                        'image' => $arr['image']
                     ));
             }
             return $returnArr;
