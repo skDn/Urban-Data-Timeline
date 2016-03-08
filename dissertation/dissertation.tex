@@ -158,7 +158,7 @@ User stories are one of the primary development artefacts for Agile project team
 		As a \textbf{\textit{ROLE}}, I want to \textbf{\textit{ACTION}}, so that \textbf{\textit{GOAL}}. \cite{sets}
 	\end{center}
 
-The role represents the user that interacts with the system. The action show how the user uses the system and the goal- what the user is trying to accomplish. All user stories are written in a way that they are understandable by both developer and customer. Ideally the customer should write the user stories while discussing them with the developer \cite{sets}. Here are the user stories, captured for this project based on the identified target users(TODO: should I talk about target users):    
+The role represents the user that interacts with the system. The action shows how the user wants to use the system and the goal- what the user is trying to accomplish. All user stories are written in a way that they are understandable by both developer and customer. Ideally the customer should write the user stories while discussing them with the developer \cite{sets}. The following list represents the user stories, captured for this project based on the identified target users(TODO: should I talk about target users):    
 
 \begin{itemize}%[noitemsep]
 	\item \textbf{\textit{Researcher}}.
@@ -183,13 +183,72 @@ The role represents the user that interacts with the system. The action show how
 		\item As a politician, I would like to compare how popular is my party in the social media in comparison to other parties, so that I can change my campaign and increase my chances of winning.
 	\end{itemize}
 	
-	\item \textbf{\textit{User}}.
+	\item \textbf{\textit{Citizen}}.
 	\begin{itemize}
-		\item As a user, I would like to compare two different public opinions about a specific event, so that I can make a decision of my own. 
+		\item As a citizen, I would like to compare two different public opinions about a specific event, so that I can make a decision of my own. 
 	\end{itemize}
 \end{itemize}
 
-\subsection{Functional and Non-Functional requirements} 
+\subsection{Functional requirements} 
+
+Functional requirements represent services the system should provide, how it should react to particular inputs and how the system should behave in some situations. More specific requirements can describe the system functions, its inputs and output or exceptions in detail \cite{sene}. 
+
+Adding new requirements may change the project direction. Projects usually have fixed duration so sometimes it may not be possible to include all the features. Therefore all use cases that are identified in this chapter must be prioritised. 
+
+Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guideline for prioritising requirements. All the use cases should be sorted, using these rules. The ones that are "Must Have" and "Should Have" should be feasible in the duration of the project. The following list represents the extracted requirements after their prioritisation.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=6cm,width=8cm]{images/MoSCoW}
+	\caption{MoSCoW rules prioritisation scheme for requirements}
+	\label{MoSCoW}
+\end{figure} 
+
+\textbf{\textit{Functional Requirements}}.
+\begin{itemize}
+	\item \textit{User Interface}
+	\begin{itemize}
+		\item Must be able to display a fusion of different kinds of timely data (tweets, weather, traffic, train delays etc.).
+		\item Must be able to show specific as well as general information based on the request.
+		\item Must display events in a timeline.
+		\item Must display the time of events.
+		\item Must be able to take date input.
+		\item Must be able to receive hashtag input.
+		\item Must be able to take location based input.
+		\item Must be able to show venues in specific area. (using a Map)
+		\item Should dynamically add data to the layout. (using AJAX)
+		\item Should be able to visualise statistic data on a graph.
+		\item Could show a summary of the made request.
+		\item Could show the link of an event with other events.
+	\end{itemize}
+	
+	\item \textit{Server}
+	\begin{itemize}
+		\item Must be able to fetch data from provided services.
+		\item Must be able to fetch data from external sources. (Twitter)
+		\item Should provide additional RESTful APIs. (TODO: explain what is REST)
+		\item Should support caching.
+		\item Could store pre-render events. 
+		
+	\end{itemize}
+\end{itemize}   
+
+
+\subsection{Non-Functional requirements}
+
+Non-functional requirements represent constraints on the services or functions offered by the system. They often apply to the application as a whole, rather than individual components \cite{sene}.
+
+	\textbf{\textit{Non-Functional Requirements}}.
+	\begin{itemize}
+		\item Must be universal to support all kinds of users(citizen, scientist, researchers, local authorities)
+		\item Must be extensible so that different things can be rendered on the views.
+		\item Must be able to quickly process the data from the services.
+		\item Should be accessible from and compatible with desktops, laptops, tablets and smartphone devices.
+		\item Should be testable.
+		\item Should be scalable so that new services can be added.
+		\item Could be compatible with code quality tools. (Sonar)
+	\end{itemize}
+
 
 \chapter{Design}
 
