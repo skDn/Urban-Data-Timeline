@@ -3,6 +3,9 @@
 \documentclass{l4proj}
 \usepackage{url}
 \usepackage{subcaption}
+\usepackage{float}
+% compacting the list items
+\usepackage{enumitem}
 
 %
 % put any packages here
@@ -67,28 +70,6 @@ Smart cities bring a lot of advantages. They can opt for better urban planning a
 \chapter{Related Work}
 There are applications that have been developed to accomplish similar if not the same goals, but most of them are concentrating on a single data stream. This chapter is presenting a short description of related products, along with key differences and correlations in comparison with the goals of this project.   
 
-\section{The Fox Jumps Over}
-
-The quick brown fox jumped over Uroborus (Figure \ref{uroborus}).
-
-
-%\vspace{-7mm}
-\begin{figure}
-\centering
-\includegraphics[height=9.2cm,width=13.2cm]{uroboros.pdf}
-\vspace{-30mm}
-\caption{An alternative hierarchy of the algorithms.}
-\label{uroborus}
-\end{figure}
-
-
-The quick brown fox jumped over \cite{ckt} the lazy dog.
-
-
-\section{The Lazy Dog}
-
-The quick brown fox \cite{am97} jumped over the lazy dog.
-
 \textbf{Google Maps Timeline \cite{GoogleMapsTimeline}}
 
 Google stores a history of where anybody that uses its location services goes. All this data is collected by your device sensors and the navigation you use and then visualized with the Google Maps Timeline feature. It is advertised to be an easy way to view and remember places somebody has been on a given day at a given time. Without any input, the timeline shows predictions of when you have arrived or left a place. One of the key features is highlighting when you have visited the most places and how you had travelled. The application does not offer sharing as Google wants your information to remain private. As far as human interaction goes, you are allowed to correct, confirm or delete a place where Google thinks you had been but even after deleting,  it can still be seen that you had passed by that area. In 2009, the company released a similar feature called Google Latitude that offered sharing of location history but the project was closed down \cite{GMTimeFeature}.
@@ -107,45 +88,112 @@ Despite of the fact that social media applications has as a main goal the delive
 
 \section{Project Management}
 
-When a new product is developed, it is not clear how it will end up and if it will fulfil the user's requirements. The developers can see the first steps but there are plenty of problems or challenges that can not be predicted from the beginning (Figure \ref{projectInitial}). That is true for any project, no matter how much planning is put in. However there is a possibility that everything is done the right way but there is a high probability to drift away from the initial target (Figure \ref{projectStart}). 
+When a new product is developed, it is not clear how it will end up and if it will fulfil the user's requirements. The developers can see the first steps but there are plenty of problems or challenges that can not be predicted from the beginning (Figure \ref{projectInitial}). That is true for any project, no matter how much planning is put in. However there is a possibility that everything is done the right way but there is a high probability to drift away from the initial target (Figure \ref{projectStart}). There are several methodologies that can be followed when developing a software but the two most common are Waterfall and Agile. 
 
-This project follows the Agile methodology (Figure \ref{projectAgile}) for software development. It is an interactive
-approach that splits the work into a number of iterations (sprints). Each of these sprints last one
+The Waterfall model is an example of a plan-driven process - in principle you must plan and schedule all of the process activities before starting work on them \cite{sene}. Here iterations can be costly and involve significant rework. Therefore, after a small number of iterations, it is normal to freeze parts of the development, such as the specification, and continue with the later development stages. Problems are left for later resolution, programmed around or completely ignored. This implementation tricks may also lead to design problems and badly structured systems.
+
+This project, on the other hand, follows the Agile methodology (Figure \ref{projectAgile}) for software development. It is an interactive
+approach that splits the work into a number of iterations (sprints). This allow the project supervisors to inspect the work of the developer and monitor how well the software development is progressing \cite{sene}. Each of these sprints last one
 week. It starts with a meeting and demonstration of the work done in the previous sprint. As an
-outcome of these meetings feedback from the project supervisors is received, based on the
+outcome of these meetings feedback from the supervisors is received, based on the
 extent to which their requirements are met. Moreover, these meetings allow discussions of the issues
 that are experienced and compare the available workarounds. At the end of a meeting, it is agreed
 upon exactly what work will be done during the next sprint. Following this scenario, at least one new
 feature is introduced after each sprint and changes to previous features are performed as early as possible. By the end of this project, 23 iterations are to be performed.
 
-\begin{figure}
+\begin{figure}[H]
 \begin{subfigure}{.3\textwidth}
 	\centering
-	\includegraphics[height=5cm,width=5cm]{images/projectInitial}
+	\includegraphics[height=4cm,width=4cm]{images/projectInitial}
 	\caption{Start of a project.}
 	\label{projectInitial}
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
 	\centering
-	\includegraphics[height=5cm,width=5cm]{images/projectStart}
+	\includegraphics[height=4cm,width=4cm]{images/projectStart}
 	\caption{Waterfall methodology.}
 	\label{projectStart}
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
 	\centering
-	\includegraphics[height=5cm,width=5cm]{images/projectAgile}
+	\includegraphics[height=4cm,width=4cm]{images/projectAgile}
 	\caption{Agile methodology.}
 	\label{projectAgile}
 \end{subfigure}
 \end{figure}
 
-\section{Requirements}
+
+
+\section{Requirements Engineering}
+
+The requirements for a system describes the functionality of the services it provides and the constraints of its operation. The process of gathering, analysing and documenting these services and constraints is called requirements engineering.
+
+At the beginning of the project, a few weeks were taken to envision the high-level requirements and to understand the scope of the required system. For the initial requirements use cases and user stories to help with exploring how users will work with the system. 
+
+\subsection{Use cases} 
+
+Use case is a way to describe how a real user interacts with the system. They should not be perfect and can only show the action and not go into much detail, in order to stay close to the agile methodology. The developer will implement the system but will have to work close with the supervisors so that the end product will meet their needs. 
+
+The following use cases were identified in the beginning of this project: 
+
+
+\begin{itemize}%[noitemsep]
+	\item see how tweets about a specific hashtag are distributed over a period of time
+	\item see popular hashtags that are twitted together with a specific hashtag
+	\item get information about a certain area of the city and find out if the venues(restaurants, train stations, cinemas) there get high attendance
+	\item browse tweets based on time and hashtag
+	\item use the system on a mobile device
+	\item check out what the clients post about a venue, they had visited
+	\item check how many people attend specific venues in a given area
+	\item compare people's opinions about an event
+	\item see if a political party is likely to win the elections
+\end{itemize}
+
+
+\subsection{User Stories}
+
+User stories are one of the primary development artefacts for Agile project teams. A user story is a high-level definition of a requirement, containing just enough information so that the developers can get a feel of what the user wants to achieve when using the system by performing a task. It represents a functionality that will be of a value to the user. A suggested template for a user story is: 
+
+	\begin{center}
+		As a \textbf{\textit{ROLE}}, I want to \textbf{\textit{ACTION}}, so that \textbf{\textit{GOAL}}. \cite{sets}
+	\end{center}
+
+The role represents the user that interacts with the system. The action show how the user uses the system and the goal- what the user is trying to accomplish. All user stories are written in a way that they are understandable by both developer and customer. Ideally the customer should write the user stories while discussing them with the developer \cite{sets}. Here are the user stories, captured for this project based on the identified target users(TODO: should I talk about target users):    
+
+\begin{itemize}%[noitemsep]
+	\item \textbf{\textit{Researcher}}.
+	\begin{itemize}
+		\item As a Researcher, I would like to see how the tweets for certain query are distributed though out a period of time, so that I can see the pick of the number of tweets.
+		\item As a Researcher, I would like to know other popular twitter hashtags for a certain day, so that I can see what was interesting for the Twitter users for that day.
+		\item As a Researcher, I would like to know if specific area of the city was busy on a specific date, so that I can see if specific event or weather conditions had affected that area.
+		\item As a Researcher, I would like to see a timeline representation of the tweets for a specific query, so that I can follow and see if the user’s opinions change.
+		\item As a Researcher, I would like to use the app on a mobile device, so that when I travel, I can continue working on my research.
+		\item As a Researcher, I would like to know what were the weather conditions on a specific date and see traffic information, so that I can use the data as an experiment and measure the likelihood of using the public transport when the weather conditions are bad. 
+	\end{itemize}
+	
+	\item \textbf{\textit{Business owner}}.
+	\begin{itemize}
+		\item As a Restaurant owner, I would like to see if posting a tweet on my timeline affects the number of people that attend my restaurant.
+		\item As a Restaurant owner, I would like to see other venues in my area, so that I can check their attendance and try to improve mine.
+		\item As a TV channel owner, I would like to compare how many people are talking about my channel at specific time, compared to other channels so that I can change my TV guide and increase my audience.
+	\end{itemize}
+	
+	\item \textbf{\textit{Politician}}.
+	\begin{itemize}
+		\item As a politician, I would like to compare how popular is my party in the social media in comparison to other parties, so that I can change my campaign and increase my chances of winning.
+	\end{itemize}
+	
+	\item \textbf{\textit{User}}.
+	\begin{itemize}
+		\item As a user, I would like to compare two different public opinions about a specific event, so that I can make a decision of my own. 
+	\end{itemize}
+\end{itemize}
+
+\subsection{Functional and Non-Functional requirements} 
 
 \chapter{Design}
-The quick brown fox jumped over the lazy dog.
 
 \chapter{Solution}
-The quick brown fox jumped over the lazy dog.
 
 \section{Choice of technology}
 
