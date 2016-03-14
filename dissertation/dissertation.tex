@@ -38,66 +38,91 @@ style file l4proj.cls
 \pagenumbering{arabic}
 
 \section{Background}
-
+\paragraph{}
 Smart cities today represent a perception to integrate both information and communication technologies in an acceptable and maintainable fashion to manage their infrastructure and facilities. The optimal goal is to enhance the quality of life and satisfy the residents’ needs. ICT gives to the people, who maintain these cities, the great opportunity to directly follow what is happening and take actions accordingly. This can be done only by processing the huge amounts of information, collected from sensors, in real time and providing knowledge and information: the keys for discovering inefficiencies. 
-
-However, the biggest asset of a smart city is not the number of cameras or sensors but the people that occupy it. A third of the internet users (Ofcom’s 2015 communications marker report, published on 6 August) represent their smartphone as the most important device for going online. A third of the population owns a smart device and use it every day to bank, shop and access social media. Social media streams, such as Twitter, have a reputation to be extremely useful source of information. Anybody can understand what is happening all around the world in real time. With that comes various opportunities for developers to implement systems that automatically detect and track events as they happen. Smart cities can benefit from that as what better way to improve efficiency than for example identifying and reporting road accidents to the emergency services in real time.
-
+\paragraph{}
+However, the biggest asset of a smart city is not the number of cameras or sensors but the people that occupy it. A third of the internet users\cite{ofcomreport1} represent their smartphone as the most important device for going online. A third of the population owns a smart device and use it every day to bank, shop and access social media. Social media streams, such as Twitter, have a reputation to be extremely useful source of information. Anybody can understand what is happening all around the world in real time. With that comes various opportunities for developers to implement systems that automatically detect and track events as they happen. Smart cities can benefit from that as what better way to improve efficiency than for example identifying and reporting road accidents to the emergency services in real time.
+\paragraph{}
 Aiming to help with analyzing these massive amounts of data, the Urban Big Data Centre was established by the UK Economic and Social Research Council to address social, economic and environmental challenges facing cities. Their researchers are undertaking innovative projects, covering topics from big data management to linking and analysing the multi-structural urban data.  Such project is the Integrated Multimedia City Data. 
 
 
 
-\subsection{Integrated Multimedia City Data\cite{imcd}}
+\subsection{Integrated Multimedia City Data}
 
+\paragraph{}
+Integrated Multimedia City Data\cite{imcd} (iMCD) is one of the Urban Big Data Centre’s inaugural projects, funded by the Economic and Social Research Council. It is designed to provide the UBDC with innovative primary data sources. The project consists of four strands: representative household survey, tracking of real-time urban sensors, internet based visual media collection and internet based textual media collection.  
+\paragraph{}
+The core research strand is the representative household survey that aims to gather data about people’s attitude and behaviour when it comes to information and communication technologies, traveling and learning. Some of the participants are given GPS and life logging sensors that record their activities and travel. Meanwhile the visual and textual data, referring to Glasgow and surrounding areas, is to be collected from the internet. 
+\paragraph{}
+All of these strands, together, are able to show how Glasgow performs as a smart city.  The Terrier IR team provides various data web services so that all these sources can be browsed and queried.
 
-Integrated Multimedia City Data (iMCD) is one of the Urban Big Data Centre’s inaugural projects, funded by the Economic and Social Research Council. It is designed to provide the UBDC with innovative primary data sources. The project consists of four strands: representative household survey, tracking of real-time urban sensors, internet based visual media collection and internet based textual media collection.  
-
-The core research strand is the representative household survey that aims to gather data about people’s attitude and behaviour when it comes to information and communication technologies, traveling and learning. Part of the participants are given GPS and life logging sensors that record their activities and travel. Meanwhile the visual and textual data, referring to Glasgow and surrounding areas, is to be collected from the internet. 
-
-All of these strands, together, are able to show how Glasgow performs as a smart city.  The Terrier IR (should I write about Terrier?) team provides various data web services so that all these sources can be browsed and queried.
-
+\subsection{Terrier IR}
+\paragraph{}
+Tell a bit about Terrier IR
 
 \subsection{Web Services}
-
+\paragraph{}
 Describe what a web service is
 
 \subsection{Web Application}
-
+\paragraph{}
 Describe what a web application is
 
-\section{Aims}
-
-This project aims to build a tool for the fusion and visualisation of timely data collected from the UBDC for their project, described earlier (iMCD). Past data from various urban data streams, such as social media posts, news, blogs, traffic information, environmental sensors and many more has been provided. The tool should be able to query all this data and come up with a timeline representation of observations that might be of interest to the user. This application is initially build to be used by the \textbf{general public} but may as all be valuable to local researchers who follow or compare people’s opinions, businessmen who want to know how their business is developing, media that want to report what are the public impressions about an important event and even politicians while running their campaigns.   
-
 \section{Motivations}
-
+\paragraph{}
 Smart cities bring a lot of advantages. They can opt for better urban planning and development by making more efficient use of the infrastructure to improve productivity and services but also to reduce the waste of fuel and energy. Furthermore their intelligence can change and enhance the way authorities respond to changing circumstances. On the other hand, achieving all these goals is a challenging process. Huge amounts of information, created by social feeds, environmental sensors, traffic, news and many more, have to be gathered, stored and analysed. This project aims to combine and visualise all these data strands so that some can look at the cities from a different angle and possibly extract new tendencies and patterns, not possible to discover by following only a single source. This will help us identify problems or challenges that we had not been aware of and provide effective solutions that we all as citizens can only benefit from.
 
+\section{Aims}
+\paragraph{}
+This project aims to build a tool for the fusion and visualisation of timely data collected from the UBDC for their project, described earlier (iMCD). Past data from various urban data streams, such as social media posts, news, blogs, traffic information, environmental sensors and many more has been provided. The tool should be able to query all this data and come up with a timeline representation of observations that might be of interest to the user. This application is initially build to be used by the \textbf{general public} but may as all be valuable to local researchers who follow or compare people’s opinions, businessmen who want to know how their business is developing, media that want to report what are the public impressions about an important event and even politicians while running their campaigns.   
+
+\section{Outline}
+The rest of the report is structured as follows:
+\begin{itemize}
+	\item \textbf{Chapter 2} provides an overview of related work with examples of similar applications.
+	
+	\item \textbf{Chapter 3} discusses the project planning by separating it into project approach and requirements engineering.
+	\item \textbf{Chapter 4} explains the design by showing the initial paper prototypes and architectural diagrams. It also provides a comparison between the possible technologies, that are available and suitable for such a project.
+	\item \textbf{Chapter 5} goes through the actual implementation of each component and describes the challenges faced. 
+	\item \textbf{Chapter 6} describes the two phases of the evaluation process and explains the testing strategy for the components.
+	\item \textbf{Chapter 7} concludes the report and discusses the implication of the evaluations in terms of future directions
+\end{itemize}
+
+
 \chapter{Related Work}
+\paragraph{}
 There are applications that have been developed to accomplish similar if not the same goals. This chapter is presenting a short description of related products, along with key differences and correlations in comparison with the goals of this project.   
-
-\textbf{Google Maps Timeline \cite{GoogleMapsTimeline}}
-
-Google stores a history of where anybody that uses its location services goes. All this data is collected by your device sensors and the navigation you use. Then it is visualized with the Google Maps Timeline feature. This application is advertised to be an easy way to view and remember places somebody has been on a given day at a given time. Without any input, the timeline shows predictions of when you have arrived or left a place. One of the key features is highlighting when you have visited the most places and how you had travelled. The application does not offer sharing as Google wants your information to remain private. As far as human interaction goes, you are allowed to correct, confirm or delete a place where Google thinks you had been but even after deleting,  it can still be seen that you had passed by that area. In 2009, the company released a similar feature called Google Latitude that offered sharing of location history but the project was closed down \cite{GMTimeFeature}.
-
-
+\paragraph{}
+\textbf{Google Maps Timeline} \\
+Google stores a history of where anybody that uses its location services goes. All this data is collected by your device sensors and the navigation you use. Then it is visualized with the Google Maps Timeline \cite{GoogleMapsTimeline} feature. This application is advertised to be an easy way to view and remember places somebody has been on a given day at a given time. Without any input, the timeline shows predictions of when you have arrived or left a place. One of the key features is highlighting when you have visited the most places and how you had travelled. The application does not offer sharing as Google wants your information to remain private. As far as human interaction goes, you are allowed to correct, confirm or delete a place where Google thinks you had been but even after deleting,  it can still be seen that you had passed by that area. In 2009, the company released a similar feature called Google Latitude that offered sharing of location history but the project was closed down \cite{GMTimeFeature}.
+\\
 This product has the same initial goal to visualize timely data originating from different streams like navigation history, pictures, travel and walking routes. Some of the key features are using a vertical timeline to display the events, allowing searching based on a specific day, month, year and having a way to show (via bar chart) how active you have been every day in the past few weeks. 
-
-\textbf{Social Media Timeline}
-
+\paragraph{}
+\textbf{Social Media Timeline} \\
 All social media websites in the likes of Twitter and Facebook use some sort of a timeline to visualize their user's personal information. However they differ on the way they organize their posts. Facebook describes a timeline to be a place on your profile where you can see your own posts, your friends' activities and stories you're tagged in, sorted by the date and time they were posted. On the other hand, Twitter displays a stream of tweets from accounts that you have chosen to follow. Making use of machine learning algorithms, posts that you are likely to care about more are displayed first.
+\\
+Despite the fact that social media applications have as a main goal the delivery of a secure and reliable tool for communication, they also provide their users with the ability to visualize their personal data streams like photos, events, group activities and accomplishments. Both Facebook and Twitter use a vertical timeline and allow for searching based on keywords. One of the key features is infinite scrolling that make the illusion of one endless stream of events by making use of the million users, posting every day. 
+\paragraph{}
+\textbf{Tech City Map} \\
+Tech City Map pulls streams of social media posts for all the businesses in the East London area and tries to analyse their influence. The idea lies on using a map to display all the corporations in the area and linking them together by using different coloured lines for any tweet from one business to the other. The tool allows searching for a specific company as some points represents more then one corporation and manually searching though the map can be difficult. From 2010 to 2012\footnote{http://flowingcity.com/visualization/tech-city-map/} the number of businesses in East London had risen from 200 to 600. This growth was welcomed even by the Prime Minister at that time, David Cameron, proving that such tools are even followed by politicians. 
 
+\paragraph{}
+\textbf{Conclusion} \\
+Some of the previously described applications are proven to be successful by millions of users all around the world. However, they focus only on their user and do not really visualise and offer a big variety of data sources. On the other hand, Urban Data Timeline targets the smart city by increasing the user's understating about it. Furthermore, with the help of the Urban Big Data Centre, it has plenty data streams to offer: querying a tweet collection based on a hashtag or specific tweet terms, examining the events, detected by automated systems, related to specific terms, obtaining information about busy venues in an area of a city, finding train stations within a radius of a specific location, searching for delayed trains and accessing past weather data records. Also, all these big companies like Google, Facebook and Twitter provide their own APIs. This brings a great opportunity for this innovative project to become a centralised system where, for example, busy venues can be listed with the tweets from their own Twitter or Facebook accounts and events can be reviewed in depth with the help of news and youtube videos.
 
-Despite of the fact that social media applications has as a main goal the delivery of a secure and reliable tool for communication, they also provide their users with the ability to visualize their personal data streams like photos, events, group activities and accomplishments. Both Facebook and Twitter use a vertical timeline and allow for searching based on keywords. One of the key features is infinite scrolling that make the illusion of one endless stream of events by making use of the million users, posting every day. 
 
 \chapter{Project Planning}
 
-\section{Project Management}
-
+\section{Project Approach}
+\paragraph{}
 When a new product is developed, it is not clear how it will end up and if it will fulfil the user's requirements. The developers can see the first steps but there are plenty of problems or challenges that can not be predicted from the beginning (Figure \ref{projectInitial}). That is true for any project, no matter how much planning is put in. However there is a possibility that everything is done the right way but there is a high probability to drift away from the initial target (Figure \ref{projectStart}). There are several methodologies that can be followed when developing a software but the two most common are Waterfall and Agile. 
 
+\subsection{Waterfall model}
+\paragraph{}
 The Waterfall model is an example of a plan-driven process - in principle you must plan and schedule all of the process activities before starting work on them \cite{sene}. Here iterations can be costly and involve significant rework. Therefore, after a small number of iterations, it is normal to freeze parts of the development, such as the specification, and continue with the later development stages. Problems are left for later resolution, programmed around or completely ignored. These implementation tricks may also lead to design problems and badly structured systems.
 
+\subsection{Agile model}
+\paragraph{}
 This project, on the other hand, follows the Agile methodology (Figure \ref{projectAgile}) for software development. It is an interactive
 approach that splits the work into a number of iterations (sprints). This allow the project supervisors to inspect the work of the developer and monitor how well the software development is progressing \cite{sene}. Each of these sprints last one
 week. It starts with a meeting and demonstration of the work done in the previous sprint. As an
@@ -126,18 +151,19 @@ feature is introduced after each sprint and changes to previous features are per
 	\caption{Agile methodology.}
 	\label{projectAgile}
 \end{subfigure}
+\caption{Software development methodologies}
 \end{figure}
 
 
 
 \section{Requirements Engineering}
-
+\paragraph{}
 The requirements for a system describes the functionality of the services it provides and the constraints of its operation. The process of gathering, analysing and documenting these services and constraints is called requirements engineering.
-
+\paragraph{}
 At the beginning of the project, a few weeks were taken to envision the high-level requirements and to understand the scope of the required system. For the initial requirements use cases and user stories were extracted to help with exploring how users will work with the system. 
 
 \subsection{Use cases} 
-
+\paragraph{}
 Use case is a way to describe how a real user interacts with the system. They should not be perfect and can only show the action and not go into much detail, in order to stay close to the agile methodology. The developer will implement the system but will have to work close with the supervisors so that the end product will meet their needs. 
 
 The following use cases were identified in the beginning of this project: 
@@ -157,19 +183,20 @@ The following use cases were identified in the beginning of this project:
 
 
 \subsection{Functional requirements} 
-
+\paragraph{}
 Functional requirements represent services the system should provide, how it should react to particular inputs and how the system should behave in some situations. More specific requirements can describe the system functions, its inputs and output or exceptions in detail \cite{sene}. 
-
+\paragraph{}
 Adding new requirements may change the project direction. Projects usually have fixed duration so sometimes it may not be possible to include all the features. Therefore all use cases that are identified in this chapter must be prioritised. 
-
-Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guideline for prioritising requirements. All the use cases should be sorted, using these rules. The ones that are "Must Have" and "Should Have" should be feasible in the duration of the project. The following list represents the extracted requirements after their prioritisation.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=6cm,width=8cm]{images/MoSCoW}
+	\includegraphics[height=4cm,width=6cm]{images/MoSCoW}
 	\caption{MoSCoW rules prioritisation scheme for requirements}
 	\label{MoSCoW}
 \end{figure} 
+\paragraph{}
+Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guideline for prioritising requirements. All the use cases should be sorted, using these rules. The ones that are "Must Have" and "Should Have" should be feasible in the duration of the project. Table \ref{tab:funcReq} represents the extracted requirements after their prioritisation.
+
 
 %\textbf{\textit{Functional Requirements}}.
 %\begin{itemize}
@@ -208,7 +235,7 @@ Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guidelin
 			\textbf{MoSCoW} & \textbf{User Interface} \\ \hline
 			Must
 			&
-			\begin{tabularx}{\textwidth}{X|l}
+			\begin{tabularx}{\textwidth}{l}
 				be able to display a fusion of different kinds of timely data (tweets, weather, traffic, train delays etc.). \\\hline
 				be able to show specific as well as general information based on the request. \\\hline
 				display events in a timeline. \\\hline
@@ -221,14 +248,14 @@ Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guidelin
 			\tabularnewline\hline
 			Should
 			&
-			\begin{tabularx}{\textwidth}{X|l}
+			\begin{tabularx}{\textwidth}{l}
 				dynamically add data to the layout. (using AJAX) \\\hline
 				be able to visualise statistic data on a graph. \\
 			\end{tabularx}
 			\tabularnewline\hline
 			Could
 			&
-			\begin{tabularx}{\textwidth}{X|l}
+			\begin{tabularx}{\textwidth}{l}
 				show a summary of the made request.	\\\hline
 				show the link of an event with other events.\\
 			\end{tabularx}
@@ -237,64 +264,100 @@ Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guidelin
 			& \textbf{Server} \\ \hline
 			Must
 			&
-			\begin{tabularx}{\textwidth}{X|l}
+			\begin{tabularx}{\textwidth}{l}
 				be able to fetch data from provided services. \\\hline
 				be able to fetch data from external sources. (Twitter) \\
 			\end{tabularx}
 			\tabularnewline\hline
 			Should
 			&
-			\begin{tabularx}{\textwidth}{X|l}
+			\begin{tabularx}{\textwidth}{l}
 				provide additional RESTful APIs. (TODO: explain what is REST) \\\hline
 				support caching. \\
 			\end{tabularx}
 			\tabularnewline\hline
 			Could
 			&
-			\begin{tabularx}{\textwidth}{X|l}
+			\begin{tabularx}{\textwidth}{l}
 				store pre-render events. \\
 			\end{tabularx}
 			\tabularnewline\hline
 			
 		\end{tabular}
 	\end{adjustbox}
-	\caption{Table Title}
+	\caption{Functional Requirements}
+	\label{tab:funcReq}
 \end{table}
 
 
 \subsection{Non-Functional requirements}
+\paragraph{}
+Non-functional requirements represent constraints on the services or functions offered by the system. They often apply to the application as a whole, rather than individual components \cite{sene}. Table \ref{tab:nonFuncReq} represents the extracted non-functional requirements for this project. 
 
-Non-functional requirements represent constraints on the services or functions offered by the system. They often apply to the application as a whole, rather than individual components \cite{sene}.
+%	\textbf{\textit{Non-Functional Requirements}}.
+%	\begin{itemize}
+%		\item Must be universal to support all kinds of users(citizen, scientist, researchers, local authorities)
+%		\item Must be extensible so that different things can be rendered on the views.
+%		\item Must be able to quickly process the data from the services.
+%		\item Should be accessible from and compatible with desktops, laptops, tablets and smartphone devices.
+%		\item Should be testable.
+%		\item Should be scalable so that new services can be added.
+%		\item Could be compatible with tools that can measure code quality. (Sonar)
+%	\end{itemize}
 
-	\textbf{\textit{Non-Functional Requirements}}.
-	\begin{itemize}
-		\item Must be universal to support all kinds of users(citizen, scientist, researchers, local authorities)
-		\item Must be extensible so that different things can be rendered on the views.
-		\item Must be able to quickly process the data from the services.
-		\item Should be accessible from and compatible with desktops, laptops, tablets and smartphone devices.
-		\item Should be testable.
-		\item Should be scalable so that new services can be added.
-		\item Could be compatible with tools that can measure code quality. (Sonar)
-	\end{itemize}
+\begin{table}[ht]
+	\centering
+	\begin{adjustbox}{width=1\textwidth}
+		\begin{tabular}{|c|@{}c@{}|}\hline
+			\multicolumn{2}{|l|}{\textbf{Non-Functional requirements}} \\\hline
+			\textbf{MoSCoW} & \textbf{Requirement} \\ \hline
+			Must
+			&
+			\begin{tabularx}{\textwidth}{l}
+				be universal to support all kinds of users(citizen, scientist, researchers, local authorities). \\\hline
+				be extensible so that different things can be rendered on the views. \\\hline
+				be able to quickly process the data from the services. \\
+			\end{tabularx}
+			\tabularnewline\hline
+			Should
+			&
+			\begin{tabularx}{\textwidth}{l}
+				be accessible from and compatible with desktops, laptops, tablets and smartphone devices. \\\hline
+				be testable. \\\hline
+				be scalable so that new services can be added. \\
+			\end{tabularx}
+			\tabularnewline\hline
+			Could
+			&
+			\begin{tabularx}{\textwidth}{l}
+				be compatible with tools that can measure code quality. (Sonar) \\
+			\end{tabularx}
+			\tabularnewline\hline
+		\end{tabular}
+	\end{adjustbox}
+	\caption{Non-Functional Requirements}
+	\label{tab:nonFuncReq}
+\end{table}
 	
-	
-
+\subsection{High Level System Diagram}
+\paragraph{}
+The outlined requirements and use cases start to reveal what the system architecture is going to be. In order to achieve the goals, the application has to consist of three main components (Figure: \ref{highLevelDiagram}): client to	handle the	interaction with the user, middleware to handle the application logic, and a database, in our case external services, to store the data. This architectural model is also called Three Tier Architecture. Tiers enable separation of concerns and encapsulate complexity as they can be broken down into layers and sub-tiers. Furthermore, they can be distributed across a number of machines to provide flexibility and can be replicated across a number of machines to provide the really important scalability factor\cite{threetier}.   	
 
 \begin{figure}[H]
 		\centering
 		\includegraphics[width=.7\linewidth]{images/HighLevelDiagram}
 		\caption{High level architecture diagram based on requirements and use cases.}
-		\label{projectInitial}
+		\label{highLevelDiagram}
 \end{figure}
 
 \subsection{User Stories}
-
-User stories are one of the primary development artefacts for Agile project teams. A user story is a high-level definition of a requirement, containing just enough information so that the developers can get a feel of what the user wants to achieve when using the system and performing a task. It represents a functionality that will be of a value to the user. A suggested template for a user story is: 
+\paragraph{}
+User stories are one of the primary development artefacts for Agile project teams. A user story is a high-level definition of a requirement, containing just enough information so that the developer can get a feel of what the user wants to achieve when using the system and performing a task. It represents a functionality that will be of a value to the user. A suggested template for a user story is: 
 
 \begin{center}
 	As a \textbf{\textit{ROLE}}, I want to \textbf{\textit{ACTION}}, so that \textbf{\textit{GOAL}}. \cite{sets}
 \end{center}
-
+\paragraph{}
 The role represents the user that interacts with the system. The action shows how the user wants to use the system and the goal- what the user is trying to accomplish. All user stories are written in a way that they are understandable by both developer and customer. Ideally the customer should write the user stories while discussing them with the developer \cite{sets}. The following list represents the user stories, captured for this project based on the identified target users(TODO: should I talk about target users):    
 
 \begin{itemize}%[noitemsep]
@@ -335,7 +398,10 @@ The role represents the user that interacts with the system. The action shows ho
 	\label{projectInitial}
 \end{figure}
 
-\chapter{Solution}
+%\chapter{Solution}
+\section{Paper prototypes}
+
+\section{Architecture diagrams}
 
 \section{Choice of technology}
 
