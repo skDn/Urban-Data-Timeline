@@ -91,23 +91,27 @@ The rest of the report is structured as follows:
 
 \chapter{Related Work}
 \paragraph{}
-There are applications that have been developed to accomplish similar if not the same goals. This chapter is presenting a short description of related products, along with key differences and correlations in comparison with the goals of this project.   
+There are applications that have been developed to accomplish similar if not the same goals. This chapter is presenting a short description of related products, along with key differences and correlations in comparison with the goals of this project.  
+
+\subsubsection{Google Maps Timeline} 
 \paragraph{}
-\textbf{Google Maps Timeline} \\
 Google stores a history of where anybody that uses its location services goes. All this data is collected by your device sensors and the navigation you use. Then it is visualized with the Google Maps Timeline \cite{GoogleMapsTimeline} feature. This application is advertised to be an easy way to view and remember places somebody has been on a given day at a given time. Without any input, the timeline shows predictions of when you have arrived or left a place. One of the key features is highlighting when you have visited the most places and how you had travelled. The application does not offer sharing as Google wants your information to remain private. As far as human interaction goes, you are allowed to correct, confirm or delete a place where Google thinks you had been but even after deleting,  it can still be seen that you had passed by that area. In 2009, the company released a similar feature called Google Latitude that offered sharing of location history but the project was closed down \cite{GMTimeFeature}.
-\\
-This product has the same initial goal to visualize timely data originating from different streams like navigation history, pictures, travel and walking routes. Some of the key features are using a vertical timeline to display the events, allowing searching based on a specific day, month, year and having a way to show (via bar chart) how active you have been every day in the past few weeks. 
-\paragraph{}
-\textbf{Social Media Timeline} \\
-All social media websites in the likes of Twitter and Facebook use some sort of a timeline to visualize their user's personal information. However they differ on the way they organize their posts. Facebook describes a timeline to be a place on your profile where you can see your own posts, your friends' activities and stories you're tagged in, sorted by the date and time they were posted. On the other hand, Twitter displays a stream of tweets from accounts that you have chosen to follow. Making use of machine learning algorithms, posts that you are likely to care about more are displayed first.
-\\
-Despite the fact that social media applications have as a main goal the delivery of a secure and reliable tool for communication, they also provide their users with the ability to visualize their personal data streams like photos, events, group activities and accomplishments. Both Facebook and Twitter use a vertical timeline and allow for searching based on keywords. One of the key features is infinite scrolling that make the illusion of one endless stream of events by making use of the million users, posting every day. 
-\paragraph{}
-\textbf{Tech City Map} \\
-Tech City Map pulls streams of social media posts for all the businesses in the East London area and tries to analyse their influence. The idea lies on using a map to display all the corporations in the area and linking them together by using different coloured lines for any tweet from one business to the other. The tool allows searching for a specific company as some points represents more then one corporation and manually searching though the map can be difficult. From 2010 to 2012\footnote{http://flowingcity.com/visualization/tech-city-map/} the number of businesses in East London had risen from 200 to 600. This growth was welcomed even by the Prime Minister at that time, David Cameron, proving that such tools are even followed by politicians. 
 
 \paragraph{}
-\textbf{Conclusion} \\
+This product has the same initial goal to visualize timely data originating from different streams like navigation history, pictures, travel and walking routes. Some of the key features are using a vertical timeline to display the events, allowing searching based on a specific day, month, year and having a way to show (via bar chart) how active you have been every day in the past few weeks. 
+
+\subsubsection{Social Media Timeline}
+\paragraph{}
+All social media websites in the likes of Twitter and Facebook use some sort of a timeline to visualize their user's personal information. However they differ on the way they organize their posts. Facebook describes a timeline to be a place on your profile where you can see your own posts, your friends' activities and stories you're tagged in, sorted by the date and time they were posted. On the other hand, Twitter displays a stream of tweets from accounts that you have chosen to follow. Making use of machine learning algorithms, posts that you are likely to care about more are displayed first.
+\paragraph{}
+Despite the fact that social media applications have as a main goal the delivery of a secure and reliable tool for communication, they also provide their users with the ability to visualize their personal data streams like photos, events, group activities and accomplishments. Both Facebook and Twitter use a vertical timeline and allow for searching based on keywords. One of the key features is infinite scrolling that make the illusion of one endless stream of events by making use of the million users, posting every day. 
+
+\subsubsection{Tech City Map}
+\paragraph{}
+Tech City Map pulls streams of social media posts for all the businesses in the East London area and tries to analyse their influence. The idea lies on using a map to display all the corporations in the area and linking them together by using different coloured lines for any tweet from one business to the other. The tool allows searching for a specific company as some points represents more then one corporation and manually searching though the map can be difficult. From 2010 to 2012\footnote{http://flowingcity.com/visualization/tech-city-map/} the number of businesses in East London had risen from 200 to 600. This growth was welcomed even by the Prime Minister at that time, David Cameron, proving that such tools are even followed by politicians. 
+
+\subsubsection{Conclusion}
+\paragraph{}
 Some of the previously described applications are proven to be successful by millions of users all around the world. However, they focus only on their user and do not really visualise and offer a big variety of data sources. On the other hand, Urban Data Timeline targets the smart city by increasing the user's understating about it. Furthermore, with the help of the Urban Big Data Centre, it has plenty data streams to offer: querying a tweet collection based on a hashtag or specific tweet terms, examining the events, detected by automated systems, related to specific terms, obtaining information about busy venues in an area of a city, finding train stations within a radius of a specific location, searching for delayed trains and accessing past weather data records. Also, all these big companies like Google, Facebook and Twitter provide their own APIs. This brings a great opportunity for this innovative project to become a centralised system where, for example, busy venues can be listed with the tweets from their own Twitter or Facebook accounts and events can be reviewed in depth with the help of news and youtube videos.
 
 
@@ -445,16 +449,16 @@ During the implementation process, there had been a few changes to the design. I
 \paragraph{}
 The Urban Data Timeline makes use of the Three Tier Architectural model as described in Section \ref{sec:highLevelDiagram}. Based on the diagram, provided in the referenced section, a more in-depth diagram was designed to outline some of the key components of the system (Figure: \ref{componentDiagram}).
 
+\subsubsection{Client}
 \paragraph{}
-\textbf{Client} \\
 The Client consists of the users and either a mobile device or a desktop PC. The users are going to access the application from the browser, running on their device. The browser talks to both the Google Charts API and Google Maps API, so that it can render the map and the chart, that appear in the wireframes(Figures: \ref{finalPrototypeEvent} and \ref{finalPrototypeCompare}). On the other hand, it talks to the Middleware, or in this case, the Controller component in order to get the information,  required by the user.
 
+\subsubsection{Middleware}
 \paragraph{}
-\textbf{Middleware} \\
 The Middleware consists of four components - Controller, View, Cache, and Model. The Controller talks to all of the other components. First of all, the required data is obtained by either the Cache or the Model. If the data is not in the Cache, the Model tries to get it from the external sources. If the communication was successful, the data is stored in the Cache and returned to the Controller. From there, the Controller sends that data to the View so that the page can be prepared and returned to the user. 
 
+\subsubsection{Data}
 \paragraph{}
-\textbf{Data} \\
 The Data currently consists of two services. The first one is the UBDC web service and it is key to this project as it separates into Twitter, Busy Venue, Delayed Transport, Train and Weather services. As for now, only the first four services are used. The second on is the Twitter API. It is used to compensate for some of the limitations of the other Twitter service, provided by the UBDC, and to broaden the possibilities of tweets querying.        
   
 
@@ -495,7 +499,92 @@ Following from the requirements(Section: \ref{sec:functional-requirements}) and 
 \end{figure}
 
 \clearpage
+
+\section{Security}
+  
+
 \section{Choice of technology}
+
+say why we are using the browser and not native
+\subsection{Web Application Framework}
+
+\subsubsection{Play Framework}
+\paragraph{}
+Play Framework 2 is is an open source web application framework, written in Scala and Java, which follows the model–view–controller (mvc) architectural pattern. 
+\\ \textbf{Pros}:
+\begin{itemize}
+
+\item It dramatically improves the productivity of a developer compared to other Java based web frameworks like Jersey or Spring MVC. The server not always has to be restarted in order to see the changes. \textit{Hot reload} is available for all Java classes, templates and configurations allows for much rapid development. This is available in many dynamic languages, but it is not provided in any other Java framework.
+
+\item Play 2 is open source. If required, everything can be seen how it works. It has a relatively large community, represented by questions on StackOverflow and developers that contribute with developing plug-ins.
+
+\item Java: type safe language. Also JVM performs great and can scale to support many developers and users. Furthermore, Java by itself has a large community and 
+wide variety of IDEs\footnote{Integrated Development Environment} and available libraries.
+	
+\end{itemize}
+\textbf{Cons}:
+\begin{itemize}
+\item Play 2 is relatively new framework so the community is not as big compared to other Java frameworks. 
+
+\item The framework is immature. Not all bugs have been fixed and good practises are still no clearly defined. 
+
+\item Java does not provide features like closures to keep asynchronous code clean. Play is build on top of asynchronous input and output. There are ways to go around this but the application will end up with lots of inner anonymous classes, which will reduce the maintainability and readability of the code.
+
+\item Java does not support Json natively so a third-party library must be used. This, together with its strict types, will lead to big overheads when parsing Json, which 
+is going to be the main source of data for this project.  
+\end{itemize}
+
+\subsubsection{Django}
+\paragraph{}
+Django is free and open source web application framework, written in Python. Its main focus is helping developers to write code, without the need to reinvent the wheel.
+\\ \textbf{Pros}:
+\begin{itemize}
+	\item Django follows the DRY principle: Do not Repeat Yourself. The frameworks is designed so that developers can get the most out of little piece of code. In addition, this automatically leads to less hours spent in developing and lower chance of introducing bugs.
+	\item Good documentation. Django provides sufficient documentation for every release with plenty of code examples. Furthermore, if something is not documented, the code is publicly available on GitHub so 
+	it can be direclty inspected from there or from an IDE like PyCharm. 
+	\item Django provides build-in Admin panel, that is generated automatically for each project. It allows users to manipulate and control users or database objects, specific to the application.
+	\item Django is scalable as it is design on a component based architecture. All the components are decoupled and does not depend on each other so they can be easily unplugged and replaces. Likewise, new components can be simple to introduced. 
+	\item Provides a set of tools that can be useful when writing tests. Tests can be perform not only on the Models and the Controllers, but also on the Views without a third-party library. It provides a build-in request factory, which uses URL resolution to trigger the views. 
+\end{itemize}
+
+\textbf{Cons}:
+\begin{itemize}
+	\item Django is using Python, that is an interpreted language, and it is ofthen slower than compiled languages.  
+	\item If the application is using a database, long queries that make use of multiple JOINs or UNIONs can be quite hard to implement.  
+\end{itemize}
+\subsubsection{Laravel}
+\paragraph{}
+Laravel is a free, open-source PHP web framework, intended for the development of web applications following the model–view–controller (MVC) architectural pattern.
+\\ \textbf{Pros}:
+\begin{itemize}
+	\item Composer - packaging system for PHP and is used for dependency management. Laravel is designed using a component based architecture and the whole framework is available as individual Composer packages. 
+	\item Blade is the Laravel's template engine that is ligthweight and provides clean synstax for views. It supports template inheritance that reduces the duplication of code and reusability of specific template components. 
+	\item Resourceful controllers. 
+\end{itemize}
+	
+	
+\textbf{Cons}:
+\begin{itemize}
+	\item test
+\end{itemize}
+
+\subsection{Javascript}
+
+\subsection{CSS}
+
+\subsection{Chart}
+
+\subsection{Map}
+
+\subsection{Javascript Library}
+
+\subsection{CSS Framework}
+
+\subsection{Chart}
+
+\subsection{Map}
+
+
 
 \chapter{Implementation}
 
