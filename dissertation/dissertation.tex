@@ -10,6 +10,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx} % in the preamble
 \usepackage{adjustbox}
+\usepackage{multicol}
 
 %
 % put any packages here
@@ -500,12 +501,16 @@ Following from the requirements(Section: \ref{sec:functional-requirements}) and 
 
 \clearpage
 
-\section{Security}
   
 
 \section{Choice of technology}
+\paragraph{}
+One of the requirements (Section: \ref{tab:nonFuncReq}) states that the application should be accessible and compatible with desktops, laptops, tablets and smartphone devices. This limits the options in terms of platforms that can be used. Common tool for all these devices is the web browser. For desktops and laptops, this is a great choice as there is a big variety of browsers. On the other hand, this introduces another challenge to the development as some technologies are not compatible with some older browsers like Internet Explorer 7 or lower. Additionally, native applications, developed specificity for a mobile platform like Android or iOS tend to perform better than their web alternatives but will take longer to implement so they are not suitable for such project. This section will try and find technologies, which will fulfil the requirements.
 
-say why we are using the browser and not native
+\subsection{Security}
+\paragraph{}
+Security is top priority when developing a web application. As this project will be used only for displaying data, there are not many vulnerabilities that can be targeted by attackers. First of all, the system will not make use of a database so any attempts for performing SQL Injection, Cross-Site Request Forgery, Sensitive Data Exposure or Cross Site Scripting (XSS) will not lead to a security breach. However, as a safety precaution, all inputs that are received must be validated before being passed to any external service. Furthermore, the application will not require authentication so it is not vulnerable to Insecure Direct Object References or Broken Authentication via stolen cookies. The only possible vulnerabilities are Denial of Service and Man in the middle attacks. For this project, no defence mechanisms will be developed against these attacks. The first one can be mitigated by following the web traffic and blocking suspicious requests. The result of a successful Denial of Service attack will be that users will not be able to access the system due to the server, on which the application is running, has be overloaded with requests and is not able to respond. Man in the middle is a form of attack where the user's network has been breached and an attacker is modifying their traffic. The way to defend against this attack is by introducing the HTTPS protocol that ensures the uniqueness of a website but it requires an expensive certificate.    
+
 \subsection{Web Application Framework}
 
 \subsubsection{Play Framework}
@@ -537,19 +542,18 @@ is going to be the main source of data for this project.
 \subsubsection{Django}
 \paragraph{}
 Django is free and open source web application framework, written in Python. Its main focus is helping developers to write code, without the need to reinvent the wheel.
-\\ \textbf{Pros}:
+\\ \textbf{Pros:}
 \begin{itemize}
 	\item Django follows the DRY principle: Do not Repeat Yourself. The frameworks is designed so that developers can get the most out of little piece of code. In addition, this automatically leads to less hours spent in developing and lower chance of introducing bugs.
 	\item Good documentation. Django provides sufficient documentation for every release with plenty of code examples. Furthermore, if something is not documented, the code is publicly available on GitHub so 
-	it can be direclty inspected from there or from an IDE like PyCharm. 
+	it can be directly inspected from there or from an IDE like PyCharm. 
 	\item Django provides build-in Admin panel, that is generated automatically for each project. It allows users to manipulate and control users or database objects, specific to the application.
 	\item Django is scalable as it is design on a component based architecture. All the components are decoupled and does not depend on each other so they can be easily unplugged and replaces. Likewise, new components can be simple to introduced. 
 	\item Provides a set of tools that can be useful when writing tests. Tests can be perform not only on the Models and the Controllers, but also on the Views without a third-party library. It provides a build-in request factory, which uses URL resolution to trigger the views. 
 \end{itemize}
-
-\textbf{Cons}:
+\textbf{Cons:}
 \begin{itemize}
-	\item Django is using Python, that is an interpreted language, and it is ofthen slower than compiled languages.  
+	\item Django is using Python, that is an interpreted language, and it is often slower than compiled languages.  
 	\item If the application is using a database, long queries that make use of multiple JOINs or UNIONs can be quite hard to implement.  
 \end{itemize}
 \subsubsection{Laravel}
@@ -558,31 +562,47 @@ Laravel is a free, open-source PHP web framework, intended for the development o
 \\ \textbf{Pros}:
 \begin{itemize}
 	\item Composer - packaging system for PHP and is used for dependency management. Laravel is designed using a component based architecture and the whole framework is available as individual Composer packages. 
-	\item Blade is the Laravel's template engine that is ligthweight and provides clean synstax for views. It supports template inheritance that reduces the duplication of code and reusability of specific template components. 
-	\item Resourceful controllers. 
+	\item Blade is the Laravel's template engine that is lightweight and provides clean syntax for views. It supports template inheritance that reduces the duplication of code and re-usability of specific template components. 
+	\item Resourceful controllers: generic routes can be made that directly map to resources in the controller. Makes developing REST a bit easier.
+	\item Laravel is built with testing in mind. It supports PHPUnit directly out of the box. Same as with Django, it provides helper methods that allows for expressive testing.  
+	\item Community is great with many active people on the Laravel's forums.
+	\item Error messages are easy to understand and points directly to the error.
+	\item PHP: built in JSON support.
 \end{itemize}
-	
-	
 \textbf{Cons}:
 \begin{itemize}
-	\item test
+	\item PHP: inconsistent function names in the standard library(for example: isset() and isnull())
+	\item Same as with Python, PHP is interpreted language so that it is slower than compiled languages. However, PHP 7 is advertised to have a big performance improvement over PHP 5.
 \end{itemize}
-
-\subsection{Javascript}
-
-\subsection{CSS}
-
-\subsection{Chart}
-
-\subsection{Map}
-
+% http://www.codeproject.com/Articles/1044334/jQuery-Vs-AngularJS-A-Good-Comparison
 \subsection{Javascript Library}
+\paragraph{}
+In order to improve the user experience and embed a chart and a map into the design, an asynchronous Javascript library is required to simplify the calls to the REST endpoints. Two options were researched: jQuery and AngularJS.
+\\\hspace*{7mm}\textbf{jQuery} is a lightweight Javascript library, which comes with many features. It broadly simplifies the use of Javascript for client-side scripting. It can:
+\begin{multicols}{2}
+	\begin{itemize}
+		\item manipulate the content of a web page.
+		\item make use of built in effects and animations.
+		\item easily make Ajax requests.
+		\item traverse though the DOM.
+	\end{itemize} 
+\end{multicols}
+\textbf{AngularJS} is a MVC framework, developed by Google. Compared to jQuery it has more features but being a framework emphasis on following its rules. It can:
+\begin{multicols}{2}
+	\begin{itemize}
+		\item make use of templates.
+		\item validate forms.
+		\item perform Ajax requests.
+		\item be tested.
+	\end{itemize} 
+\end{multicols}
 
 \subsection{CSS Framework}
+With the rise of mobile devices, making responsive websites and keeping up with the latest technologies is very time consuming and hard to maintain. There are many CSS frameworks that solve this problems but Bootstrap was the only one considered for this project as first of all is one of the most widely used. It is very simple to get started with: just reference the framework into the header of the page. Bootstrap offers 12 column grid system as well as many layouts and components. One of the most important features is providing responsive utility classes that can automatically rearrange a page based on the screen size of the device. Bootstrap has great documentation with a lot of examples and also comes with Javascript plug-ins like drop downs, tool-tips, pop-ups, sliders and many more.   
 
-\subsection{Chart}
+\subsection{Chart Engine}
 
-\subsection{Map}
+\subsection{Map Engine}
 
 
 
