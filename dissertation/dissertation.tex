@@ -598,12 +598,34 @@ In order to improve the user experience and embed a chart and a map into the des
 \end{multicols}
 
 \subsection{CSS Framework}
+\paragraph{}
 With the rise of mobile devices, making responsive websites and keeping up with the latest technologies is very time consuming and hard to maintain. There are many CSS frameworks that solve this problems but Bootstrap was the only one considered for this project as first of all is one of the most widely used. It is very simple to get started with: just reference the framework into the header of the page. Bootstrap offers 12 column grid system as well as many layouts and components. One of the most important features is providing responsive utility classes that can automatically rearrange a page based on the screen size of the device. Bootstrap has great documentation with a lot of examples and also comes with Javascript plug-ins like drop downs, tool-tips, pop-ups, sliders and many more.   
 
-\subsection{Chart Engine}
-
-\subsection{Map Engine}
-
+%https://www.quora.com/How-does-D3-js-compare-with-Google-Charts-API
+\subsection{Graph API}
+\paragraph{}
+Following from the requirements(Section: \ref{sec:functional-requirements}), the application should provide graph visualisation. For this purpose, two APIs were considered: D3.js and Google Charts.  
+\\\hspace*{7mm}\textbf{Google Charts}:
+\begin{multicols}{2}
+	\begin{itemize}[noitemsep]
+		\item contains a wide varsity of charts.
+		\item has a great documentation.
+		\item offers fully implemented examples for all charts. 
+		\item provides extra features like exporting charts as images.
+	\end{itemize} 
+\end{multicols}
+\textbf{D3.js}:
+\begin{multicols}{2}
+	\begin{itemize}[noitemsep]
+		\item offers flexibility.
+		\item does not have a limit on how much data to display.
+		\item provides extra features like zooming and clicking.
+		\item can be used for creating very complex graphs.
+	\end{itemize} 
+\end{multicols}
+\subsection{Map API}
+\paragraph{}
+Going back to the requirements (Section: \ref{sec:functional-requirements}) and the paper prototypes(Section: \ref{sec:paper-prototypes}), the application must be able to show venues on a map and also to take location based input. To simplify the implementation, it will be useful to find an API that provides functionality to fulfil both requirements. Google Maps API\cite{mapusage} was the only one considered as it is free and offers 25,000 map loads per 24 hours for 90 days. It also provides wide variety of customisable options like colours, shapes, markers and many more. Furthermore, Google Places\cite{mapplace}, part of the Google Maps API, features more than 100 million businesses and points of interest that are updated frequently through owner-verified listings and user-moderated contributions. It gives the ability to search for specific place and can be configured to display details like ratings and reviews.
 
 
 \chapter{Implementation}
