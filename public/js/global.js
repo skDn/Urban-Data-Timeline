@@ -30,7 +30,7 @@ var mapDiv = 'googleMap';
 var latInput = 'latInput';
 var lngInput = 'lonInput';
 
-var countRangePlusMinus = 0;
+var countRangePlusMinus = 3;
 
 
 var $timeline_block = $('.section');

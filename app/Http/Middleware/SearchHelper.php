@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 use Urban\Models\TwitterTimeline;
+use Urban\Models\DelayedServices;
+use Urban\Models\TrainStations;
 
 define("DATEASID", "ha");
 define("USEDIFF", false);
@@ -57,7 +59,7 @@ class SearchHelper
         $date = $request->input('date');
         $query = ($query) ? $query : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
-//        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount, $date) : new TwitterTimeline($query, $date);
+        $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount, $date) : new TwitterTimeline($query, $date);
 //        dd($twitTimeline->getData());
         $twit = new Twitter($query, $date);
 
@@ -65,23 +67,22 @@ class SearchHelper
         $lat = $request->input('lat');
         $lng = $request->input('lng');
 
-        // if there are any train stations nearby
+//         if there are any train stations nearby
 //        $delayedService = new DelaysTimeSeries($date);
 //        $delayedService = new DelayedServices($date);
 //        $delayedService->getDate('GLGQHL');
-        //dd($stations);
-        /* TODO: delayed service bug
-        $trainStations = new TrainStations($lat, $lng);
-        $stations = $trainStations->getData($date, 0, 10);
-        // if there are any train stations nearby
-        //dd($stations);
-        if (count($stations) > 0) {
-            $delayedService = new DelayedServices($date);
-            foreach ($stations as $station) {
-                $delayedService->getDate($station['tiploc']);
-            }
-        }
-        */
+        /* TODO: delayed service bug */
+//        $trainStations = new TrainStations($lat, $lng, $date);
+//        $stations = $trainStations->getData();
+//        // if there are any train stations nearby
+//        dd($stations);
+//        if (count($stations) > 0) {
+//            $delayedService = new DelayedServices($date);
+//            foreach ($stations as $station) {
+//                $delayedService->getDate($station['tiploc']);
+//            }
+//        }
+        // */
 
         $venues = new BusyVenues($lat, $lng, $date, null);
 
@@ -93,8 +94,8 @@ class SearchHelper
 
         $mergeQueries = array_merge((array)$twit->getData(),
             ($searchToken && $searchToken === 'venue') ?
-                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData()//,
-//            (array)$twitTimeline->getData()
+                (array)$venues->getVenueData(strtotime($date)) : (array)$venues->getData(),
+            (array)$twitTimeline->getData()
         );
         usort($mergeQueries, array($this, 'date_compare'));
         $response = array(
@@ -123,10 +124,6 @@ class SearchHelper
         return $t1 - $t2;
     }
 
-    /**
-     * @param $mergeQueries
-     * @return array
-     */
     private function generateSections($mergeQueries)
     {
         $sectionDate = null;

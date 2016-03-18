@@ -17,8 +17,9 @@ namespace Urban\Models;
 
 class TrainStations extends AbstractService
 {
-    function __construct($lat, $lon)
+    function __construct($lat, $lon, $date)
     {
+        $this->queryDate = strtotime($date);
         $this->url = config('services.trainStations.url');
         $this->postData = array(
             "request" => array(
@@ -27,6 +28,7 @@ class TrainStations extends AbstractService
                 "radius" => config('controls.stationsRange'),
             )
         );
+        $this->response = $this->sendRequest($this->getPostData());
         $this->responseData = array(
             "trainStations" => null,
         );
@@ -47,11 +49,9 @@ class TrainStations extends AbstractService
         // TODO: Implement setPostDataDate() method.
     }
 
-    public function getCount($queryDate,$resp)
+    public function getCount()
     {
-        $this->setPostDataDate($queryDate);
-        // sending request
-        $response = $this->sendRequest($this->getPostData());
+        $response = $this->getResponse();
 
         $count = 0;
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
@@ -61,7 +61,7 @@ class TrainStations extends AbstractService
             }
         }
         $returnArray = array(
-            'date' => $this->dateToString($queryDate),
+            'date' => $this->dateToString($this->queryDate),
             'count' => $count,
         );
         return $returnArray;
@@ -72,11 +72,9 @@ class TrainStations extends AbstractService
         // TODO: Implement getCountForRange() method.
     }
 
-    public function getData($queryDate, $resp, $start, $end)
+    public function getData()
     {
-        $this->setPostDataDate($queryDate);
-        // sending request
-        $response = $this->sendRequest($this->getPostData());
+        $response = $this->getResponse();
         $returnArr = array();
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             foreach ($response['response']['trainStations'] as $trainStation) {
