@@ -2,12 +2,24 @@
  * Created by skDn on 19/11/2015.
  */
 
+/**
+ * sorting dictionary based on time
+ * @param d
+ * @param k
+ * @returns {Array.<T>|*}
+ */
 function sortDictionary(d, k) {
     return d.sort(function (x, y) {
         return new Date(x[k]).getTime() - new Date(y[k]).getTime();
     })
 }
 
+/**
+ * Converting dictionary to array
+ * @param dict
+ * @param value
+ * @returns {Array}
+ */
 function convertDicToArray(dict, value) {
     var retArray = [];
     for (var key in dict[value]) {
@@ -25,6 +37,10 @@ function convertStringDate(date) {
     return date.substring(8, 11).trim() + '/' + date.substring(5, 7).trim();
 }
 
+/**
+ * on button click, change the data in the chart
+ * @param el
+ */
 function a_onClick(el) {
     drawChartWithData = el.name;
     drawChart();
@@ -38,6 +54,9 @@ function convertDataToChartArray(data) {
     var keys = [];
 
     var dictionary = {};
+    /**
+     * read the json array and form one, suitable for google maps
+     */
     for (var q in data)
         for (var query in data[q]) {
 
@@ -88,6 +107,9 @@ function convertDataToChartArray(data) {
     return retDict;
 }
 
+/**
+ * draw chart using google maps api.
+ */
 function drawChart() {
     if (chartArray == undefined)
         chartArray = convertDataToChartArray(dataToDraw);
@@ -98,6 +120,12 @@ function drawChart() {
     chart.draw(dataConv, options);
 }
 
+/**
+ * Compare method for dates. Check only day, month and year.
+ * @param date1
+ * @param date2
+ * @returns {boolean}
+ */
 function compareDates(date1, date2) {
     return date1.getDate() === date2.getDate() &&
         date1.getMonth() === date2.getMonth() &&
@@ -106,6 +134,10 @@ function compareDates(date1, date2) {
 
 
 $(document).ready(function () {
+    /**
+     * getting all the inputs and forming an array
+     * @returns {Array}
+     */
     function getSearchSpace() {
         var searchSpace = [];
         var lat = $('#' + latInput).val();
@@ -127,6 +159,10 @@ $(document).ready(function () {
         return searchSpace;
     }
 
+    /**
+     * Ajax request for chart data.
+     * @param queries
+     */
     function foo(queries) {
         var resp = [];
         var queryResponses = [];

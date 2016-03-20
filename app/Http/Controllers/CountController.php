@@ -14,6 +14,10 @@ use Urban\Models\Twitter;
 
 class CountController extends Controller
 {
+    /**Preparing count for the user and returning json
+     * @param Request $request
+     * @return string
+     */
     public function getUserCount(Request $request)
     {
 

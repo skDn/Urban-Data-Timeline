@@ -38,6 +38,26 @@ class BusyVenues extends AbstractService
 
     const VENUE_CACHE_LIMIT = 15;
 
+    const LOCATION = 'location';
+
+    const PHONE = 'phone';
+
+    const NAME = 'name';
+
+    const VALUE = 'value';
+
+    const FORMATTED_PHONE = 'formattedPhone';
+
+    const CONTACT = 'contact';
+
+    const ADDRESS = 'address';
+
+    const LNG = 'lng';
+
+    const POSTAL_CODE = 'postalCode';
+
+    const TWITTER = 'twitter';
+
     function __construct($lat, $lon, $date, $radius)
     {
         $this->url = config('services.busyVenues.url');
@@ -70,11 +90,11 @@ class BusyVenues extends AbstractService
         return date("Y-m-d 12:00:00", $date);
     }
 
+    /** Getting how many busy venues are around the area
+     * @return array
+     */
     public function getCount()
     {
-        // init request parameters
-//        $this->setPostDataDate($this->getQueryDate());
-        // sending request
         $response = $this->getResponse();
 
         $count = 0;
@@ -91,6 +111,9 @@ class BusyVenues extends AbstractService
         );
     }
 
+    /**Getting data for busy venues in an area
+     * @return array
+     */
     public function getData()
     {
         /**
@@ -111,7 +134,6 @@ class BusyVenues extends AbstractService
         $cmp_date1 = date(Y_M_D, $this->getQueryDate());
 
         $response = $this->getResponse();
-//        dd($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES]['4dd242367d8b4c6585e723c9']);
         $modifiedData = array();
         $filter = array();
         if (isset($response[self::RESPONSE][self::STATUS]) && $response[self::RESPONSE][self::STATUS] == self::OK) {
@@ -126,10 +148,10 @@ class BusyVenues extends AbstractService
                 $maxValue = 0;
                 $maxTimeSeries = null;
                 // getting venues from the response only for the desired date
-                foreach ($response['response']['results']['venueTimeSeries'][$venue['id']] as $timeSeriesIter) {
-                    if ($timeSeriesIter['value'] > 0.0 && date(Y_M_D, strtotime($timeSeriesIter['dateString'])) === $cmp_date1) {
-                        if ($maxValue < $timeSeriesIter['value']) {
-                            $maxValue = $timeSeriesIter['value'];
+                foreach ($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]] as $timeSeriesIter) {
+                    if ($timeSeriesIter[self::VALUE] > 0.0 && date(Y_M_D, strtotime($timeSeriesIter['dateString'])) === $cmp_date1) {
+                        if ($maxValue < $timeSeriesIter[self::VALUE]) {
+                            $maxValue = $timeSeriesIter[self::VALUE];
                             $maxTimeSeries = $timeSeriesIter;
                         }
                     }
@@ -152,7 +174,7 @@ class BusyVenues extends AbstractService
                                 KEY_DATE_STRING => $newDate,
                                 'users' => $entryInfo['stats']['usersCount'],
                                 'checkins' => $entryInfo['stats']['checkinsCount'],
-                                'location' => $entryInfo['location']['country'],
+                                self::LOCATION => $entryInfo[self::LOCATION]['country'],
                             ));
                             break;
                         }
@@ -167,6 +189,10 @@ class BusyVenues extends AbstractService
         return $modifiedData;
     }
 
+    /** Getting venue data for specific date. Used for VenueTimeseries feature
+     * @param $queryDate
+     * @return array
+     */
     public function getVenueData($queryDate)
     {
         $this->setPostDataDate($queryDate);
@@ -202,12 +228,12 @@ class BusyVenues extends AbstractService
                 array_push($returnArr, array(
                     KEY_CLASS => self::VENUE_TIME_SERIES,
                     KEY_DATE_STRING => $newDate,
-                    'value' => $timeSeries['value'],
-                    'name' => $venueData['name'],
-                    'phone' => array_key_exists('formattedPhone', $venueData['contact']) ? $venueData['contact']['formattedPhone'] : null,
-                    'location' => array_key_exists('address', $venueData['location']) ? $venueData['location']['address'] : null,
-                    self::LAT => $venueData['location'][self::LAT],
-                    'lng' => $venueData['location']['lng'],
+                    self::VALUE => $timeSeries[self::VALUE],
+                    self::NAME => $venueData[self::NAME],
+                    self::PHONE => array_key_exists(self::FORMATTED_PHONE, $venueData[self::CONTACT]) ? $venueData[self::CONTACT][self::FORMATTED_PHONE] : null,
+                    self::LOCATION => array_key_exists(self::ADDRESS, $venueData[self::LOCATION]) ? $venueData[self::LOCATION][self::ADDRESS] : null,
+                    self::LAT => $venueData[self::LOCATION][self::LAT],
+                    self::LNG => $venueData[self::LOCATION][self::LNG],
                 ));
             }
         }
@@ -218,6 +244,9 @@ class BusyVenues extends AbstractService
 
     }
 
+    /**Method that gets the venues near a specific location
+     * @return array
+     */
     public function getVenuesNearBy()
     {
         $response = $this->getResponse();
@@ -225,13 +254,13 @@ class BusyVenues extends AbstractService
         $returnArr = array();
         foreach ($venueData as $venue) {
             array_push($returnArr, array(
-                'name' => $venue['name'],
-                'phone' => array_key_exists('formattedPhone', $venue['contact']) ? $venue['contact']['formattedPhone'] : null,
-                'location' => array_key_exists('address', $venue['location']) ? $venue['location']['address'] : null,
-                'postalCode' => array_key_exists('postalCode', $venue['location']) ? $venue['location']['postalCode'] : null,
-                'twitter' => array_key_exists('twitter', $venue['contact']) ? $venue['contact']['twitter'] : '',
-                self::LAT => $venue['location'][self::LAT],
-                'lng' => $venue['location']['lng'],
+                self::NAME => $venue[self::NAME],
+                self::PHONE => array_key_exists(self::FORMATTED_PHONE, $venue[self::CONTACT]) ? $venue[self::CONTACT][self::FORMATTED_PHONE] : null,
+                self::LOCATION => array_key_exists(self::ADDRESS, $venue[self::LOCATION]) ? $venue[self::LOCATION][self::ADDRESS] : null,
+                self::POSTAL_CODE => array_key_exists(self::POSTAL_CODE, $venue[self::LOCATION]) ? $venue[self::LOCATION][self::POSTAL_CODE] : null,
+                self::TWITTER => array_key_exists(self::TWITTER, $venue[self::CONTACT]) ? $venue[self::CONTACT][self::TWITTER] : '',
+                self::LAT => $venue[self::LOCATION][self::LAT],
+                self::LNG => $venue[self::LOCATION][self::LNG],
             ));
         }
         return $returnArr;

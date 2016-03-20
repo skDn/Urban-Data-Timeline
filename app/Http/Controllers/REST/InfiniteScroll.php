@@ -15,10 +15,23 @@ use Cache;
 
 class InfiniteScroll extends Controller
 {
+    const SECTIONS = 'sections';
+
+    const SECOND = 'second';
+
+    const RESPONSE_FIRST = 'responseFirst';
+
+    const FIRST = 'first';
+
+    const ID = 'id';
+
+    const EVENTS = 'events';
+
+    const RESPONSE_SECOND = 'responseSecond';
+
     public function getSectionToPopulate(Request $request)
     {
 
-//        return json_encode(array('value'=>'test'));
 //        $cacheTag = 'fullResponse'; //config timeline twitter
 
         $cacheKey = '';
@@ -34,25 +47,25 @@ class InfiniteScroll extends Controller
         $fullResponse = Cache::get($cacheKey);
 
 
-        if (array_key_exists('sections', $fullResponse)) {
-            foreach ($fullResponse['sections'] as $section) {
-                if ($section['id'] === $id) {
-                    return json_encode($section['events']);
+        if (array_key_exists(self::SECTIONS, $fullResponse)) {
+            foreach ($fullResponse[self::SECTIONS] as $section) {
+                if ($section[self::ID] === $id) {
+                    return json_encode($section[self::EVENTS]);
                 }
             }
-        } else if (array_key_exists('responseFirst', $fullResponse)) {
+        } else if (array_key_exists(self::RESPONSE_FIRST, $fullResponse)) {
             $returnJson = array(
-                'first' => null,
-                'second' => null
+                self::FIRST => null,
+                self::SECOND => null
             );
-            foreach ($fullResponse['responseFirst']['sections'] as $section) {
-                if ($section['id'] === $id) {
-                    $returnJson['first'] = $section['events'];
+            foreach ($fullResponse[self::RESPONSE_FIRST][self::SECTIONS] as $section) {
+                if ($section[self::ID] === $id) {
+                    $returnJson[self::FIRST] = $section[self::EVENTS];
                 }
             }
-            foreach ($fullResponse['responseSecond']['sections'] as $section) {
-                if ($section['id'] === $id) {
-                    $returnJson['second'] = $section['events'];
+            foreach ($fullResponse[self::RESPONSE_SECOND][self::SECTIONS] as $section) {
+                if ($section[self::ID] === $id) {
+                    $returnJson[self::SECOND] = $section[self::EVENTS];
                 }
             }
             return json_encode($returnJson);

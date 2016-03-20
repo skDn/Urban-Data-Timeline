@@ -11,6 +11,10 @@ var markers = [];
 var markerInput;
 var lat = document.getElementById(latInput);
 var lng = document.getElementById(lngInput);
+
+/**
+ * check if user wants to share location
+ */
 function start() {
     if (navigator.geolocation && lat.value === '' && lng.value === '') {
         navigator.geolocation.getCurrentPosition(success, success);
@@ -21,6 +25,10 @@ function start() {
     }
 }
 
+/**
+ * populate location inputs and setup the map
+ * @param position
+ */
 function success(position) {
     var coords;
     var zoom;
@@ -130,7 +138,10 @@ function callback(results, status) {
         }
     }
 }
-
+/**
+ * create marker at a specific location
+ * @param place
+ */
 function createMarker(place) {
     var placeLoc = place.geometry.location;
 
@@ -148,6 +159,7 @@ function createMarker(place) {
         //icon: 'http://s12.postimg.org/3mxjruq5l/AB5bb.png', // null = default icon
     });
     markers.push(marker1);
+    // add mouse over to show content
     google.maps.event.addListener(marker1, 'mouseover', function () {
         infowindow.setContent(place.name);
         infowindow.open(map, this);
@@ -174,7 +186,10 @@ function getNearbyVenues() {
         }
     });
 }
-
+/**
+ * remove previous markers and replace them
+ * @param results
+ */
 function callbackFromService(results) {
     // Clear out the old markers.
     markers.forEach(function (marker) {
@@ -187,7 +202,10 @@ function callbackFromService(results) {
         }
     }
 }
-
+/**
+ * create markers, based on the venues that are returned from the server
+ * @param place
+ */
 function createMarkerFromServiceResponse(place) {
     //var placeLoc = place.geometry.location;
     //
@@ -234,6 +252,10 @@ function createMarkerFromServiceResponse(place) {
     });
 }
 
+/**
+ * get location of the main marker and setup the zoom
+ * @param address
+ */
 function codeAddress(address) {
     geocoder.geocode({
         'address': address
@@ -257,6 +279,9 @@ function codeAddress(address) {
 //loading google maps
 window.onload = start;
 
+/**
+ * submit a venue search from popup
+ */
 function submitVenueSearch() {
      $('<input>').attr({
      type: 'hidden',
@@ -267,6 +292,10 @@ function submitVenueSearch() {
      $('form').submit();
 }
 
+/**
+ * get twitter account from marker
+ * @param content
+ */
 function getTwitterAccountFromContent(content) {
     var contentInfo = content.split('<br>');
     var queryParameter = '';

@@ -38,7 +38,7 @@ class DelaysTimeSeries extends AbstractService
         // TODO: Implement dateToString() method.
     }
 
-    public function getCount($queryDate, $resp)
+    public function getCount()
     {
         // TODO: Implement getCount() method.
     }
@@ -48,7 +48,7 @@ class DelaysTimeSeries extends AbstractService
         // TODO: Implement getCountForRange() method.
     }
 
-    public function getData($queryDate, $resp, $start, $end)
+    public function getData()
     {
 
     }
@@ -58,8 +58,6 @@ class DelaysTimeSeries extends AbstractService
 
         $this->postData['request']['tiploc'] = $tiploc;
         $response = $this->sendRequest($this->getPostData());
-//        dd($this->getPostData());
-//        dd($response);
         $returnArr = null;
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $returnArr = array();

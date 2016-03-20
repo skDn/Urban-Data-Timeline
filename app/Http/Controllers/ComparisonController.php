@@ -36,6 +36,7 @@ class ComparisonController extends Controller
 
     private function rules()
     {
+        // rules used for validation
         return [
             'query' . $this->firstID => 'required|max:100|alpha_dash',
             'query' . $this->secondID => 'required|max:100|alpha_dash',
@@ -46,18 +47,21 @@ class ComparisonController extends Controller
         ];
     }
 
+    /**
+     * Comparing two events based on request
+     * @param Request $request
+     * @return $this
+     */
     public function compareTwoEvents(Request $request)
     {
-
+        // validating the parameters
         $validator = Validator::make($request->all(), $this->rules());
-
+        // if not valid, the user is redirected back with errors
         if ($validator->fails()) {
             return redirect()->route('comparison')
                 ->withErrors($validator)
                 ->withInput();
         }
-
-
         $response = $this->prepareDataForView($request);
         return view('comparison.result')->with('comparisonData', $response);
     }
@@ -120,21 +124,6 @@ class ComparisonController extends Controller
                 'second' => $secondElement,
             )
         );
-//        dd($response);
-        $cacheKey = '';
-
-        $cacheLimit = 15;
-
-        $requestParameters = array_values($request->all());
-        array_pop($requestParameters);
-
-
-//        foreach ($requestParameters as $value) {
-//            $cacheKey .= $value;
-//        }
-//        if (count($response['elements']['first']) > 0 || count($response['elements']['second']) > 0 ) {
-//            Cache::put($cacheKey, $response, $cacheLimit);
-//        }
 
         return $response;
 

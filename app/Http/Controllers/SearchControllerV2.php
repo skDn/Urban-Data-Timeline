@@ -31,6 +31,7 @@ class SearchControllerV2 extends Controller
 
     private function rules()
     {
+        // rules for validation
         return [
             'query' . $this->firstID => 'max:100|alpha_dash',
             'date' => 'required|date',
@@ -40,6 +41,10 @@ class SearchControllerV2 extends Controller
         ];
     }
 
+    /**Preparing results for single search
+     * @param Request $request
+     * @return $this
+     */
     public function getResults(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules());

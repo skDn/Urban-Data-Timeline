@@ -59,7 +59,6 @@ class DelayedServices extends AbstractService
 
         $this->postData['request']['tiploc'] = $tiploc;
         $response = $this->sendRequest($this->getPostData());
-//        dd($this->getPostData());
         dd($response);
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $response = json_decode($response['response']['jsonResponse'], TRUE);

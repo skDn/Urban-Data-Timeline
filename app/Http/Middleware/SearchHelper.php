@@ -53,7 +53,6 @@ class SearchHelper
 //            }
 //        }
 
-//        dd($cacheKey);
 //        if (Cache::has($cacheKey)) {
 //            return Cache::get($cacheKey);
 //        }
@@ -62,7 +61,6 @@ class SearchHelper
         $query = ($query) ? $query : $request->input('twitterAccount');
         $twitterAccount = $request->input('twitterAccount');
         $twitTimeline = ($twitterAccount) ? new TwitterTimeline($twitterAccount, $date) : new TwitterTimeline($query, $date);
-//        dd($twitTimeline->getData());
         $twit = new Twitter($query, $date);
 
 
@@ -75,7 +73,6 @@ class SearchHelper
 //        $trainStations = new TrainStations($lat, $lng, $date);
 //        $stations = $trainStations->getData();
 //        // if there are any train stations nearby
-//        dd($stations);
 //        if (count($stations) > 0) {
 //            $delayedService = new DelayedServices($date);
 //            foreach ($stations as $station) {
@@ -129,7 +126,6 @@ class SearchHelper
         $sectionDate = null;
         $currentDate = null;
         $section = null;
-        $previousDifference = 0;
         $response = array();
         foreach ($mergeQueries as $event) {
 
@@ -151,25 +147,9 @@ class SearchHelper
                     'events' => array(),
                 );
             }
-
-            if (USEDIFF) {
-                $diff = ($currentDate === null) ? 0 : $date->diff($currentDate);
-                $diff = (!is_object($diff) || $this->my_first_condition($diff))
-                    ? $previousDifference : round(log($diff->i + $diff->h * 60 + $diff->d * 3600, 2));
-            } else {
-                $diff = 0;
-            }
-            $currentDate = $date;
-            $previousDifference = $diff;
             array_push($section['events'], $event);
         }
         return $response;
-    }
-
-    private function my_first_condition($diff)
-    {
-        return $diff->y == 0 && $diff->m == 0 && $diff->d == 0 &&
-        $diff->h == 0 && $diff->i == 0;
     }
 
     private function isFirst($query, $request)

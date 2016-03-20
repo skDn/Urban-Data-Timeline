@@ -22,7 +22,9 @@ class Twitter extends AbstractService
         );
         $this->response = $this->sendRequest($this->getPostData());
     }
-
+    /**Getting how many tweets there were at a given day
+     * @return array
+     */
     public function getCount()
     {
         $response = $this->getResponse();
@@ -36,20 +38,14 @@ class Twitter extends AbstractService
         return null;
 
     }
-
+    /**Getting data for specific query term
+     * @return array
+     */
     public function getData()
     {
-
         $response = $this->getResponse();
-        //TODO: implement infinite scrolling
         if (isset($response['response']['status']) && $response['response']['status'] == 'OK') {
             $returnArr = array();
-//            foreach ($response['response']['serviceJson']['users'] as $arr) {
-//                array_push($returnArr, $arr + array(
-//                        'dateString' => $this->getRandomTimeOfDay($this->getQueryDate()),
-//                        'class' => 'tweet',
-//                    ));
-//            }
             foreach ($response['response']['serviceJson']['tweet'] as $arr) {
                 $date = \DateTime::createFromFormat('jmY His', $arr['time']);
                 array_push($returnArr, array(
@@ -64,7 +60,9 @@ class Twitter extends AbstractService
         }
         return null;
     }
-
+    /**Getting information from the response to summarise the user's request
+     * @return array
+     */
     public function getInfo()
     {
         $response = $this->getResponse();
@@ -95,6 +93,6 @@ class Twitter extends AbstractService
 
     protected function setResponse($data)
     {
-        $this->responseData['twitter'] = $data;
+        $this->response['twitter'] = $data;
     }
 }

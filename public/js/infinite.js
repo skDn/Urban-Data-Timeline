@@ -1,6 +1,8 @@
 /**
  * Created by skDn on 16/02/2016.
  */
+
+// modified afterscroll to return bottom of screen
 (function ($) {
     $.fn.afterScrollPast = function (after_top, before_top, after_bottom, before_bottom) {
         var $win = $(window)
@@ -47,12 +49,14 @@
         })
     }
 })(jQuery);
-const $loading = $('#loading');
 
+const $loading = $('#loading');
+// start of event template
 const eventStart = '<li class="event">' +
     '<i class="event_pointer"></i>' +
 
     '<div class="event_container">';
+// end of event template
 const eventEnd = '</div>' + '</li>';
 
 $(function () {
@@ -65,6 +69,9 @@ $(function () {
                 counter++;
             }
         });
+        /**
+         * make ajax call if user is about to hit the bottom of the page
+         */
         $(document).on('scroll', function () {
             $timeline_block.each(function (event) {
                 //$timeline_elements.each(function () {
@@ -82,7 +89,11 @@ $(function () {
             });
         });
 
-
+        /**
+         * get all inputs from form and url
+         * @param id
+         * @returns {{}}
+         */
         function getInputs(id) {
             var dict = {};
 
@@ -106,6 +117,12 @@ $(function () {
             return dict;
         }
 
+        /**
+         * extract parameter from current url
+         * @param name
+         * @param url
+         * @returns {*}
+         */
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
             name = name.replace(/[\[\]]/g, "\\$&");
@@ -116,6 +133,10 @@ $(function () {
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
 
+        /**
+         * call the server for the events in section with id
+         * @param id
+         */
         function ajaxCall(id) {
             $loading.show();
 
@@ -153,10 +174,19 @@ $(function () {
 
         }
 
+        /**
+         * remove loading events, that were put from the View
+         * @param marker
+         */
         function hideLoadingEvenetsFromSection(marker) {
             marker.children(".loading").removeClass('zoomIn').addClass('zoomOut').hide();
         }
 
+        /**
+         * template for venue time series
+         * @param event
+         * @returns {string}
+         */
         function getHtmlForVenueTimeSeries(event) {
             return eventStart +
                 '<div class="event_title">' +
@@ -194,6 +224,11 @@ $(function () {
 
         }
 
+        /**
+         * template for Venue
+         * @param event
+         * @returns {string}
+         */
         function getHtmlForVenue(event) {
             return eventStart +
                 '<div class="event_title">' +
@@ -238,11 +273,16 @@ $(function () {
 
         }
 
+        /**
+         * template for Tweet
+         * @param event
+         * @returns {string}
+         */
         function getHtmlForTweet(event) {
             return eventStart +
                 '<div class="event_title">' +
-                //'<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
-                '<i class="profile_image"> <img src="'+ event.image +'"> </i>' +
+                    //'<i class="fa fa-twitter fa-2x profile_image twitter"> </i>' +
+                '<i class="profile_image"> <img src="' + event.image + '"> </i>' +
                 '<h3>' + event['screen_name'] + '</h3>' +
                 '<span class="subtitle">@' + event.screen_name + '</span>' +
                 '</div>' +
@@ -257,6 +297,11 @@ $(function () {
                 + eventEnd;
         }
 
+        /**
+         * template for twitter timeline
+         * @param event
+         * @returns {string}
+         */
         function getHtmlForTwitterTimeLine(event) {
             return eventStart +
                 '<div class="event_title">' +
@@ -285,6 +330,11 @@ $(function () {
                 + eventEnd;
         }
 
+        /**
+         * check if comparison view and put the events in the appropriate section
+         * @param data
+         * @param objectToAppend
+         */
         function getEventsHtmlRepresentation(data, objectToAppend) {
             var dataToUse;
             if (objectToAppend.selector.indexOf(timelineFirst) > -1) {

@@ -1,38 +1,9 @@
-//function animateEvenets() {
-//    $(window).on('scroll', function () {
-//        $timeline_block.each(function () {
-//            $timeline_elements.each(function () {
-//                if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9 && $(this).hasClass('is-hidden')) {
-//                    $(this).removeClass('is-hidden').addClass('animated zoomIn');
-//                }
-//            });
-//        });
-//    });
-//}
-
+/**
+ * code that works with the timeline
+ */
 $(document).ready(function () {
     // $('.timeline .timeline_nav').stickyfloat({duration:400});
     $('html, body').animate({scrollTop: ($('#' + googleChart).offset().top) - 150}, 1500);
-
-
-    //hide timeline blocks which are outside the viewport
-    //function makeNonVisibleEventsHidden() {
-    //    $timeline_block.each(function () {
-    //        $timeline_elements.each(function () {
-    //            if ($(this).offset().top > $(window).scrollTop() + $(window).height() * 0.75) {
-    //                if (!$(this).hasClass('is-hidden')) {
-    //                    $(this).addClass('is-hidden');
-    //                }
-    //                if (!$(this).hasClass('loading')) {
-    //                    console.log('here');
-    //                }
-    //
-    //            }
-    //        });
-    //    });
-    //}
-
-    //makeNonVisibleEventsHidden();
 
     $('document').on('event:success', function () {
         console.log('good event');
@@ -40,14 +11,13 @@ $(document).ready(function () {
 
     var $timeline_nav = $('.timeline_nav');
     var $infoBox = $('.infoBox');
-    //var $timeline = $('.timeline');
     var $timeline = $('#' + googleChart);
     var offset = 150;
 
-    //$timeline_nav.addClass('is-hidden');
-    //$infoBox.addClass('is-hidden');
-    //animateEvenets();
-    //on scolling, show/animate timeline blocks when enter the viewport
+    /**
+     * on scroll hide or show navigation bar and information box but only after
+     * specific location is passed
+     */
     $(window).on('scroll', function () {
 
 
@@ -128,7 +98,9 @@ $(document).ready(function () {
         });
     }
     changeCurrentInNavBar();
-
+    /**
+     * change current section on every completed request
+     */
     $(document).ajaxComplete(function (event, xhr, settings) {
         if (settings.url.indexOf('infinite') > -1) {
             changeCurrentInNavBar();

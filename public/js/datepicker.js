@@ -15,6 +15,10 @@ var monthDropDownId = "#monthDropDown";
 var yearDropDownId = "#yearDropDown";
 var startYear = 2013;
 var endYear = 2015;
+
+/**
+ * populating the date picker ui element
+ */
 $(function () {
 
     //populating the fields
@@ -34,6 +38,9 @@ $(function () {
     //end of population
 });
 
+/**
+ * logic behind the data picker
+ */
 $(function () {
     $(".dropdown-menu li").click(function () {
         var itemID = '#' + $(this).closest('div').find('a').attr("id");
@@ -68,13 +75,20 @@ $(function () {
         }
     });
 });
-
+/**
+ * submitting the input form
+ */
 $(function () {
     $('form').submit(function () {
         $(dateInputId).val(getDate());
     });
 });
 
+/**
+ * getting the current date that is entered
+ * @param elementID
+ * @returns {*}
+ */
 function getDate(elementID) {
     var thisDay, thisMonth, thisYear;
     if (elementID !== undefined) {
