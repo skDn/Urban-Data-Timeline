@@ -28,7 +28,7 @@ class TwitterTest extends TestCase
                         "text" => "RT @wattcommunity: FIFA to Scottish national football team in event of No vote | #indyref #YesScotland #noscotland #lol http://t.co/xxFhqOC�",
                         "score" => "",
                         "image" => "",
-                        "screen_name" => ""
+                        "screen_name" => "aboutshawlands"
                     )
                 ),
                 "userSize" => 12,
@@ -143,7 +143,6 @@ class TwitterTest extends TestCase
         $dataEntry = array_values($twitterData)[0];
 
         $this->assertTrue(array_key_exists('screen_name', $dataEntry));
-        $this->assertTrue(array_key_exists('count', $dataEntry));
         $this->assertTrue(array_key_exists('class', $dataEntry));
         $this->assertTrue(array_key_exists('dateString', $dataEntry));
 

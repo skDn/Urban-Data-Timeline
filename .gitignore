@@ -14,3 +14,4 @@ composer.lock
 phpunit-*
 /reports
 .sonar
+.DS_Store

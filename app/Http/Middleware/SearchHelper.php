@@ -38,7 +38,9 @@ class SearchHelper
         foreach ($requestParameters as $value) {
             $cacheKey .= $value;
         }
-//
+/**
+ *      UNCOMMENT IF USING INFINITE SCROLLING IN THE COMPARISON VIEW
+ */
 //        foreach ($requestParameters as $value) {
 //            if ($this->isFirst($query, $request)) {
 //                if ($value !== $request->input("querySecond")) {
@@ -67,11 +69,9 @@ class SearchHelper
         $lat = $request->input('lat');
         $lng = $request->input('lng');
 
-//         if there are any train stations nearby
-//        $delayedService = new DelaysTimeSeries($date);
-//        $delayedService = new DelayedServices($date);
-//        $delayedService->getDate('GLGQHL');
-        /* TODO: delayed service bug */
+/**
+ *      UNCOMMENT IF DELAYED SERVICES API WORKS
+ */
 //        $trainStations = new TrainStations($lat, $lng, $date);
 //        $stations = $trainStations->getData();
 //        // if there are any train stations nearby

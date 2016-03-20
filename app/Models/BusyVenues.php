@@ -16,7 +16,6 @@ class BusyVenues extends AbstractService
     const RESULTS = 'results';
 
 
-
     const Y_M_D_H_I = "Y-m-d H:i";
 
     const VENUE_TIME_SERIES = 'venueTimeSeries';
@@ -87,13 +86,16 @@ class BusyVenues extends AbstractService
             }
         }
         return array(
-            'date' => date(Y_M_D,$this->getQueryDate()),
+            'date' => date(Y_M_D, $this->getQueryDate()),
             'count' => $count,
         );
     }
 
     public function getData()
     {
+        /**
+         * comment this out if using cache
+         */
 //        $this->setPostDataDate($this->getQueryDate());
 //        $post = $this->getPostData();
 //        $cacheLat = $post[self::REQUEST][self::LAT];
@@ -112,39 +114,37 @@ class BusyVenues extends AbstractService
 //        dd($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES]['4dd242367d8b4c6585e723c9']);
         $modifiedData = array();
         $filter = array();
-        //TODO: implement infinite scrolling
         if (isset($response[self::RESPONSE][self::STATUS]) && $response[self::RESPONSE][self::STATUS] == self::OK) {
             foreach ($response[self::RESPONSE][self::RESULTS][self::RESULTS] as $venue) {
                 if ($venue['score'] > 0.0) {
                     array_push($filter, $venue);
                 }
             }
+
             foreach ($filter as $venue) {
-                $timeSeries = array();
-//                TODO: Service has a bug with score to value mapping
-//                foreach($response['response']['results']['venueTimeSeries'][$venue['id']] as $timeSeriesIter)
-//                {
-//                    if($timeSeriesIter['value']>0.0)
-//                    {
-//                        array_push($timeSeries,$timeSeriesIter);
-//                    }
-//                }
-                $randint = rand(0, count($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]]) - 1);
-//                dd($randint);
-                // getting a random record from the time series
-                $timeSeries = array_values($response[self::RESPONSE][self::RESULTS][self::VENUE_TIME_SERIES][$venue[self::ID]])[$randint];
-                $originalDate = $timeSeries[KEY_DATE_STRING];
-                $newDate = date(self::Y_M_D_H_I, strtotime($originalDate));
+                $fullTimeSeries = array();
+                $maxValue = 0;
+                $maxTimeSeries = null;
+                // getting venues from the response only for the desired date
+                foreach ($response['response']['results']['venueTimeSeries'][$venue['id']] as $timeSeriesIter) {
+                    if ($timeSeriesIter['value'] > 0.0 && date(Y_M_D, strtotime($timeSeriesIter['dateString'])) === $cmp_date1) {
+                        if ($maxValue < $timeSeriesIter['value']) {
+                            $maxValue = $timeSeriesIter['value'];
+                            $maxTimeSeries = $timeSeriesIter;
+                        }
+                    }
+                }
+                // if max value of a venue for the day is found, add it to the list of busy venues
+                if (!is_null($maxTimeSeries)) {
+                    array_push($fullTimeSeries, $maxTimeSeries);
+                }
 
-                $venueInformation = array();
-                // getting info for each venue
-                foreach ($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA] as $entryInfo) {
+                foreach ($fullTimeSeries as $timeSeries) {
                     $originalDate = $timeSeries[KEY_DATE_STRING];
-
-                    $cmp_date2 = date(Y_M_D, strtotime($originalDate));
-                    if ($entryInfo[self::ID] == $venue[self::ID]) {
-                        if ($cmp_date1 == $cmp_date2) {
-
+                    // getting info for each venue
+                    // needs refactoring as loops though the array more than once to find the venue info
+                    foreach ($response[self::RESPONSE][self::RESULTS][self::VENUES_DATA] as $entryInfo) {//
+                        if ($entryInfo[self::ID] == $venue[self::ID]) {
                             $newDate = date(self::Y_M_D_H_I, strtotime($originalDate));
                             array_push($modifiedData, array(
                                 KEY_CLASS => KEY_VENUE,

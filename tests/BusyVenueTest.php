@@ -30,7 +30,7 @@ class BusyVenueTest extends TestCase
                         ),
                         array("timeInMilis" => 1435712400000,
                             "dateString" => "2015-07-01 03:00:00",
-                            "value" => 0),
+                            "value" => 10),
                         array("timeInMilis" => 1435712400000,
                             "dateString" => "2015-07-01 04:00:00",
                             "value" => 0),
@@ -159,7 +159,7 @@ class BusyVenueTest extends TestCase
 
         $this->assertTrue(array_key_exists('date', $twitterCount));
         $this->assertTrue(array_key_exists('count', $twitterCount));
-        $this->assertEquals(0, $twitterCount['count']);
+        $this->assertEquals(1, $twitterCount['count']);
     }
 
     /**
@@ -168,7 +168,6 @@ class BusyVenueTest extends TestCase
     public function testGetData()
     {
         $twitterData = $this->_mockedService->getData();
-
         $this->assertEquals(1, count($twitterData));
 
         $dataEntry = array_values($twitterData)[0];
