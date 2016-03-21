@@ -43,39 +43,47 @@ style file l4proj.cls
 Smart cities bring a lot of advantages. They can opt for better urban planning and development by making more efficient use of the infrastructure to improve productivity and services but also to reduce the waste of fuel and energy. Furthermore their intelligence can change and enhance the way authorities respond to changing circumstances. On the other hand, achieving all these goals is a challenging process. Huge amounts of information, created by social feeds, environmental sensors, traffic, news and many more, have to be gathered, stored and analysed. This project aims to combine and visualise all these data strands so that some can look at the cities from a different angle and possibly extract new tendencies and patterns, not possible to discover by following only a single source. This will help us identify problems or challenges that we had not been aware of and provide effective solutions that we all as citizens can only benefit from.
 
 \section{Aims}
+\label{sec:aims}
 \paragraph{}
-This project aims to build a tool for the fusion and visualisation of timely data collected from the UBDC for their project, described earlier (iMCD). Past data from various urban data streams, such as social media posts, news, blogs, traffic information, environmental sensors and many more has been provided. The tool should be able to query all this data and come up with a timeline representation of observations that might be of interest to the user. This application is initially build to be used by the \textbf{general public} but may as all be valuable to local researchers who follow or compare people’s opinions, businessmen who want to know how their business is developing, media that want to report what are the public impressions about an important event and even politicians while running their campaigns.   
+This project aims to build a tool for the fusion and visualisation of timely data collected from the Urban Big Data Centre for their Integrated Multimedia City Data project. Past data from various urban data streams, such as social media posts, news, blogs, traffic information, environmental sensors and many more has been provided. The tool should be able to query all this data and come up with a timeline representation of observations that might be of interest to the user. This application is initially build to be used by the general public but may as all be valuable to local researchers who follow or compare people’s opinions, businessmen who want to know how their business is developing, media that want to report what are the public impressions about an important event and even politicians while running their campaigns.   
 
 \section{Background}
 \paragraph{}
 Smart cities today represent a perception to integrate both information and communication technologies in an acceptable and maintainable fashion to manage their infrastructure and facilities. The optimal goal is to enhance the quality of life and satisfy the residents’ needs. ICT gives to the people, who maintain these cities, the great opportunity to directly follow what is happening and take actions accordingly. This can be done only by processing the huge amounts of information, collected from sensors, in real time and providing knowledge and information: the keys for discovering inefficiencies. 
 \paragraph{}
-However, the biggest asset of a smart city is not the number of cameras or sensors but the people that occupy it. A third of the internet users\cite{ofcomreport1} represent their smartphone as the most important device for going online. A third of the population owns a smart device and use it every day to bank, shop and access social media. Social media streams, such as Twitter, have a reputation to be extremely useful source of information. Anybody can understand what is happening all around the world in real time. With that comes various opportunities for developers to implement systems that automatically detect and track events as they happen. Smart cities can benefit from that as what better way to improve efficiency than for example identifying and reporting road accidents to the emergency services in real time.
+However, the biggest asset of a smart city is not the number of cameras or sensors but the people that occupy it. A third of the internet users\cite{ofcomreport1} represent their smart-phone as the most important device for going online. A third of the population owns a smart device and use it every day to bank, shop and access social media. Social media streams, such as Twitter, have a reputation to be extremely useful source of information. Anybody can understand what is happening all around the world in real time. With that comes various opportunities for developers to implement systems that automatically detect and track events as they happen. Smart cities can benefit from that as what better way to improve efficiency than for example identifying and reporting road accidents to the emergency services in real time.
 \paragraph{}
-Aiming to help with analyzing these massive amounts of data, the Urban Big Data Centre was established by the UK Economic and Social Research Council to address social, economic and environmental challenges facing cities. Their researchers are undertaking innovative projects, covering topics from big data management to linking and analysing the multi-structural urban data.  Such project is the Integrated Multimedia City Data. 
+Aiming to help with analysing these massive amounts of data, the Urban Big Data Centre was established by the UK Economic and Social Research Council to address social, economic and environmental challenges facing cities. Their researchers are undertaking innovative projects, covering topics from big data management to linking and analysing the multi-structural urban data.  Such project is the Integrated Multimedia City Data. 
 
 
 
 \subsection{Integrated Multimedia City Data}
 
 \paragraph{}
-Integrated Multimedia City Data\cite{imcd} (iMCD) is one of the Urban Big Data Centre’s inaugural projects, funded by the Economic and Social Research Council. It is designed to provide the UBDC with innovative primary data sources. The project consists of four strands: representative household survey, tracking of real-time urban sensors, internet based visual media collection and internet based textual media collection.  
+Integrated Multimedia City Data\cite{imcd} (iMCD) is one of the Urban Big Data Centre’s inaugural projects, funded by the Economic and Social Research Council. It is designed to provide the UBDC with innovative primary data sources. The project consists of four strands: representative household survey, tracking of real-time urban sensors, internet based visual and textual media collection.  
 \paragraph{}
-The core research strand is the representative household survey that aims to gather data about people’s attitude and behaviour when it comes to information and communication technologies, traveling and learning. Some of the participants are given GPS and life logging sensors that record their activities and travel. Meanwhile the visual and textual data, referring to Glasgow and surrounding areas, is to be collected from the internet. 
+The core research strand is the representative household survey that aims to gather data about people’s attitude and behaviour when it comes to information and communication technologies, travelling and learning. Some of the participants are given GPS and life logging sensors that record their activities and travel. Meanwhile the visual and textual data, referring to Glasgow and surrounding areas, is to be collected from the internet. 
 \paragraph{}
 All of these strands, together, are able to show how Glasgow performs as a smart city.  The Terrier IR team provides various data web services so that all these sources can be browsed and queried.
 
 \subsection{Terrier IR}
 \paragraph{}
-Tell a bit about Terrier IR
+Terrier IR\footnote{http://terrierteam.dcs.gla.ac.uk/} team consists of researchers, working on large-scale textual information retrieval. They are part of the Computer Science Department at the University of Glasgow. The Terrier IR Platform\footnote{http://terrier.org/} is where they concentrate their research. It is an open source search engine that is highly effective and ready to be used on large-scale collections of documents. 
 
-\subsection{Web Services}
+\subsection{RESTful Web Services}
 \paragraph{}
-Describe what a web service is
+Web technologies are not meant to only deliver HTML pages between HTTP clients but also, with their technical fundamentals of URIs, HTML and HTTP, to provide a widely deployed information delivery and service platform. REST, on the other hand, is a set of constraints that guide the design of such systems. The general claim of RESTful systems, implementing these constraints, are that they are highly scalable and that the interlinking of self-describing representation formats allows such a system to grow organically and in a decentralized way\cite{restful}. As the time of writing, REST is one of the most important technologies that is used in many Web and Mobile applications.
 
 \subsection{Web Application}
 \paragraph{}
-Describe what a web application is
+Web application runs in a web browser and follows the client-server model(\ref{fig:clientserver}). It is based on splitting the tasks or workloads between a provider, called server, and a requester, called client. Web applications can run on every platform as far as there is a web browser. This is a great relief for the developers as there are far less constraints on the implementation. Web applications usually are built from a combination of  server-side and client-side scripts. The server-side scripts take care of storing, processing and retrieving information while the client-side is responsible for presenting it. Furthermore, the separation of concerns allows for updates to be made independently.    
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{images/clientserver}
+	\caption{Client-Server Model}
+	\label{fig:clientserver}
+\end{figure} 
 
 \section{Outline}
 The rest of the report is structured as follows:
@@ -92,7 +100,7 @@ The rest of the report is structured as follows:
 
 \chapter{Related Work}
 \paragraph{}
-There are applications that have been developed to accomplish similar if not the same goals. This chapter is presenting a short description of related products, along with key differences and correlations in comparison with the goals of this project.  
+There are applications that have been developed to use a timeline for presenting some kind of data. This chapter is reveals a short description of related products, along with key differences and correlations in comparison with the main ideas behind this project.  
 
 \subsubsection{Google Maps Timeline} 
 \paragraph{}
@@ -112,6 +120,7 @@ Despite the fact that social media applications have as a main goal the delivery
 Tech City Map pulls streams of social media posts for all the businesses in the East London area and tries to analyse their influence. The idea lies on using a map to display all the corporations in the area and linking them together by using different coloured lines for any tweet from one business to the other. The tool allows searching for a specific company as some points represents more then one corporation and manually searching though the map can be difficult. From 2010 to 2012\footnote{http://flowingcity.com/visualization/tech-city-map/} the number of businesses in East London had risen from 200 to 600. This growth was welcomed even by the Prime Minister at that time, David Cameron, proving that such tools are even followed by politicians. 
 
 \subsubsection{Conclusion}
+\label{subsubsec:conclusion}
 \paragraph{}
 Some of the previously described applications are proven to be successful by millions of users all around the world. However, they focus only on their user and do not really visualise and offer a big variety of data sources. On the other hand, Urban Data Timeline targets the smart city by increasing the user's understating about it. Furthermore, with the help of the Urban Big Data Centre, it has plenty data streams to offer: querying a tweet collection based on a hashtag or specific tweet terms, examining the events, detected by automated systems, related to specific terms, obtaining information about busy venues in an area of a city, finding train stations within a radius of a specific location, searching for delayed trains and accessing past weather data records. Also, all these big companies like Google, Facebook and Twitter provide their own APIs. This brings a great opportunity for this innovative project to become a centralised system where, for example, busy venues can be listed with the tweets from their own Twitter or Facebook accounts and events can be reviewed in depth with the help of news and youtube videos.
 
@@ -168,6 +177,7 @@ The requirements for a system describes the functionality of the services it pro
 At the beginning of the project, a few weeks were taken to envision the high-level requirements and to understand the scope of the required system. For the initial requirements use cases and user stories were extracted to help with exploring how users will work with the system. 
 
 \subsection{Use cases} 
+\label{sec:usecases}
 \paragraph{}
 Use case is a way to describe how a real user interacts with the system. They should not be perfect and can only show the action and not go into much detail, in order to stay close to the agile methodology. The developer will implement the system but will have to work close with the supervisors so that the end product will meet their needs. 
 
@@ -196,7 +206,7 @@ Adding new requirements may change the project direction. Projects usually have 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=4cm,width=6cm]{images/MoSCoW}
+	\includegraphics[width=.5\textwidth]{images/MoSCoW}
 	\caption{MoSCoW rules prioritisation scheme for requirements}
 	\label{MoSCoW}
 \end{figure} 
@@ -362,6 +372,7 @@ The outlined requirements and use cases start to reveal what the system architec
 After summarising the requirements(Section: \ref{sec:functional-requirements}) and the high level diagram(Section: \ref{sec:highLevelDiagram}), some challenges can be identified. The biggest on is building a system that can be used by people without any experience in computing like citizens and satisfies the needs of researchers. Furthermore, the system should be valuable and usable on mobile devices. Taking into account how many services are to be used, the user interface must be designed carefully and efficiently. Additionally, the services are not implemented specifically for these application so a lot of unrelated data has to be filtered out. Moreover, there are multiple services and all the data, received from them, has to be sorted quickly.   
 
 \subsection{User Stories}
+\label{sec:userstories}
 \paragraph{}
 User stories are one of the primary development artefacts for Agile project teams. A user story is a high-level definition of a requirement, containing just enough information so that the developer can get a feel of what the user wants to achieve when using the system and performing a task. It represents a functionality that will be of a value to the user. A suggested template for a user story is: 
 
@@ -369,7 +380,7 @@ User stories are one of the primary development artefacts for Agile project team
 	As a \textbf{\textit{ROLE}}, I want to \textbf{\textit{ACTION}}, so that \textbf{\textit{GOAL}}. \cite{sets}
 \end{center}
 \paragraph{}
-The role represents the user that interacts with the system. The action shows how the user wants to use the system and the goal- what the user is trying to accomplish. All user stories are written in a way that they are understandable by both developer and customer. Ideally the customer should write the user stories while discussing them with the developer \cite{sets}. The following list represents the user stories, captured for this project based on the identified target users(TODO: should I talk about target users):    
+The role represents the user that interacts with the system. The action shows how the user wants to use the system and the goal- what the user is trying to accomplish. All user stories are written in a way that they are understandable by both developer and customer. Ideally the customer should write the user stories while discussing them with the developer \cite{sets}. The following list represents the user stories, captured for this project based on the identified target users:    
 
 \begin{itemize}%[noitemsep]
 	\item \textbf{\textit{Researcher}}.
@@ -406,49 +417,59 @@ The role represents the user that interacts with the system. The action shows ho
 \section{Paper prototypes}
 \label{sec:paper-prototypes}
 \paragraph{}
-As shown on the Figure \ref{uiPrototyping}, designing an interface prototype is an iterative process that consists of four steps. The fist step is determining the needs of the users. This is already discussed in the previous chapter. The second step is building the actual prototype. It is good to start from sketches. Once the sketch (Figure: \ref{initialPaperPrototype}) was finished, a wireframe (Figure: \ref{initialWireframe}) was prepared to be evaluated during the next meeting so that changes can be made before the start of the implementation. 
-
-\paragraph{}
-During the implementation process, there had been a few changes to the design. In iteration 6, 8(reference progress reports) and 9 new requirements were identified and modifications to the whole design were required (Figures: \ref{finalPrototypeEvent} and \ref{finalPrototypeCompare}). 
-
+As shown in Figure \ref{uiPrototyping}, designing an interface prototype is an iterative process that consists of four steps. The fist step is determining the needs of the users. This is already discussed in the previous chapter. The second step is building the actual prototype. It is good to start from sketches. Once a sketch (Figure: \ref{initialPaperPrototype}) was completed, a wireframe (Figure: \ref{initialWireframe}) was prepared to be evaluated during the next meeting so that changes can be made before the start of the implementation. 
 
 \begin{figure}[H]
-	\begin{subfigure}{.3\textwidth}
+	\begin{subfigure}{.33\textwidth}
 		\centering
-		\includegraphics[height=4cm,width=3cm]{images/uiPrototyping}
+		\includegraphics[width=\textwidth]{images/uiPrototyping}
 		\caption{Prototyping process}
 		\label{uiPrototyping}
 	\end{subfigure}
-	\begin{subfigure}{.3\textwidth}
+	\begin{subfigure}{.33\textwidth}
 		\centering
-		\includegraphics[height=4cm,width=4cm]{images/initialPaperPrototype}
+		\includegraphics[width=\textwidth]{images/initialPaperPrototype}
 		\caption{Initial Paper Prototype.}
 		\label{initialPaperPrototype}
 	\end{subfigure}
-	\begin{subfigure}{.3\textwidth}
+	\begin{subfigure}{.33\textwidth}
 		\centering
-		\includegraphics[height=4cm,width=4cm]{images/initialWireframe}
+		\includegraphics[width=\textwidth]{images/initialWireframe}
 		\caption{Wireframe from the paper prototype}
 		\label{initialWireframe}
 	\end{subfigure}
-	\begin{subfigure}{.3\textwidth}
-		\centering
-		\includegraphics[height=4cm,width=4cm]{images/FinalPrototypeEvent}
-		\caption{Wireframe for event exploring}
-		\label{finalPrototypeEvent}
-	\end{subfigure}
-	\begin{subfigure}{.3\textwidth}
-		\centering
-		\includegraphics[height=4cm,width=4cm]{images/FinalPrototypeCompare}
-		\caption{Wireframe for comparing events}
-		\label{finalPrototypeCompare}
-	\end{subfigure}
-	\caption{Paper Prototypes and Wireframes}
+	\caption{Paper Prototypes}
 \end{figure} 
+
+
+\paragraph{}
+During the implementation process, there had been a few changes to the design. The first few iterations were enough to visualise the initial prototype and it was time to think about what the user was going to extract from using the system. Key limitations of the design were identified as it narrowed the user experience by not providing visual representation of data, that was otherwise available for use to the system. Figures  \ref{finalPrototypeEvent} and \ref{finalPrototypeCompare} show the new version of the design. A map component was included so any service, that uses location based input can be used. Also a Comparison Screen(Figure: \ref{finalPrototypeCompare}) was designed so that users will be given the opportunity to compare events side by side. The list of requirements and user stories was updated to reflect on these changes.
+
+\begin{figure}[H]
+%		\begin{subfigure}{.33\textwidth}
+%			\centering
+%			\includegraphics[width=\textwidth]{images/initialWireframe}
+%			\caption{Wireframe from the paper prototype}
+%			\label{initialWireframe}
+%		\end{subfigure}
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{images/FinalPrototypeEvent}
+			\caption{Wireframe for event exploring}
+			\label{finalPrototypeEvent}
+		\end{subfigure}
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{images/FinalPrototypeCompare}
+			\caption{Wireframe for comparing events}
+			\label{finalPrototypeCompare}
+		\end{subfigure}
+		\caption{Wireframes}
+\end{figure}
 
 \section{Architecture diagrams}
 \paragraph{}
-The Urban Data Timeline makes use of the Three Tier Architectural model as described in Section \ref{sec:highLevelDiagram}. Based on the diagram, provided in the referenced section, a more in-depth diagram was designed to outline some of the key components of the system (Figure: \ref{componentDiagram}).
+The Urban Data Timeline makes use of the Three Tier Architectural model as described in Section \ref{sec:highLevelDiagram}. Based on the diagram \ref{highLevelDiagram} a more in-depth diagram was designed to outline some of the key components of the system (Figure: \ref{componentDiagram}).
 
 \subsubsection{Client}
 \paragraph{}
@@ -460,7 +481,7 @@ The Middleware consists of four components - Controller, View, Cache, and Model.
 
 \subsubsection{Data}
 \paragraph{}
-The Data currently consists of two services. The first one is the UBDC web service and it is key to this project as it separates into Twitter, Busy Venue, Delayed Transport, Train and Weather services. As for now, only the first four services are used. The second on is the Twitter API. It is used to compensate for some of the limitations of the other Twitter service, provided by the UBDC, and to broaden the possibilities of tweets querying.        
+The Data currently consists of two services. The first one is the UBDC web service and it is key to this project as it separates into Twitter, Busy Venue, Delayed Transport, Train and Weather services(brief description of the services can be found at Section \ref{sec:aims} and \ref{subsubsec:conclusion}). As for now, only the first four services are used. The second one is the Twitter API. It is used to compensate for the limitation of the Twitter service, provided by the UBDC, which only allows for queering the results based on hashtags. The additional API will broaden the possibilities of tweets querying by adding the option to search by username and get access to tweets from specific twitter account.        
   
 
 \begin{figure}[H]
@@ -470,38 +491,30 @@ The Data currently consists of two services. The first one is the UBDC web servi
 	\label{componentDiagram}
 \end{figure}
 
-
-\clearpage
 \section{Components communication}
 \paragraph{}
-Following from the previous section, this section describes how actually the components are communicating between each other. There are two scenarios, based on what request is made by the browser. 
+This section describes how actually the components are communicating between each other. There are two scenarios, based on what request is made by the browser. 
 
 \subsection{HTTP Request}
 \paragraph{}
-The first one(Figure: \ref{HTTPRequest}) follows the traditional pattern when the user wants to access a page, which visualises data, using the application. To begin with, the browser makes a HTTP GET request to the controller, that maps to a specific URL. Then the request is validated against a set of rules and analysed so that the right Model can be invoked. Then the data is requested from the Model. The Model checks the Cache to see if the data is available there and if yes, returns it to the Controller. On the other hand, if the data is not available, a XMLHTTP POST Request is made to specific Web Service and a XMLHTTP Response is received in the form of a Json object. Depending on the initial request by the user, some of the data from the Json is filtered out and the rest is stored in the Cache for a specified amount of time. Cache is not only part of the requirements but it is important as users, like researchers, are expected to do many similar request by changing only one or two variables at a time. Once the model is finished, manipulating the data, it is sent back to the Controller that redirects it to the View. The View formats the data, according to its type, and sends back to the Controller. Finally the Controller returns HTTP Response with the generated HTML.  
-
-\subsection{XMLHTTP Request}
-Following from the requirements(Section: \ref{sec:functional-requirements}) and the paper prototypes(Section: \ref{sec:paper-prototypes}), some of the elements(Map and Chart) cannot be rendered by the View. In addition, these elements use Ajax that performs XMLHTTP Requests in stead of HTTP Request. In order to handle such requests, the system must provide REST endpoints. If the browser makes a XMLHTTP request to one of the endpoints, the Controller, same with the previous case, performs the same steps but in this case there is no communication with the View. The data, returned from the services, is filtered and sent, via a XMLHTTP Response in a Json format, back to the user. 
+The first one(Figure: \ref{HTTPRequest}) follows the traditional pattern when a user wants to access a page, which visualises data, using the application. Taking as an example one of the user stories from Section \ref{sec:userstories}, a researcher is on the home page and wants to know what are the popular tags for a given day. First step is to fill all the required inputs and then press on the search button. Then a new page is rendered on the screen and the researcher can start interacting. However, for all this to happen, the browser has to communicate with the application's server. To begin with, it makes a HTTP GET request to the controller, that maps to the action, triggered by the search button. Then all the inputs are validated against a set of rules and analysed so that the right Model can be invoked. Then the data is requested from the Model. The Model checks the Cache to see if the data is available there and if yes, returns it to the Controller. On the other hand, if the data is not available, a XMLHTTP POST Request is made to a specific Web Service and a XMLHTTP Response is received in the form of a Json object. Depending on the initial request by the researcher, some of the data from the Json is filtered out and the rest is stored in the Cache for a specified amount of time. Cache is not only part of the requirements but it is important as users, like researchers, are expected to do many similar requests by changing only one or two variables at a time. Once the model has finished, manipulating the data, it is sent back to the Controller that redirects it to the View. The View formats the data, according to its type, and sends it back to the Controller. Finally the Controller returns an HTTP Response with the generated HTML.  
 
 \begin{figure}[H]
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[height=5cm,width=7cm]{images/HTTPRequestSequenceDiagram}
-		\caption{HTTP Request Sequence diagram}
-		\label{HTTPRequest}
-	\end{subfigure}
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[height=5cm,width=7cm]{images/XMLHTTPRequestSequenceDiagram}
-		\caption{XMLHTTP Request Sequence diagram}
-		\label{XMLHTTPRequest}
-	\end{subfigure}
-	\caption{Components communication}
+	\centering
+	\includegraphics[width=\textwidth]{images/HTTPRequestSequenceDiagram}
+	\caption{HTTP Request Sequence diagram}
+	\label{HTTPRequest}
 \end{figure}
 
-\clearpage
+\subsection{XMLHTTP Request}
+Following from the requirements(Section: \ref{sec:functional-requirements}) and the paper prototypes(Section: \ref{sec:paper-prototypes}), some of the elements(Map and Chart) cannot be rendered by the View. In addition, these elements use Ajax that performs XMLHTTP Requests instead of HTTP Request. In order to handle such requests, the system must provide REST endpoints. If the browser makes a XMLHTTP request to one of the endpoints, the Controller, similar to the previous case, performs the same steps but in this case there is no communication with the View. The data, returned from the services, is filtered and sent, via a XMLHTTP Response in a Json format, back to the user. 
 
-  
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/XMLHTTPRequestSequenceDiagram}
+	\caption{XMLHTTP Request Sequence diagram}
+	\label{XMLHTTPRequest}
+\end{figure}
 
 \section{Choice of technology}
 \paragraph{}
@@ -649,11 +662,12 @@ The first step from the evaluation planning was clarifying the goals and objecti
  Finally, the evaluation process looked as follows: first the participants performed the list of tasks, then they were given a SUS questionnaire and in the end was the Think Aloud. The actual evaluation was decided to be spilt into two parts: initial and final phase.
 \subsection{Initial phase}
 \paragraph{}
-The initial phase was crucial as it allowed for piloting the evaluation. It represents a small scale preliminary study conducted in order to evaluate feasibility, time, and cost in an attempt to predict an appropriate sample size prior to performance of the final full-scale evaluation\cite{clinicalresearch}. Piloting allowed for improvements upon the study design by fixing bugs in the software and see if the initially planned evaluation would have given the desired results.
-
+The initial phase was crucial as it allowed for piloting the evaluation. It represents a small scale preliminary study conducted in order to evaluate feasibility, time, and cost in an attempt to predict an appropriate sample size prior to performance of the final full-scale evaluation\cite{clinicalresearch}. Piloting allowed for improvements upon the design of the experiment by fixing bugs in the software and see if the initially planned evaluation would have given the desired results. However, the final version of the system was not used in this phase as some of its features were still under development. 
+\subsubsection{Results}
 \paragraph{}
-Four students from the University of Glasgow participated in the Initial phase. Two of them were studying Computer Science, one Music and the last one, Sociology. The average time for completing the whole process was 9 minutes and 27 seconds. Three tasks(the list can be seen at Table: \ref{tab:initialevaltasks}) were given to each participant, followed by the SUS questionnaire.  
-
+Four students from the University of Glasgow participated in the Initial phase. Two of them were studying Computer Science, one Music and the last one, Sociology. The average time for completing the whole process was 9 minutes and 27 seconds. Three tasks (the list can be seen at Table: \ref{tab:initialevaltasks}) were given to each participant, followed by the SUS questionnaire. Based on research, a SUS score above a 68(out of 100) would be considered above average. The score that the system got at these stage was 75. This proves that the participants liked the system overall and felt that it was easy to use. However, 3 out of 4 participants disagreed on the first question of the questionnaire that states: I think that I would like to use this system frequently. When asked during the Think Aloud, main reason for that was they do not use twitter or they are not doing a research, as this application would have been great for researchers. Proof of that was the sociology student that agreed on this question. When asked what they think about the application as a whole, 2 out of 4 said that it is quite unique and they have not used any similar system so far.
+\paragraph{}
+The Think Aloud was also beneficial in terms of feedback on the design and the features of the system. For three of the participants, the buttons under the graph were not clear if they are for the graph or for the timeline and they suggested for better separation of the components. Two of the participants did not notice some of the features(the navigation bar for the timeline and the information box that pops up from the top) and when asked afterwards, said that these were useful but their main focus was on completing the tasks and did not look for hints. All of the participants liked the clearness of the design and the graphics. Also one of them suggested alternative use case about using the application in television shows to present people's opinions about a specific topic. Furthermore, two of them said that they could use the system during a political event and see how other people think, which completely overlaps with one of the use cases in Section \ref{sec:usecases} 
 \begin{table}[ht]
 	\centering
 	\begin{adjustbox}{width=1\textwidth}
@@ -679,9 +693,28 @@ Four students from the University of Glasgow participated in the Initial phase. 
 \end{table}
 
 \subsection{Final phase}
+\paragraph{}
+The feedback from the initial phase was positive but did not fully achieved the main goal of the evaluation: proving that the features were actually of use to the users. In order to improve, the first section of the evaluation process had to be redesigned. Two hypothesis were introduced. The first one was that the time of completing a task was affected by the interface. The second one tested if the interface had an affect on the number of clicks, performed for completing the task. In order to complete the experiment, A/B testing was used. It is a technique that compares two versions of a single variable and finds out which of the two variables is more effective. The idea, when testing a web application, is to show two versions of the interface to similar participants at the same time. In the case of this project, the desktop and mobile versions offer similar features. To solve this, a third system was extracted, where some of the features were disabled. However, they were selected in a way that will not prevent the participants from performing their tasks. The information box, timeline navigation bar, sections headings, which show in what timeslot is the current event on the screen, bar graph and infinite scrolling were all of the removed features. On the other hand, the full system was improved, as suggested in the initial evaluation, and components were separated by following Google's Material Design\footnote{https://www.google.com/design/spec/material-design/introduction.html} and visualising them as Cards\footnote{https://www.google.com/design/spec/components/cards.html}. Cards are a convenient means of displaying content composed of different elements. They are also well-suited for showcasing elements whose size or supported actions vary(\textbf{add screenshot}).
 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|} \hline
+		Number of Participants&	Interface & Task &	Interface & Task \\ \hline
+		2 	& 1	& 1	& 2 & 2  \\ \hline
+		2	& 2	& 1	& 1 & 2  \\ \hline
+		2 	& 1	& 2	& 2 & 1  \\ \hline
+		2	& 2	& 2 & 1 & 1  \\ \hline
+		2 	& 1	& 1	& 3 & 2  \\ \hline
+		2	& 3	& 1	& 1 & 2  \\ \hline
+	\end{tabular}
+	\caption{Distribution of Participants per Task and Interface after Counterbalancing}
+	\label{tab:counterbalancing}
+\end{table}
 
-\begin{table}[ht]
+\paragraph{} 
+In addition, counterbalancing method was used in the designing of the final experiment. It can be defined as using all of the possible orders of conditions to control order effects\cite{counterbalancing}. 12 participants were allocated for this experiment and Table \ref{tab:counterbalancing} shows their distribution according to the task and interface. The participants first had to complete a task, using one version of the interface, and then fill the questionnaire about that particular interface. Then, they were given another version and a different task with the same questionnaire in the end. This technique was used in order to try and minimize the disadvantages, such as learning effect and boredom, of paired experiments. The Think Aloud was kept in the end, trying to focus more on comparing the evaluated systems. Additionally, the list of tasks was modified (Table \ref{tab:finalevaltasks}) to try and make the participants interact more with the system. Due to time constraints, the functionality behind the third task was not fully implemented and it was given as optional for the participants, who were keen on discussing it.     
+
+\begin{table}[H]
 	\centering
 	\begin{adjustbox}{width=1\textwidth}
 		\begin{tabular}{|c|p{14cm}|}\hline
@@ -704,6 +737,104 @@ Four students from the University of Glasgow participated in the Initial phase. 
 	\caption{Final Evaluation tasks list}
 	\label{tab:finalevaltasks}
 \end{table}
+
+
+
+\subsubsection{Results from Task}
+\paragraph{}
+The first hypothesis suggested that there will be an interaction between the independent variables of task and interface on total completion time. The mean total time of completing tasks 1 and 2 on each of the three interfaces were obtained and are presented in Table \ref{tab:timepertaskandinterface} and illustrated in Figure \ref{ch:meantimebargraph} with error bars identifying Standard Deviation. The lowest mean value for Task 1 was the completion using Interface 2 (M=168.52, SD=19.95). The highest value on Task 1 was obtained using Interface 1 (M=215.19, SD=117.97).  Accordingly, Task 2 was completed fastest on Interface 1 (M=152.19, SD=36.62) and slowest on Interface 2 (M=336,35, SD=41.73). The lowest total time of completing both tasks is on Interface 3 (365.28). When being plotted on a line graph, the obtained values suggest interaction (Figure \ref{ch:meantimelinegraph}). Therefore, the descriptive statistics seem to support the first testing hypothesis. 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|l|} \hline
+		Task\textbackslash Interface Time(s)&	Interface 1	& Interface 2 &	Interface 3 \\ \hline
+		Task 1 	& 215.30 (117.97)	& 168.52 (19.95)	& 171.62 (124.19)  \\ \hline
+		Task 2	& 152.19 (36.62)	& 336.35 (41.73)	& 193.66 (105.56)  \\ \hline
+		Total Time(s)	& 367.49 & 	504.87	& 365.28 \\ \hline
+	\end{tabular}
+		\caption{Mean Time for Task, performed on Interface}
+		\label{tab:timepertaskandinterface}
+\end{table}
+
+
+\begin{figure}[H]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{charts/table1.pdf}
+		\caption{Mean Time Bar Graph}
+		\label{ch:meantimebargraph}
+	\end{subfigure}
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{charts/table2.pdf}
+		\caption{Mean Time Line Graph}
+		\label{ch:meantimelinegraph}
+	\end{subfigure}
+	\caption{Results for Dependant Variable: Time}
+	\label{fig:time}
+\end{figure}
+
+\paragraph{}
+A 3x2 mixed factorial ANOVA was used to analyse the data. A significant interaction between Task and Interface was found (F(2,18)=5.058, p<0.05, η2=0.360). However, there were no significant main effect of Interface (F(2,18)=1.866, p=0.185, η2=0.172) an of Task (F(1,18)=1.903, p=0.185, η2=0.096). 
+\paragraph{}
+The second hypothesis suggested that there will be an interaction between Task and Interface on Total Number of Clicks. The mean number of clicks for completion of a task using a particular Interface were obtained and presented in Table \ref{tab:clickspertaskandinterface}. These were also illustrated along with errors bars for Standard Deviation on Figure \ref{ch:meantimebargraph}. As it is shown, Task 1 is on average completed with the least number of clicks on Interface 1 (M=21.50, SD=11.62), and largest number on Interface 2 (M=30.25, SD=2.754). The best mean value on Task 2 was also completed on Interface 1 (M=13.17, SD=0.753), and the highest mean value on Interface 2 (M=16, SD=1.826). The lowest total number of clicks required for completion of both tasks was obtained on Interface 1 (34.67). Furthermore, as it is illustrated in Figure \ref{ch:meanclicklinegraph}, when plotted on a line graph, there is no evidence of interaction. 
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|l|} \hline
+		Task\textbackslash Interface Clicks(count)&	Interface 1	& Interface 2 &	Interface 3 \\ \hline
+		Task 1 	& 21.50 (11.62)	& 30.25 (2.754)	& 27.00 (8.49)  \\ \hline
+		Task 2	& 13.17 (0.753)	& 16.00 (1.826)	& 15.00 (2.828)  \\ \hline
+		Total Clicks(count)	& 34.67	& 46.25 & 42.00 \\ \hline
+	\end{tabular}
+	\caption{Mean Number of Clicks for Task, performed on Interface}
+	\label{tab:clickspertaskandinterface}
+\end{table}
+
+\begin{figure}[H]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{charts/table3.pdf}
+		\caption{Mean Number of Clicks Bar Graph}
+		\label{ch:meanclicksbargraph}
+	\end{subfigure}
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{charts/table4.pdf}
+		\caption{Mean Number of Clicks Line Graph}
+		\label{ch:meanclicklinegraph}
+	\end{subfigure}
+	\caption{Results for Dependant Variable: Clicks}
+	\label{fig:clicks}
+\end{figure}
+\paragraph{}
+A second 3x2 mixed factorial ANOVA of Task (1*2) and Interface (1*2*3) was run to explore the number of clicks. No significant interaction between Task and Interface was found (F=(2,18), p=0.618, η2=0.052). Also there was no main effect of Interface on number of clicks per task completion (F=(2,18)=1.901, p=0.178, η2=0.174). However, a significant main effect of Task was found (F(1,18)=14.844, p<0.05, η2=0.52). 
+
+\subsubsection{Results from Questionnaire}
+\paragraph{}
+All the participants had to complete the System Usability Scale questionnaire twice, once after each task and interface. For interface 1, representing the system with all the features, it was filled 12 times, for interface 2(the mobile version): 8 times and for interface 3(the version with the removed features): 4 times. Figure \ref{fig:susresultsmean} shows the scores after calculating the results. The biggest mean score is for interface 1(89.38), followed by interface 2(87.50) and interface 3(84.25). The fact that only 4 people filled in the questionnaire for interface 3 did not affect the overall score in this case as when further analysed, all of them had disagreed on the same statement: I found the various functions in this system were well integrated. In comparison, 3 of the them agreed and 1 strongly agreed on the same statement when asked for interface 1. On the other hand, the difference between interface 1 and 2 came from the fact that 4 participants disagreed on the first statement(I think that I would like to use this system frequently) after performing a task on the mobile version but agreed after using the full version. Finally, when asked, 8 participants said that they might not use the system as they did not use Twitter.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\textwidth]{charts/SUSScaleMeanValues.pdf}
+	\caption{SUS Scale Mean Values per Interface}
+	\label{fig:susresultsmean}
+\end{figure}
+
+\subsubsection{Results from Think Aloud}
+\paragraph{}
+The Think Aloud was beneficial in two ways. First, it helped proving that the changes to the interface, performed after the initial phase of the evaluation,  were successful as none of the participants had any comments on the new separation of components. Second, it helped identifying potential usability issues as well as comparing the different interfaces. 
+\paragraph{}
+Also, while performing tasks on interface 1, 4 participants said that the date input was not clear. The reason was that there were arrows and clearly written Day, Month and Year on the buttons but nothing was leading them to the conclusion that this was the place where they had to input a date. 3 participants were confused by the tweets and their text as they were not used to Twitter and the notion of multiple hash-tags. Additionally, when performing task 2, 5 participants made an error while inputting the venue in the search input box and 2 of them did not even notice the error message, returned from the system. Also, 6 participants were misled and thought that entering the venue in the location input box would lead them to the required place and did not take into account any chance for a difference in coordinates. 
+\paragraph{}
+Furthermore, while using interface 2 and performing task 2, 6 participants said that they had to scroll too much in order to reach the target and 2 of them suggested squeezing the timeline in case of too many tweets in a particular section and give the option to show more if required. 5 participants forgot which query corresponded to which timeline in the comparison screen due to the long scrolling and needed to go back to the top of the page. 3 people were confused from the Busy Venues events, which were displayed, and stated that there were no clues for showing the source of information. Furthermore, 4 participants felt it hard to find the place on the map as on mobile devices there is no hoover effect and only after pressing on the screen, they could have determine the venue that was selected. On the other hand, 6 participants liked the alignment of the timelines and the fact that they could be compared directly.
+\paragraph{}
+In addition, for interface 3, all of the participants directly noticed the lack of features and started looking for clues around the interface. They did not like the fact that there was no clear separation of the sections and that they had to follow the timestamp on each event in order to determine the timeslot. Finally, all did not notice the lack of a graph but when asked, they pointed out that it was not needed for the particular task.
+
+\subsubsection{Conclusion}
+\paragraph{}
+The results from the two ANOVA tests revealed that there is no significant effect of the interface, on its own, on the performance of the participants. However, due to the small sample size(12 people), the outcome of the experiment can not be generalised. Contrastingly, the analysis of the Questionnaire and Think Aloud evaluations revealed that the participants tend to prefer Interface 1, which represents the full system, due to its extra features.      
+
 \section{Testing}
 
 \chapter{Future work}
