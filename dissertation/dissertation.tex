@@ -12,6 +12,39 @@
 \usepackage{adjustbox}
 \usepackage{multicol}
 
+
+% code
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	language        = php,
+	emph            =[1]{php},
+	emph            =[2]{if,and,or,else},
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=matlab,
+	basicstyle=\scriptsize,
+	upquote=true,
+	aboveskip={1.5\baselineskip},
+	columns=fixed,
+	showstringspaces=false,
+	extendedchars=true,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	frame=single,
+	showtabs=false,
+	showspaces=false,
+	showstringspaces=false,
+	identifierstyle=\ttfamily,
+	keywordstyle=\color[rgb]{0,0,1},
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
 %
 % put any packages here
 %
@@ -149,19 +182,19 @@ feature is introduced after each sprint and changes to previous features are per
 \begin{figure}[H]
 \begin{subfigure}{.3\textwidth}
 	\centering
-	\includegraphics[height=4cm,width=4cm]{images/projectInitial}
+	\includegraphics[width=\textwidth]{images/projectInitial}
 	\caption{Start of a project.}
 	\label{projectInitial}
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
 	\centering
-	\includegraphics[height=4cm,width=4cm]{images/projectStart}
+	\includegraphics[width=\textwidth]{images/projectStart}
 	\caption{Waterfall methodology.}
 	\label{projectStart}
 \end{subfigure}
 \begin{subfigure}{.3\textwidth}
 	\centering
-	\includegraphics[height=4cm,width=4cm]{images/projectAgile}
+	\includegraphics[width=\textwidth]{images/projectAgile}
 	\caption{Agile methodology.}
 	\label{projectAgile}
 \end{subfigure}
@@ -517,6 +550,7 @@ Following from the requirements(Section: \ref{sec:functional-requirements}) and 
 \end{figure}
 
 \section{Choice of technology}
+\label{sec:choiceoftec}
 \paragraph{}
 One of the requirements (Section: \ref{tab:nonFuncReq}) states that the application should be accessible and compatible with desktops, laptops, tablets and smartphone devices. This limits the options in terms of platforms that can be used. A common tool for all these devices is the web browser. For desktops and laptops, this is a great choice as there is a big variety of browsers. On the other hand, this introduces another challenge to the development as some technologies are not compatible with some older browsers like Internet Explorer 7 or lower. Additionally, native applications, developed specificity for a mobile platform like Android or iOS tend to perform better than their web alternatives but will take longer to implement so they are not suitable for such project. This section will present technologies, which will fulfil the requirements.
 
@@ -655,13 +689,140 @@ Going back to the requirements (Section: \ref{sec:functional-requirements}) and 
 
 \chapter{Implementation}
 
-\section{Model}
+\section{Prototype Implementation}
+\paragraph{}
+The first three iterations of the project focused on the background research, project planning, requirements gathering and choosing the technologies. Furthermore, the fourth iteration involved producing a prototype out of the wireframes(Figure: \ref{initialWireframe}). A simple static HTML page was developed to represent the key components: search box, date picker, chart and timeline. The search box(Figure: 5.1) was a simple input html field. Its purpose was to get user's input. Also a hint was included(\textit{input a query}) in order to make it clear what this field was supposed to take as parameters. The date picker was implemented using dropdown menus for the day, the month and the year. Two additional buttons were added on both sides to help the user to quickly adjust the date input without the need to go and use the menus again.        
 
-\section{View}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/searchboxwithdatepicker}
+	\label{fig:searchbox}
+	\caption{Search Box and Date picker}
+\end{figure}
 
-\section{Controller}
+\paragraph{}
+For the purpose of the prototype, an open-source vertical timeline was used. It was implemented using jQuery and CSS3, which perfectly suited the technologies(\ref{sec:choiceoftec}), used for this project. With its responsiveness and clear design, it was a perfect choice for representing the initial outline of the interface. During this iteration, no back-end logic was introduced, as main focus was evaluating and finalising the design before the start of the next iteration. 
 
-\section{Challenges}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.5\textwidth]{images/opensourcetimeline}
+	\label{fig:opensourcetimeline}
+	\caption{Initial timeline}
+\end{figure}
+
+\section{Product Implementation}
+\paragraph{}
+Accordingly, during the fifth iteration, it was decided to move the prototype to a the Model-View-Controller framework, that was chosen in Section \ref{sec:choiceoftec} so that communication with the services can be introduced.
+
+\subsection{Model}
+\paragraph{}
+The models, as shown on Figure: \ref{componentDiagram}, were represented by an external service. At the start, in order to learn how the framework worked, each model was implemented separately. However, this lead to a lot of repetitive code so another approach was considered. As PHP supported Object-Oriented programming, the common features from all the models were extracted and an Abstract class was implemented. 
+\begin{lstlisting}
+abstract class AbstractService
+{
+/** holds the service url*/
+protected $url;
+
+/** holds the input query*/
+protected $query;
+
+/** holds the request parameters*/
+protected $postData;
+
+/** holds the input date*/
+public $queryDate;
+
+/** holds the response from the services*/
+public $response;
+
+abstract public function getCount();
+
+abstract public function getData();
+}
+public function sendRequest($arrayToSend)    
+\end{lstlisting}
+\paragraph{}
+Using the abstract class mentioned above made including another service really easy. The public methods \textit{sendRequest} was common for all models as it was used for communication with the services. The parameter, that it took, \textit{\$arraytoSend} represented the array of parameters, that the service required as inputs. The methods \textit{getCount()} and \textit{getData()} were implemented in each Model accordingly. The idea behind them is to process, filter and format the response from a service and return either the count or an array of entries, that the user had required.  
+
+\paragraph{}
+In addition, the Busy Venues service was returning information about the venues, which in some cases included twitter account. However, the Twitter service did not allow searching for tweets, based on user's account. In order to compensate for this limitation and increase the amount of data sources, it was decided to include communication with the genuine Twitter API. With Laravel's flexible design and high separation of concerns, it was possible to integrate an additional component that would perform the required communication. Thujohn/twitter\footnote{https://packagist.org/packages/thujohn/twitter} was a php component that could have be integrated with Laravel and allowed for extracting a collection of the most recent Tweets, posted by specific user. It allowed for searching base on screen\_name or user\_id parameters. The only requirement for it to work was creating a Twitter account and enabling the API by generating the appropriate keys and tokens. 
+\begin{lstlisting}
+return Twitter::getUserTimeline(['screen_name' => 'thujohn', 'count' => 20, 'format' => 'json']);
+\end{lstlisting}
+
+\subsubsection{Challenges}
+\paragraph{}
+At the beginning of the project, the services were still under development. A few problems were identified at the beginning of the development. First of all, the twitter service was not returning a timestamp for each tweet. As a timeline was built, the time was a key factor. To go around this issues, until the services were fixed, a random time generator was developed so that the tweets can be listed on the timeline. Furthermore, the Busy Venue service was behaving not as expected as some venues, despite the fact that they were returned with score higher than 0, they did not seem to have any entries (all entries were set to 0). On the other hand, some venues with score 0 had entries greater than 0. Again, another random generator, in this case generating attendance, was introduced so that venues could be visualised on the timeline. 
+\paragraph{}
+Consequently, after introducing the communication with Twitter, registering to use the API for free came with some limitations. Twitter restricted the usage to 180 requests in 15 minutes and advised the developers to cache the responses locally. As Laravel supports caching, it was decided to implement this extra functionality and use file system cache in order not to fill up the memory of the server, as well as, not to increase the overhead of the project by designing and introducing a database. The Caching capabilities of Laravel were very flexible and allowed for directly inserting objects and specifying a time limit for how long each insertion stayed in the Cache. 
+\begin{lstlisting}
+    public function sendRequest($username)
+	    {
+	    $user = $username;
+	    $cacheTag = 'twitterTimeline'; //config timeline twitter
+	    $cacheKey = $user . "-" . $cacheTag;
+	    $cacheLimit = 15;
+	    $tweets = null;
+	    
+	    /* caching */
+	    if (Cache::has($cacheKey)) {
+		    $tweets = Cache::get($cacheKey);
+	    } else {
+		    $tweets = Twitter::getUserTimeline(['screen_name' => $user, 'count' => 10, 'format' => 'object']);
+		    Cache::put($cacheKey, $tweets, $cacheLimit);
+	    }
+	    return $tweets;
+    }
+\end{lstlisting}
+
+
+\subsection{View}
+
+chart
+
+Designed it using Bar chart instead of Line graph
+ Designed my own bar chart so that I can keep up with the clean design so far.
+ Managed to implement some design features:
+o Showing value of the bar while hovering over
+
+ Currently the charts shows the number of tweets for a period of 10 days
+ On the y-axis there is a scale, computed from the maximum value
+ On the x-axis are the corresponding dates
+
+Also made the chart to draw any number of charts passed from the Controller so if a new service is add, there will be no need to change the way the chart works.
+o HOW IT WORKS – controller returns a response in the form: {"yesscotland":{"twitter":[{"date":"2014-08-21","count":126},{"date":"2014-08-22","count":629}, … ],"venues":[{"date":"2014-08-21 12:08:00","count":7},{"date":"2014-08-22 12:08:00","count":7} …]} - client jQuery code reads this and for each key it creates a button and stores the array corresponding to that key. On button click, jQuery gets the name of the button and draw the data corresponding to that name.
+
+
+Compare screen
+ A screen where two separate events can be queried at the same time so that they can be compared side by side
+Challenges:
+o Currently my design was for single search space so that I had to come up with approach that will separate both search spaces that we introduce
+ Solution: Pass ID parameters from the Controller to the View so that it can be appended to each ID of each valuable element from it. E.g. – id=day will become id=dayFirst and so on.
+ Positives: it can be extendable to support as many search spaces as desired.
+o Had to become with standard way of passing data from Controller to View and migrate my current code to support it.
+
+Scroll-To-Top
+ Implemented that feature because at some scenarios the response might be quite long and it will take you a lot of time to scroll to the top of the page and perform another search.
+
+Problem
+ My current choice for a timeline doesn’t scale properly when used in the comparison screen so I may have to look for alternative component.
+
+\subsection{Controller}
+
+\subsection{Challenges}
+
+
+
+Validation
+Research
+ Javascript validation
+o Advantage – live update if a field is valid or not
+o Disadvantage – update appear only under the input field. Also cannot modify error messages style, only if I dig in the implementation of the plugin and make the changes. Furthermore the request can still be manipulated.
+ PHP Validation component that comes with Laravel
+o Advantage – can use any style and can place the error messages anywhere on the page. Works on the server which makes it even more secure as it validates the request.
+o Disadvantage – needs a page reload to show the errors
+Implementation
+Every controller starts with validating the request. There are custom rules for every field from the request. If the validation passes, the controller does its job, otherwise the user is redirected to the same page with error messages under the fields that are required or have wrong input. Error messages fields are displayed using Bootstrap CSS in a red colour, so that the user knows that there is an error.
 
 \chapter{Evaluation}
 
@@ -874,7 +1035,7 @@ The models were tested in the same way as in the unit tests but this time using 
 Two RESTful APIs were implemented for this project but due to time constraints only one had been tested using integration tests. The Busy Venue API(reference to implementation) was tested against valid, wrong or missing GPS input. All the return messages were checked if they were appropriate depending on the given inputs.
 
 \subsubsection{Testing Summary}
-For the duration of this project, 26 tests were written with 84 assertions and overall test coverage of 32.5\%.
+For the duration of this project, 26 tests with 84 assertions were written with overall test coverage of 32.5\%.
 
 \subsection{Manual Testing}
 \paragraph{}
