@@ -13,6 +13,11 @@ use Urban\Models\BusyVenues;
 use Urban\Models\Twitter;
 use Validator;
 
+/**
+ * Class SearchController
+ * *********************DEPRECATED*******************
+ * @package Urban\Http\Controllers
+ */
 class SearchController extends Controller
 {
     public function event()
@@ -35,8 +40,8 @@ class SearchController extends Controller
             'query' . $this->firstID => 'max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
-            'lat' => 'required',
-            'lng' => 'required',
+            'lat' => 'required|regex:/^(\-?\d+(\.\d+)?).\s*(\-?\d+(\.\d+)?)$/',
+            'lng' => 'required|regex:/^(\-?\d+(\.\d+)?).\s*(\-?\d+(\.\d+)?)$/',
         ];
     }
 

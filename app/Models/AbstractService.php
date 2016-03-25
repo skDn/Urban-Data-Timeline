@@ -36,27 +36,27 @@ const Y_M_D = "Y-m-d";
 abstract class AbstractService
 {
 
-    /**
+    /** holds the service url
      * @var String
      */
     protected $url;
 
-    /**
+    /** holds the input query
      * @var String
      */
     protected $query;
 
-    /**
+    /** holds the request parameters
      * @var array
      */
     protected $postData;
 
-    /**
+    /** holds the input date
      * @var int
      */
     public $queryDate;
 
-    /**
+    /** holds the response from the services
      * @var array
      */
     public $response;

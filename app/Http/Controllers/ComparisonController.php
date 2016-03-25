@@ -42,8 +42,8 @@ class ComparisonController extends Controller
             'query' . $this->secondID => 'required|max:100|alpha_dash',
             'date' => 'required|date',
 //            digits_between:min,max for lat/lng
-            'lat' => 'required',
-            'lng' => 'required',
+            'lat' => 'required|regex:/^(\-?\d+(\.\d+)?).\s*(\-?\d+(\.\d+)?)$/',
+            'lng' => 'required|regex:/^(\-?\d+(\.\d+)?).\s*(\-?\d+(\.\d+)?)$/',
         ];
     }
 
