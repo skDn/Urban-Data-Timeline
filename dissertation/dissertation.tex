@@ -11,6 +11,7 @@
 \usepackage{tabularx} % in the preamble
 \usepackage{adjustbox}
 \usepackage{multicol}
+\usepackage{pdfpages}
 
 
 % code
@@ -123,8 +124,8 @@ The rest of the report is structured as follows:
 \begin{itemize}
 	\item \textbf{Chapter 2} provides an overview of related work with examples of similar applications.
 	
-	\item \textbf{Chapter 3} discusses the project planning by separating it into project approach and requirements engineering.
-	\item \textbf{Chapter 4} explains the design by showing the initial paper prototypes and architectural diagrams. It also provides a comparison between the possible technologies, that are available and suitable for such a project.
+	\item \textbf{Chapter 3} discusses the project planning by separating it into design approach and requirements engineering.
+	\item \textbf{Chapter 4} explains the design by showing the initial paper prototypes and architectural diagrams. It also provides a comparison between the possible technologies, that were available and suitable for such a project.
 	\item \textbf{Chapter 5} goes through the actual implementation of each component and describes the challenges faced. 
 	\item \textbf{Chapter 6} describes the two phases of the evaluation process and explains the testing strategy for the components.
 	\item \textbf{Chapter 7} concludes the report and discusses the implication of the evaluations in terms of future directions
@@ -152,10 +153,10 @@ Despite the fact that social media applications have as a main goal the delivery
 \paragraph{}
 Tech City Map pulls streams of social media posts for all the businesses in the East London area and tries to analyse their influence. The idea lies on using a map to display all the corporations in the area and linking them together by using different coloured lines for any tweet from one business to the other. The tool allows searching for a specific company as some points represents more then one corporation and manually searching though the map can be difficult. From 2010 to 2012\footnote{\url{http://flowingcity.com/visualization/tech-city-map/}} the number of businesses in East London had risen from 200 to 600. This growth was welcomed even by the Prime Minister at that time, David Cameron, proving that such tools are even followed by politicians. 
 
-\subsubsection{Conclusion}
+\subsubsection{Summary}
 \label{subsubsec:conclusion}
 \paragraph{}
-Some of the previously described applications are proven to be successful by millions of users all around the world. However, they focus only on their user and do not really visualise and offer a big variety of data sources. On the other hand, Urban Data Timeline targets the smart city by increasing the user's understating about it. Furthermore, with the help of the Urban Big Data Centre, it has plenty data streams to offer: querying a tweet collection based on a hashtag or specific tweet terms, examining the events, detected by automated systems, related to specific terms, obtaining information about busy venues in an area of a city, finding train stations within a radius of a specific location, searching for delayed trains and accessing past weather data records. Also, all these big companies like Google, Facebook and Twitter provide their own APIs. This brings a great opportunity for this innovative project to become a centralised system where, for example, busy venues can be listed with the tweets from their own Twitter or Facebook accounts and events can be reviewed in depth with the help of news and youtube videos.
+Some of the previously described applications are proven to be successful by millions of users all around the world. However, they focus only on their user and do not really visualise and offer a big variety of data sources. On the other hand, Urban Data Timeline targets the smart city by increasing the user's understating about it. Furthermore, with the help of the Urban Big Data Centre, it has plenty data streams to offer: querying a tweet collection based on a hash-tag or specific tweet terms, examining the events, detected by automated systems, related to specific terms, obtaining information about busy venues in an area of a city, finding train stations within a radius of a specific location, searching for delayed trains and accessing past weather data records. Also, all these big companies like Google, Facebook and Twitter provide their own APIs. This brings a great opportunity for this innovative project to become a centralised system where, for example, busy venues can be listed with the tweets from their own Twitter or Facebook accounts and events can be reviewed in depth with the help of news and youtube videos. On the other hand, the next chapter describes how the project was planned and lists the identified use cases, requirements and challenges along with a high level diagram of the system. 
 
 
 \chapter{Project Planning}
@@ -218,10 +219,10 @@ The following use cases were identified in the beginning of this project:
 
 
 \begin{itemize}%[noitemsep]
-	\item see how tweets about a specific hashtag are distributed over a period of time
-	\item see popular hashtags that are twitted together with a specific hashtag
+	\item see how tweets about a specific hash-tag are distributed over a period of time
+	\item see popular hash-tags that are twitted together with a specific hash-tag
 	\item get information about a certain area of the city and find out if the venues(restaurants, train stations, cinemas) there get high attendance
-	\item browse tweets based on time and hashtag
+	\item browse tweets based on time and hash-tag
 	\item use the system on a mobile device
 	\item check out what the clients post about a venue, they had visited
 	\item check how many people attend specific venues in a given area
@@ -255,7 +256,7 @@ Figure \ref{MoSCoW} shows the MoSCoW rules that are typically used as a guidelin
 %		\item Must display events in a timeline.
 %		\item Must display the time of events.
 %		\item Must be able to take date input.
-%		\item Must be able to receive hashtag input.
+%		\item Must be able to receive hash-tag input.
 %		\item Must be able to take location based input.
 %		\item Must be able to show venues in specific area. (using a Map)
 %		\item Should dynamically add data to the layout. (using AJAX)
@@ -419,7 +420,7 @@ The role represents the user that interacts with the system. The action shows ho
 	\item \textbf{\textit{Researcher}}.
 	\begin{itemize}
 		\item As a Researcher, I would like to see how the tweets for certain query are distributed though out a period of time, so that I can see the pick of the number of tweets.
-		\item As a Researcher, I would like to know other popular twitter hashtags for a certain day, so that I can see what was interesting for the Twitter users for that day.
+		\item As a Researcher, I would like to know other popular twitter hash-tags for a certain day, so that I can see what was interesting for the Twitter users for that day.
 		\item As a Researcher, I would like to know if specific area of the city was busy on a specific date, so that I can see if specific event or weather conditions had affected that area.
 		\item As a Researcher, I would like to see a timeline representation of the tweets for a specific query, so that I can follow and see if the user’s opinions change.
 		\item As a Researcher, I would like to use the app on a mobile device, so that when I travel, I can continue working on my research.
@@ -443,6 +444,12 @@ The role represents the user that interacts with the system. The action shows ho
 		\item As a citizen, I would like to compare two different public opinions about a specific event, so that I can make a decision of my own. 
 	\end{itemize}
 \end{itemize}
+
+\section{Summary}
+Finally, this chapter defines what design approach was used for the duration of the project. Furthermore, it lists the identified use cases and requirements, along with their representation as user stories. On the other hand, the next chapter goes though the design process and describes how the application was going to meet the requirements and outlines what was the chosen combination of technologies to solve the challenges, identified in this chapter.
+
+
+
 
 \chapter{Design}
 
@@ -514,7 +521,7 @@ The Middleware consists of four components - Controller, View, Cache, and Model.
 
 \subsubsection{Data}
 \paragraph{}
-The Data currently consists of two services. The first one is the UBDC web service and it is key to this project as it separates into Twitter, Busy Venue, Delayed Transport, Train and Weather services(brief description of the services can be found at Section \ref{sec:aims} and \ref{subsubsec:conclusion}). As for now, only the first four services are used. The second one is the Twitter API. It is used to compensate for the limitation of the Twitter service, provided by the UBDC, which only allows for queering the results based on hashtags. The additional API will broaden the possibilities of tweets querying by adding the option to search by username and get access to tweets from specific twitter account.        
+The Data currently consists of two services. The first one is the UBDC web service and it is key to this project as it separates into Twitter, Busy Venue, Delayed Transport, Train and Weather services(brief description of the services can be found at Section \ref{sec:aims} and \ref{subsubsec:conclusion}). As for now, only the first four services are used. The second one is the Twitter API. It is used to compensate for the limitation of the Twitter service, provided by the UBDC, which only allows for queering the results based on hash-tags. The additional API will broaden the possibilities of tweets querying by adding the option to search by username and get access to tweets from specific twitter account.        
   
 
 \begin{figure}[H]
@@ -529,6 +536,7 @@ The Data currently consists of two services. The first one is the UBDC web servi
 This section describes how actually the components are communicating between each other. There are two scenarios, based on what request is made by the browser. 
 
 \subsection{HTTP Request}
+\label{sec:http}
 \paragraph{}
 The first one(Figure: \ref{HTTPRequest}) follows the traditional pattern when a user wants to access a page, which visualises data, using the application. Taking as an example one of the user stories from Section \ref{sec:userstories}, a researcher is on the home page and wants to know what are the popular tags for a given day. First step is to fill all the required inputs and then press on the search button. Then a new page is rendered on the screen and the researcher can start interacting. However, for all this to happen, the browser has to communicate with the application's server. To begin with, it makes a HTTP GET request to the controller, that maps to the action, triggered by the search button. Then all the inputs are validated against a set of rules and analysed so that the right Model can be invoked. Then the data is requested from the Model. The Model checks the Cache to see if the data is available there and if yes, returns it to the Controller. On the other hand, if the data is not available, a XMLHTTP POST Request is made to a specific Web Service and a XMLHTTP Response is received in the form of a Json object. Depending on the initial request by the researcher, some of the data from the Json is filtered out and the rest is stored in the Cache for a specified amount of time. Cache is not only part of the requirements but it is important as users, like researchers, are expected to do many similar requests by changing only one or two variables at a time. Once the model has finished, manipulating the data, it is sent back to the Controller that redirects it to the View. The View formats the data, according to its type, and sends it back to the Controller. Finally the Controller returns an HTTP Response with the generated HTML.  
 
@@ -540,6 +548,7 @@ The first one(Figure: \ref{HTTPRequest}) follows the traditional pattern when a 
 \end{figure}
 
 \subsection{XMLHTTP Request}
+\label{sec:xmlhttp}
 Following from the requirements(Section: \ref{sec:functional-requirements}) and the paper prototypes(Section: \ref{sec:paper-prototypes}), some of the elements(Map and Chart) can be rendered by the View but in order to make them responsive, these elements have to use Ajax in order to be populated. Taking as an example one of the user stories from Section \ref{sec:userstories}, a restaurant owner wants to view venues that are nearby but also may want to get the same information but for a place, which is not the same as his current location. In order not to reload the page every time, Ajax performs XMLHTTP Requests instead of HTTP Request and the received response will be used to update the page dynamically. In order to handle such requests, the system must provide REST endpoints that are compatible. If the browser makes a XMLHTTP request(Figure: \ref{XMLHTTPRequest}) to one of the endpoints, the Controller, similar to the previous case, performs the same steps but in this case there is no communication with the View. The data, returned from the services, is filtered and sent, via a XMLHTTP Response in a Json format, back to the client. 
 
 \begin{figure}[H]
@@ -556,7 +565,7 @@ One of the requirements (Section: \ref{tab:nonFuncReq}) states that the applicat
 
 \subsection{Security}
 \paragraph{}
-Security is top priority when developing a web application. As this project will be used only for displaying data, there are not many vulnerabilities that can be targeted by attackers. First of all, the system will not make use of a database so any attempts for performing SQL Injection, Cross-Site Request Forgery, Sensitive Data Exposure or Cross Site Scripting (XSS) will not lead to a security breach. However, as a safety precaution, all inputs that are received must be validated before being passed to any of the external services shown on Figure \ref{componentDiagram}. Furthermore, the application will not require authentication so it is not vulnerable to Insecure Direct Object References or Broken Authentication via stolen cookies. The only possible vulnerabilities are Denial of Service and Man in the middle attacks. For this project, no defence mechanisms will be developed against these attacks. The first one can be mitigated by following the web traffic and blocking suspicious requests. The result of a successful Denial of Service attack will be that users will not be able to access the system due to the server, on which the application is running, has be overloaded with requests and is not able to respond. Man in the middle is a form of attack where the user's network has been breached and an attacker is modifying their traffic. The way to defend against this attack is by introducing the HTTPS protocol that ensures the uniqueness of a website but it requires an expensive certificate. However, all of the following technologies have to be compatible with the HTTPS protocol in case that it is decided to be included in a future iteration.   
+Security is top priority when developing a web application. As this project will be used only for displaying data, there are not many vulnerabilities that can be targeted by attackers. First of all, the system will not make use of a database so any attempts for performing SQL Injection, Cross-Site Request Forgery, Sensitive Data Exposure or Cross Site Scripting (XSS) will not lead to a security breach. However, as a safety precaution, all inputs that are received must be validated before being passed to any of the external services shown in Figure \ref{componentDiagram}. Furthermore, the application will not require authentication so it is not vulnerable to Insecure Direct Object References or Broken Authentication via stolen cookies. The only possible vulnerabilities are Denial of Service and Man in the middle attacks. For this project, no defence mechanisms will be developed against these attacks. The first one can be mitigated by following the web traffic and blocking suspicious requests. The result of a successful Denial of Service attack will be that users will not be able to access the system due to the server, on which the application is running, has be overloaded with requests and is not able to respond. Man in the middle is a form of attack where the user's network has been breached and an attacker is modifying their traffic. The way to defend against this attack is by introducing the HTTPS protocol that ensures the uniqueness of a website but it requires an expensive certificate. However, all of the following technologies have to be compatible with the HTTPS protocol in case that it is decided to be included in a future iteration.   
 
 \subsection{Web Application Framework}
 
@@ -686,12 +695,13 @@ Google Charts Graph API was chosen for this project due to its simplicity and gr
 \paragraph{}
 Going back to the requirements (Section: \ref{sec:functional-requirements}) and the paper prototypes(Section: \ref{sec:paper-prototypes}), the application must be able to show venues on a map and also to take location based input. To simplify the implementation, it will be useful to find an API that provides functionality to fulfil both requirements. Google Maps API\footnote{\url{https://developers.google.com/maps/}} was chosen for this project as it is the only one that is free and has built it support for all the required features. In addition, it offers 25,000 map loads per 24 hours for 90 days\cite{mapusage}. It also provides wide variety of customisable options like colours, shapes, markers and many more. Furthermore, Google Places\cite{mapplace}, part of the Google Maps API, features more than 100 million businesses and points of interest that are updated frequently through owner-verified listings and user-moderated contributions. It gives the ability to search for specific place and can be configured to display details like ratings and reviews.
 
+\section{Summary}
+Finally, this chapter outlines the details, needed before the start of the implementation. It shows how the system is supposed to look like, both in terms of the interface and the component structure. Furthermore, it lists the technologies that were used for the implementation. On the other hand, the next chapter highlights some of the main steps and challenges that were identified during the iterations, allocated for developing a prototype and transforming it to a final product.    
 
 \chapter{Implementation}
-
 \section{Prototype Implementation}
 \paragraph{}
-The first three iterations of the project focused on the background research, project planning, requirements gathering and choosing the technologies. Furthermore, the fourth iteration involved producing a prototype out of the wireframes(Figure: \ref{initialWireframe}). A simple static HTML page was developed to represent the key components: search box, date picker, chart and timeline. The search box(Figure: 5.1) was a simple input html field. Its purpose was to get user's input. Also a hint was included(\textit{input a query}) in order to make it clear what this field was supposed to take as parameters. The date picker was implemented using dropdown menus for the day, the month and the year. Two additional buttons were added on both sides to help the user to quickly adjust the date input without the need to go and use the menus again.        
+The first three iterations of the project focused on the background research, project planning, requirements gathering and choosing the technologies. Furthermore, the fourth iteration involved producing a prototype out of the wireframes(Figure: \ref{initialWireframe}). A simple static HTML page was developed to represent the key components: search box, date picker, chart and timeline. The search box(Figure: 5.1) was a simple input html field. Its purpose was to get the required tweet hash-tag. Also a hint was included(\textit{input a query}) in order to make it clear what this field was supposed to take as parameters. The date picker was implemented using dropdown menus for the day, the month and the year. Two additional buttons were added on both sides to help the user to quickly adjust the date input without the need to go and use the menus again.        
 
 \begin{figure}[H]
 	\centering
@@ -701,7 +711,7 @@ The first three iterations of the project focused on the background research, pr
 \end{figure}
 
 \paragraph{}
-For the purpose of the prototype, an open-source vertical timeline was used. It was implemented using jQuery and CSS3, which perfectly suited the technologies(\ref{sec:choiceoftec}), used for this project. With its responsiveness and clear design, it was a perfect choice for representing the initial outline of the interface. During this iteration, no back-end logic was introduced, as main focus was evaluating and finalising the design before the start of the next iteration. 
+For the purpose of the prototype, an open-source vertical timeline was used. It was implemented using jQuery and CSS3, which perfectly suited the technologies(Section: \ref{sec:choiceoftec}), used for this project. With its responsiveness and clear design, it was a perfect choice for representing the initial outline of the interface. During this iteration, no back-end logic was introduced, as main focus was evaluating and finalising the design before the start of the next iteration. 
 
 \begin{figure}[H]
 	\centering
@@ -712,47 +722,49 @@ For the purpose of the prototype, an open-source vertical timeline was used. It 
 
 \section{Product Implementation}
 \paragraph{}
-Accordingly, during the fifth iteration, it was decided to move the prototype to a the Model-View-Controller framework, that was chosen in Section \ref{sec:choiceoftec} so that communication with the services can be introduced.
+Accordingly, during the fifth iteration, the prototype was re-factored to make use of a Model-View-Controller framework, which was chosen in Section \ref{sec:choiceoftec} so that communication with the services could be introduced.
 
 \subsection{Model}
+\label{sub:model}
 \paragraph{}
-The models, as shown on Figure: \ref{componentDiagram}, were represented by an external service. At the start, in order to learn how the framework worked, each model was implemented separately. However, this lead to a lot of repetitive code so another approach was considered. As PHP supported Object-Oriented programming, the common features from all the models were extracted and an Abstract class was implemented. 
+The models represented the data. They, as shown on the architecture diagram(Figure: \ref{componentDiagram}), corresponded to an external service. At the start, in order to learn how the framework worked, each model was implemented separately. However, this led to a lot of repetitive code so another approach was considered. As PHP supported Object-Oriented programming, the common features from all the models were extracted and an Abstract class was implemented. 
 \begin{lstlisting}
 abstract class AbstractService
 {
-/** holds the service url*/
-protected $url;
-
-/** holds the input query*/
-protected $query;
-
-/** holds the request parameters*/
-protected $postData;
-
-/** holds the input date*/
-public $queryDate;
-
-/** holds the response from the services*/
-public $response;
-
-abstract public function getCount();
-
-abstract public function getData();
-}
-public function sendRequest($arrayToSend)    
+	/** holds the service url*/
+	protected $url;
+	
+	/** holds the input query*/
+	protected $query;
+	
+	/** holds the request parameters*/
+	protected $postData;
+	
+	/** holds the input date*/
+	public $queryDate;
+	
+	/** holds the response from the services*/
+	public $response;
+	
+	abstract public function getCount();
+	
+	abstract public function getData();
+	
+	public function sendRequest($arrayToSend)  
+}  
 \end{lstlisting}
 \paragraph{}
-Using the abstract class mentioned above made including another service really easy. The public methods \textit{sendRequest} was common for all models as it was used for communication with the services. The parameter, that it took, \textit{\$arraytoSend} represented the array of parameters, that the service required as inputs. The methods \textit{getCount()} and \textit{getData()} were implemented in each Model accordingly. The idea behind them is to process, filter and format the response from a service and return either the count or an array of entries, that the user had required.  
+Using the abstract class mentioned above made including another service really easy. The public method \textit{sendRequest} was common for all models as it was used for communication with the services. The parameter, that it took, \textit{\$arraytoSend} represented the array of parameters, that the service required as inputs. The methods \textit{getCount()} and \textit{getData()} were implemented in each Model accordingly. The idea behind them was to process, filter and format the response from a service and return either the count or an array of entries, that the user had required.  
 
 \paragraph{}
-In addition, the Busy Venues service was returning information about the venues, which in some cases included twitter account. However, the Twitter service did not allow searching for tweets, based on user's account. In order to compensate for this limitation and increase the amount of data sources, it was decided to include communication with the genuine Twitter API. With Laravel's flexible design and high separation of concerns, it was possible to integrate an additional component that would perform the required communication. Thujohn/twitter\footnote{https://packagist.org/packages/thujohn/twitter} was a php component that could have be integrated with Laravel and allowed for extracting a collection of the most recent Tweets, posted by specific user. It allowed for searching base on screen\_name or user\_id parameters. The only requirement for it to work was creating a Twitter account and enabling the API by generating the appropriate keys and tokens. 
+In addition, the Busy Venues service was returning information about the venues, which in some cases included the venue's twitter account. However, the Twitter service did not allow searching for tweets, based on user's account. In order to compensate for this limitation and increase the amount of data sources, it was decided to include communication with the genuine Twitter API as shown on the architecture diagram(Figure: \ref{componentDiagram}). With Laravel's flexible design and high separation of concerns, it was possible to integrate an additional component that would perform the required communication. Thujohn/twitter\footnote{https://packagist.org/packages/thujohn/twitter} was a php component that was able to be integrated with Laravel and allowed for extracting a collection of the most recent Tweets, posted by specific user. It allowed for searching based on screen\_name or user\_id. The only requirement for it to work was creating a Twitter account and enabling the API by generating the appropriate keys and tokens. 
 \begin{lstlisting}
 return Twitter::getUserTimeline(['screen_name' => 'thujohn', 'count' => 20, 'format' => 'json']);
 \end{lstlisting}
 
 \subsubsection{Challenges}
 \paragraph{}
-At the beginning of the project, the services were still under development. A few problems were identified at the beginning of the development. First of all, the twitter service was not returning a timestamp for each tweet. As a timeline was built, the time was a key factor. To go around this issues, until the services were fixed, a random time generator was developed so that the tweets can be listed on the timeline. Furthermore, the Busy Venue service was behaving not as expected as some venues, despite the fact that they were returned with score higher than 0, they did not seem to have any entries (all entries were set to 0). On the other hand, some venues with score 0 had entries greater than 0. Again, another random generator, in this case generating attendance, was introduced so that venues could be visualised on the timeline. 
+At the beginning of the project, the services were still under development. A few problems were identified at the beginning of the implementation. First of all, the Twitter service was not returning a time-stamp for each tweet. As a timeline was built, the time was a key factor. To go around this issues, until the services were fixed, a random time generator was developed so that the tweets can be listed on the timeline. Furthermore, the Busy Venue service was behaving not as expected as some venues, despite the fact that they were returned with score higher than 0, they did not seem to have any entries (all entries were set to 0). On the other hand, some venues with score 0 had entries greater than 0. Again, another random generator, in this case generating attendance, was introduced so that venues could be visualised on the timeline. 
 \paragraph{}
 Consequently, after introducing the communication with Twitter, registering to use the API for free came with some limitations. Twitter restricted the usage to 180 requests in 15 minutes and advised the developers to cache the responses locally. As Laravel supports caching, it was decided to implement this extra functionality and use file system cache in order not to fill up the memory of the server, as well as, not to increase the overhead of the project by designing and introducing a database. The Caching capabilities of Laravel were very flexible and allowed for directly inserting objects and specifying a time limit for how long each insertion stayed in the Cache. 
 \begin{lstlisting}
@@ -774,55 +786,309 @@ Consequently, after introducing the communication with Twitter, registering to u
 	    return $tweets;
     }
 \end{lstlisting}
+\paragraph{}
+In addition, Caching was a part of the requirements(Table: \ref{tab:funcReq}). As it is shown on the architecture diagram(Figure: \ref{componentDiagram}), it was included for all the Models as most of the users were expected to be researchers, who would not perform random queries but rather adjust some of the input parameters to extract the most out of the system. As a result, when a request was made, there would be no point in requesting data, needed for a previous search. Furthermore, this resulted in a reduced number of the requests to the external services. 
 
 
 \subsection{View}
+\label{sub:view}
+\paragraph{}
+The views represented an interface to present the data from the models as shown on the HTTP sequence diagram(Figure: \ref{HTTPRequest}). Initially, they were static pages. However, after migrating to the MVC pattern, using Laravel, the project benefited from the template engine, which the framework provided, called Blade\footnote{https://laravel.com/docs/5.1/blade}.Two of the primary benefits of using Blade were template inheritance and sections. Since this project maintained the same general layout across all views, it was convenient to define it in a single Blade template, which was extended by all the pages:
+\begin{lstlisting}
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		@yield('title')
+		@include('layout.style')
+	</head>
+	<body>
+		@include('templates.partials.navigation')
+	
+		@yield('content')
+		
+		@include('layout.script')
+	</body>
+	</html>
+\end{lstlisting}
+\paragraph{}
+This file contains typical HTML mark-up. However, it makes use of the @include and @yield directives. The @include directive defined a feature or component from the interface, while the @yield directive was used to display the contents of a given section, taken from a child page. This structure allowed for high flexibility as well as modularity. 
 
-chart
+\paragraph{}
+One of the requirements was about visualising data on a graph(Table: \ref{tab:funcReq}). Accordingly, a chart view component was introduced. Initially, a bar chart was developed from scratch. However, due to time constraints, an already implemented solution was introduced, which offered a lot more extra features and ensured compatibility with different browsers. Google Charts was very flexible as it was adjusting the graph, based on the input that was given. For example, when the input was an array of arrays of length 2: \textit{[['2014-08-21',10],['2014-08-22',20]..]}, a single bar for each data was presented(Figure: \ref{singlechartsmall}). On the other hand, when the input was \textit{[['2014-08-21',10,15],['2014-08-22',20,11]..]}, two bars for each date with different colours were shown (Figure: \ref{comparechartsmall}). Furthermore, as the project was making use of data from different domains, each that offered some way to count events got its own chart representation. The one for the Twitter service was showing number of tweets for a given hash-tag. On the other hand, the Busy Venues service chart was presenting the number of busy venues in a specified area. The user could easily switch between charts by clicking on the buttons, labelled with the corresponding service name.
 
-Designed it using Bar chart instead of Line graph
- Designed my own bar chart so that I can keep up with the clean design so far.
- Managed to implement some design features:
-o Showing value of the bar while hovering over
+%Also made the chart to draw any number of charts passed from the Controller so if a new service is add, there will be no need to change the way the chart works.
+%o HOW IT WORKS – controller returns a response in the form: {"yesscotland":{"twitter":[{"date":"2014-08-21","count":126},{"date":"2014-08-22","count":629}, … ],"venues":[{"date":"2014-08-21 12:08:00","count":7},{"date":"2014-08-22 12:08:00","count":7} …]} - client jQuery code reads this and for each key it creates a button and stores the array corresponding to that key. On button click, jQuery gets the name of the button and draw the data corresponding to that name.
 
- Currently the charts shows the number of tweets for a period of 10 days
- On the y-axis there is a scale, computed from the maximum value
- On the x-axis are the corresponding dates
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.3\textwidth}
+%		\centering
+		\includegraphics[width=.8\textwidth]{images/singleChartSmall}
+		\caption{Single Chart}
+		\label{singlechartsmall}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+%		\centering
+		\includegraphics[width=.8\textwidth]{images/compareChartSmall}
+		\caption{Compare Chart}
+		\label{comparechartsmall}
+	\end{subfigure}
+	\caption{Charts}
+	\label{fig:chartsmall}
+\end{figure}
 
-Also made the chart to draw any number of charts passed from the Controller so if a new service is add, there will be no need to change the way the chart works.
-o HOW IT WORKS – controller returns a response in the form: {"yesscotland":{"twitter":[{"date":"2014-08-21","count":126},{"date":"2014-08-22","count":629}, … ],"venues":[{"date":"2014-08-21 12:08:00","count":7},{"date":"2014-08-22 12:08:00","count":7} …]} - client jQuery code reads this and for each key it creates a button and stores the array corresponding to that key. On button click, jQuery gets the name of the button and draw the data corresponding to that name.
+\paragraph{}
+Additionally, taking location input was one of the requirements(Table: \ref{tab:funcReq}). In order to achieve that, a map component was introduced, which made use of Google Maps API(Figure: \ref{mapsmall}). To allow the user to quickly find a place on the map, an input field was included that offered searching based on name and location(Figure: \ref{mapsearchsmall}). Furthermore, each marker contained information about the venue, which was representing(Figure: \ref{mapvenuessmall}). The map was populated with data, retrieved from the Controllers(Section: \ref{subsec:controller}) with an Ajax request. On every change of the location, a new request was made to get the nearby venues.
+
+\begin{lstlisting}
+ google.maps.event.addListener(marker, 'dragend', function (evt) {
+	  map.setCenter(evt.latLng);
+	  lat.value = evt.latLng.lat();
+	  lng.value = evt.latLng.lng();
+	  getNearbyVenues();
+ });
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.3\textwidth}
+		%		\centering
+		\includegraphics[width=\textwidth]{images/mapsmall}
+		\caption{Map}
+		\label{mapsmall}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+		%		\centering
+		\includegraphics[width=\textwidth]{images/mapsearchsmall}
+		\caption{Map search}
+		\label{mapsearchsmall}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+		%		\centering
+		\includegraphics[width=\textwidth]{images/mapvenuesmall}
+		\caption{Venue information}
+		\label{mapvenuessmall}
+	\end{subfigure}
+	\caption{Map Component}
+\end{figure}
+
+\paragraph{}
+With the extra functionality of the map, new possibilities for the user to browse different series of events were introduced. Google Maps API allowed for the markers on the map to be clicked. Part of the data, received from the Busy Venues service was about the venue's time-series. In addition, the Train Delays service was offering a time-series of train delays for a particular train station. Table \ref{tab:contentuserinput} summarises the new alternatives, presented to the users based on their input. However, due to time constraints, train delays were not included in the views. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|p{2cm}|p{7cm}|p{7cm}|} \hline
+		&	Query	& No Query \\ \hline
+		Location(click on the map) 	& Timeline of tweets with information about busy venues	in radius of half a mile.	& Timeline of busy venues around the area  \\ \hline
+		Location(click on a venue)	& Timeline of tweets for the query combined with tweets for this venue and hourly information about this venue	& Venue time series – including	hourly information about the venue with tweets from the venue’s twitter account  \\ \hline
+		Location(click on train station)	& Timeline of tweets for the query combined hourly information about train delays from this train station & 	Timeline of train delays \\ \hline
+	\end{tabular}
+	\caption{Timeline content based on user input}
+	\label{tab:contentuserinput}
+\end{table}
 
 
-Compare screen
- A screen where two separate events can be queried at the same time so that they can be compared side by side
-Challenges:
-o Currently my design was for single search space so that I had to come up with approach that will separate both search spaces that we introduce
- Solution: Pass ID parameters from the Controller to the View so that it can be appended to each ID of each valuable element from it. E.g. – id=day will become id=dayFirst and so on.
- Positives: it can be extendable to support as many search spaces as desired.
-o Had to become with standard way of passing data from Controller to View and migrate my current code to support it.
+\paragraph{}
+In addition, one of the \textit{Could have} requirements for the user interface(Table: \ref{tab:funcReq}) was to show a summary of the performed search, a box that pops up from the top and sticks there while scrolling was included as a component. The purpose of this box was to store key statistics and also to provide the user with other popular tweet hash-tags, based on the already provided input(Figure: \ref{zebrainfobox}).  
 
-Scroll-To-Top
- Implemented that feature because at some scenarios the response might be quite long and it will take you a lot of time to scroll to the top of the page and perform another search.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/infobox}
+	\label{zebrainfobox}
+	\caption{Information Box}
+\end{figure}
 
-Problem
- My current choice for a timeline doesn’t scale properly when used in the comparison screen so I may have to look for alternative component.
+%google maps api - progress 8
+%input - we could not use the venue search from google as coordinates missmatch so a rest api was introduced
+%venues search progress 12
+\subsubsection{Challenges}
+%compare screen - challange .. how to align?	
+\paragraph{}
+Originally, the design was made to accommodate only a single search. However, in order to meet one of the must have requirements for the user interface(Table: \ref{tab:funcReq}) and increase what the users could extract from the system, a compare screen was introduced so that two events could be compared side by side. At this point, all the components had their unique ids so just duplicating the logic for the single event search would break the system. To go around this, depending on how many search spaces were required, the controllers were implemented to generate an id for each one and passed it to the View so that each component could append it to its own unique id. For example a field with id \textit{day} would change its id to \textit{dayFirst}, \textit{daySecond} and so on. The positives for such design were that it could be extended to support as many search spaces as wanted. However, the disadvantage was that they must have been predefined in the required Javascript files.
+\paragraph{}
+Additionally, when the changes were made and the timeline was visualised, it was clear that the open-source timeline, which was chosen earlier, did not scale properly(Figure: \ref{oldtimeline}). Furthermore, there was a lot of empty space so in a case of a really long sequence of events, the timeline would have been far too long. On way to solve this problem was to redesign it, but the code was very complicated and not easy to get on with. Finally, it was decided to implement a timeline from scratch so that it could be designed specificity for this project with all the desired features in mind(Figure: \ref{newtimeline}). It displayed the events in sections, where each section represented a period of 1 hour. In addition, to reduce the amount of scrolling needed to reach a point of interest, a navigation bar for the timeline was included(Figure: \ref{timenavbar}). It highlighted the timeslot, which the events on the screen corresponded to, as well as supported clicking that would automatically navigate to the desired section. 
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.44\textwidth}
+		%		\centering
+		\includegraphics[width=\textwidth]{images/oldtimeline}
+		\caption{Open Source Timeline in Comaparison View}
+		\label{oldtimeline}
+	\end{subfigure}
+	\begin{subfigure}{.44\textwidth}
+		%		\centering
+		\includegraphics[width=\textwidth]{images/newtimeline}
+		\caption{New Timeline in Event View}
+		\label{newtimeline}
+	\end{subfigure}
+	\begin{subfigure}{.1\textwidth}
+		\includegraphics[width=\textwidth]{images/timelinenavbar}
+		\caption{Timeline navigation}
+		\label{timenavbar}
+	\end{subfigure}
+	\caption{Timelines}
+	\label{fig:timelines}
+\end{figure}
+
+\paragraph{}
+Furthermore, support for mobile devices was a non-functional requirement(Table: \ref{tab:nonFuncReq}) for this project. Initially, all the technologies (Section: \ref{sec:choiceoftec}), used were supporting mobile devices, meaning that they would scale properly even on small screen sizes. On the other hand, Bootstrap provided CSS classes that were implemented, using media queries\footnote{\url{https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries}}, so all the components on the interface that made use of them will resize depending on the screen size of the device. However, the timeline, which was implemented from scratch, was not optimised and additional media queries needed to be developed. In order to emphasise the content of the events, the timeline was modified to show only one line of events(Figure: \ref{mobversion1}), instead of two as shown in Figure \ref{newtimeline}. Additionally, the navigation bar and the information box were made invisible for devices with width less than 900px. 
+\begin{lstlisting}
+@media only screen and (min-width: 300px) and (max-width: 900px) {
+	.timeline ol.timeline_nav, #infoBox {
+		display: none;
+	}
+}
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{.2\textwidth}
+		\includegraphics[width=\textwidth]{images/mobilesinglesearch}
+		\label{mobversion1}
+	\end{subfigure}
+	\begin{subfigure}{.2\textwidth}
+		\includegraphics[width=\textwidth]{images/mobilevenues}
+		\label{mobversion2}
+	\end{subfigure}
+		\caption{Mobile Version of the Application}
+\end{figure}
+
+\paragraph{}
+To conclude, one of the most valuable feature, as well as, one of the biggest challenges when implementing the views was including infinite scrolling. A scenario when the views had to render a lot of events would increase the time, for which the user had to wait before starting to use the system. Infinite scrolling was the solution for this problem as it was made possible for a series of events to render on the page only after the user actually required them. The following code snippet shows a high level view of the implementation.
+
+\begin{lstlisting}
+// on scroll
+$(document).on('scroll', function () {
+	$timeline_block.each(function (event) {
+		// once the bottom of the screen is reached
+		if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9) {
+			// get the id of the next section
+			var sectionID = $(this).attr('id');
+			// check if it is a new section, which has not been required yet
+			if (prevSection !== sectionID && $.inArray(sectionID, listOfFilledSections) === -1) {
+				listOfFilledSections.push(sectionID);
+				// retrieve the events for the section
+				ajaxCall(sectionID);
+			}
+			prevSection = sectionID;
+		}
+	});
+});
+\end{lstlisting}
 
 \subsection{Controller}
+\label{subsec:controller}
+% write about the Validator component - Laravel
+\paragraph{}
+The controllers served as operations that could be performed on the data. As it is shown on the architecture diagram(Figure: \ref{componentDiagram}), they formed the connection between the client and the data. Every controller starts with validation. Depending on its purpose, every controller had different rules for validation.
+The rules for the Single Event Search Controller are show at Listing: \ref{lst:validrules}:
+\begin{lstlisting}[caption={Validation Rules},label={lst:validrules},language=PHP]
+    'query' . $this->firstID => 'max:100|alpha_dash',
+    'date' => 'required|date',
+    'lat' => 'required|regex:/^(\-?\d+(\.\d+)?).\s*(\-?\d+(\.\d+)?)$/',
+    'lng' => 'required|regex:/^(\-?\d+(\.\d+)?).\s*(\-?\d+(\.\d+)?)$/',
+\end{lstlisting}
+The date, latitude and longitude were required and must follow a specific format. If the validation passed, the controller got the data from the required models. Otherwise, a page was rendered by the View with error messages under the fields that were required or had wrong input. 
 
-\subsection{Challenges}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{images/errormessagedate}
+	\label{errormessagedate}
+	\caption{Error messages in the Views}
+\end{figure}
+
+\paragraph{}
+There was one controller for each page. Initially every controller had the same mechanism for getting the data from the Model, which lead to a lot of duplicate code. This had to be refactored so that the implementation stuck to the DRY\footnote{Do not repeat yourself} principle and more controllers could be added more easily in the future. The common operations from the controllers were moved to a Helper class that took care of all data manipulations like sorting and section generating: splitting the events into separate sections, depending on their time-stamp.
+
+\paragraph{} 
+In addition, controllers that were compatible with XMLHTTP requests(described in Section: \ref{sec:xmlhttp}) had to be developed to accommodate the needs of some of the View's components and meet the requirement(Table: \ref{tab:funcReq}) to be able to dynamically add data to the layout. They were implemented as RESTful APIs. Initially, the Chart component was requiring a list with the number of events for a specific time period. A CountController was implemented that made use of the getCount() method of each Model to retrieve data and return it in a Json format. For the duration of this project, the getCount() method was implemented only for the Twitter and Busy Venues models. The first one returned the number of tweets for a specific hash-tag and the second: the number of busy venues for a specific location. Table \ref{tab:countapi} shows the allowed input parameters for this API and Listing \ref{lst:countcontroller} demonstrates the response for a given url. 
+
+\begin{lstlisting}[caption={Count API Request and Response},label={lst:countcontroller}]
+Request URL
+localhost:8001/rest/count?date=2014-08-25&query=business&lat=55.858&lng=-4.2590000000000146&range=3
+Response:
+{"business":
+	{"twitter":[{"date":"2014-08-24","count":11},{"date":"2014-08-25","count":22},{"date":"2014-08-26","count":40}],"venues":[{"date":"2014-08-24","count":14},{"date":"2014-08-25","count":18},{"date":"2014-08-26","count":19}]}
+}
+\end{lstlisting}
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|l|} \hline
+		Field	&	Type	& Optional & Default\\ \hline
+		date 	& string & no  & \\ \hline
+		query 	& string & no  & \\ \hline
+		lat 	& float & no  & \\ \hline
+		lng 	& float & no  & \\ \hline
+		range 	& int & yes  & 9\\ \hline
+	\end{tabular}
+	\caption{Parameters available to the Count RESTful API}
+	\label{tab:countapi}
+\end{table}
+
+\paragraph{}
+Additionally, the Map component was requiring the nearby venues for a given location. A NearbyVenues controller was developed that made use of the getVenuesNearBy() method of the BusyVenues model. This method was making a request to the services and keeping only relevant information about the venues from the response, including their location and twitter account. Table \ref{tab:venueapi} shows the allowed parameters for this API and Listing \ref{lst:busycontroller} demonstrates how it works.
+
+\begin{lstlisting}[caption={Busy Venues API Request and Response},label={lst:busycontroller}]
+Request URL
+localhost:8001/rest/nearbyVenues?lat=55.874863914508&lng=-4.293143904860926&radius=0.01
+Response:
+{"status":"OK",
+ "message":[{"name":"The Grosvenor Cafe","phone":"+44 845 166 6028","location":"31 Ashton Ln.","postalCode":"G12 8SJ","twitter":"the_grosvenor","lat":55.874805250556,"lng":-4.292950630188},{"name":"Ubiquitous Chip","phone":"+44 141 334 5007","location":"8-12 Ashton Ln.","postalCode":"G12 8SJ","twitter":"ubiquitouschip","lat":55.874863914508,"lng":-4.2931439048609},{"name":"Ashton Lane","phone":null,"location":"Ashton Ln","postalCode":null,"twitter":"","lat":55.874865439609,"lng":-4.2929935455322},{"name":"The Wee Pub","phone":"+44 141 334 5007","location":"8-12 Ashton Ln","postalCode":"G12 8SJ","twitter":"","lat":55.874853401806,"lng":-4.2929077148438}]
+}
+\end{lstlisting}
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|l|l|} \hline
+		Field	&	Type	& Optional & Default\\ \hline
+		lat 	& float & no  & \\ \hline
+		lng 	& float & no  & \\ \hline
+		radius 	& float & yes  & 0.05\\ \hline
+	\end{tabular}
+	\caption{Parameters available to the BusyVenues RESTful API}
+	\label{tab:venueapi}
+\end{table}
+
+\subsubsection{Challenges}
+\paragraph{}
+Initially, one of the challenges was with the ComparisonController and the Compare page. The problem was how two sequences of events could be compared side by side. Once the Helper class was implemented and the data was split into sections based on time, it became difficult to align the two arrays as they could differ. A simple algorithm was implemented that goes though each result and populates the other one with an empty section for the missing time slot so in the end they would both have the same number of sections and the corresponding functional requirement(Table: \ref{tab:funcReq}) could be met. 
+
+\paragraph{}
+To conclude, one of the biggest challenges was implementing the backend support for the infinite scrolling. The logic behind it is simple. If the bottom of the page is reached, request the next N items from the database with id less than the last element's id in the View. However, this project, as shown in Figure \ref{highLevelDiagram}, did not have a database. Furthermore, all of the services were not designed specifically for this project and it was not possible to make a request for a specific data. On the other hand, if a new request was made every time, it would have increased the amount of traffic to the services and also the overall computation time required to process the data every time. The identified solution for this was once all the data was prepared, it was stored in a file system cache for a specific amount of time. It was still faster and more efficient but at the same time was not filling the server's memory, as well as, increasing the overhead of the project. In order to make this data available for the view, another RESTful API was designed. The logic behind it was to use the inputs and concatenate them together to produce an unique key, which was then used for extracting the data from the Cache(Listing: \ref{lst:infinitescrollingcache}).   
+
+\begin{lstlisting}[caption={Using Cache for infinite scrolling},label={lst:infinitescrollingcache},language=PHP]
+//Request URL: http://localhost:8002/infinite/single?queryFirst=noscotland&
+//date=2014-08-29&lat=55.858&lng=-4.2590000000000146&_token=o0121trrqhGeBEv4F1fVqAcYLKinSJabgQ9GOjHQ&sectionID=03am
+$requestParameters = array_values($request->all());
+$id = array_pop($requestParameters);
+//remove the crsf token 
+array_pop($requestParameters);
+// form the key
+foreach ($requestParameters as $value) {
+    $cacheKey .= $value;
+}
+$fullResponse = Cache::get($cacheKey);
+//return the part of the response, corresponding to the required id 
+\end{lstlisting}
 
 
+% Validation
+% Research
+%  Javascript validation
+% o Advantage – live update if a field is valid or not
+% o Disadvantage – update appear only under the input field. Also cannot modify error messages style, only if I dig in the implementation of the plugin and make the changes. Furthermore the request can still be manipulated.
+%  PHP Validation component that comes with Laravel
+% o Advantage – can use any style and can place the error messages anywhere on the page. Works on the server which makes it even more secure as it validates the request.
+% o Disadvantage – needs a page reload to show the errors
+% Implementation
+% Every controller starts with validating the request. There are custom rules for every field from the request. If the validation passes, the controller does its job, otherwise the user is redirected to the same page with error messages under the fields that are required or have wrong input. Error messages fields are displayed using Bootstrap CSS in a red colour, so that the user knows that there is an error.
 
-Validation
-Research
- Javascript validation
-o Advantage – live update if a field is valid or not
-o Disadvantage – update appear only under the input field. Also cannot modify error messages style, only if I dig in the implementation of the plugin and make the changes. Furthermore the request can still be manipulated.
- PHP Validation component that comes with Laravel
-o Advantage – can use any style and can place the error messages anywhere on the page. Works on the server which makes it even more secure as it validates the request.
-o Disadvantage – needs a page reload to show the errors
-Implementation
-Every controller starts with validating the request. There are custom rules for every field from the request. If the validation passes, the controller does its job, otherwise the user is redirected to the same page with error messages under the fields that are required or have wrong input. Error messages fields are displayed using Bootstrap CSS in a red colour, so that the user knows that there is an error.
+\section{Summary}
+Finally, this chapter shows how each of the components from the architecture diagram(Figure: \ref{componentDiagram}) was developed. Section \ref{sub:model} goes thought the process of getting the data from the services. Section \ref{sub:view} explains how the data was rendered and section \ref{subsec:controller} describes the communication between the client and the middleware. However, the next chapter goes through the process of evaluating and testing the already developed system by outlining the taken steps.  
 
 \chapter{Evaluation}
 
@@ -866,6 +1132,7 @@ The Think Aloud was also beneficial in terms of feedback on the design and the f
 \end{table}
 
 \subsection{Final phase}
+\label{sub:finalphase}
 \paragraph{}
 The feedback from the initial phase was positive but did not fully achieved the main goal of the evaluation: proving that the features were actually of use to the users. In order to improve, the first section of the evaluation process had to be redesigned. Two hypothesis were introduced. The first one was that the time of completing a task was affected by the interface. The second one tested if the interface had an affect on the number of clicks, performed for completing the task. In order to complete the experiment, A/B testing was used. It is a technique that compares two versions of a single variable and finds out which of the two variables is more effective. The idea, when testing a web application, is to show two versions of the interface to similar participants at the same time. In the case of this project, the desktop and mobile versions offer similar features. To solve this, a third system was extracted, where some of the features were disabled. However, they were selected in a way that will not prevent the participants from performing their tasks. The information box, timeline navigation bar, sections headings, which show in what timeslot is the current event on the screen, bar graph and infinite scrolling were all of the removed features. On the other hand, the full system was improved, as suggested in the initial evaluation, and components were separated by following Google's Material Design\footnote{\url{https://www.google.com/design/spec/material-design/introduction.html}} and visualising them as Cards\footnote{\url{https://www.google.com/design/spec/components/cards.html}}. Cards are a convenient means of displaying content composed of different elements. They are also well-suited for showcasing elements whose size or supported actions vary(\textbf{add screenshot}).
 
@@ -949,7 +1216,7 @@ The first hypothesis suggested that there will be an interaction between the ind
 \paragraph{}
 A 3x2 mixed factorial ANOVA was used to analyse the data. A significant interaction between Task and Interface was found (F(2,18)=5.058, p<0.05, η2=0.360). However, there were no significant main effect of Interface (F(2,18)=1.866, p=0.185, η2=0.172) an of Task (F(1,18)=1.903, p=0.185, η2=0.096). 
 \paragraph{}
-The second hypothesis suggested that there will be an interaction between Task and Interface on Total Number of Clicks. The mean number of clicks for completion of a task using a particular Interface were obtained and presented in Table \ref{tab:clickspertaskandinterface}. These were also illustrated along with errors bars for Standard Deviation on Figure \ref{ch:meantimebargraph}. As it is shown, Task 1 is on average completed with the least number of clicks on Interface 1 (M=21.50, SD=11.62), and largest number on Interface 2 (M=30.25, SD=2.754). The best mean value on Task 2 was also completed on Interface 1 (M=13.17, SD=0.753), and the highest mean value on Interface 2 (M=16, SD=1.826). The lowest total number of clicks required for completion of both tasks was obtained on Interface 1 (34.67). Furthermore, as it is illustrated in Figure \ref{ch:meanclicklinegraph}, when plotted on a line graph, there is no evidence of interaction. 
+The second hypothesis suggested that there will be an interaction between Task and Interface on Total Number of Clicks. The mean number of clicks for completion of a task using a particular Interface were obtained and presented in Table \ref{tab:clickspertaskandinterface}. These were also illustrated along with errors bars for Standard Deviation in Figure \ref{ch:meantimebargraph}. As it is shown, Task 1 is on average completed with the least number of clicks on Interface 1 (M=21.50, SD=11.62), and largest number on Interface 2 (M=30.25, SD=2.754). The best mean value on Task 2 was also completed on Interface 1 (M=13.17, SD=0.753), and the highest mean value on Interface 2 (M=16, SD=1.826). The lowest total number of clicks required for completion of both tasks was obtained on Interface 1 (34.67). Furthermore, as it is illustrated in Figure \ref{ch:meanclicklinegraph}, when plotted on a line graph, there is no evidence of interaction. 
 
 
 \begin{table}[H]
@@ -996,13 +1263,13 @@ All the participants had to complete the System Usability Scale questionnaire tw
 
 \subsubsection{Results from Think Aloud}
 \paragraph{}
-The Think Aloud was beneficial in two ways. First, it helped proving that the changes to the interface, performed after the initial phase of the evaluation,  were successful as none of the participants had any comments on the new separation of components. Second, it helped identifying potential usability issues as well as comparing the different interfaces. 
+The Think Aloud was beneficial in two ways. First, it helped proving that the changes to the interface, performed after the initial phase of the evaluation,  were successful as none of the participants had any comments on the new separation of the components. Second, it helped identifying potential usability issues as well as comparing the different interfaces. 
 \paragraph{}
 Also, while performing tasks on interface 1, 4 participants said that the date input was not clear. The reason was that there were arrows and clearly written Day, Month and Year on the buttons but nothing was leading them to the conclusion that this was the place where they had to input a date. 3 participants were confused by the tweets and their text as they were not used to Twitter and the notion of multiple hash-tags. Additionally, when performing task 2, 5 participants made an error while inputting the venue in the search input box and 2 of them did not even notice the error message, returned from the system. Also, 6 participants were misled and thought that entering the venue in the location input box would lead them to the required place and did not take into account any chance for a difference in coordinates. 
 \paragraph{}
 Furthermore, while using interface 2 and performing task 2, 6 participants said that they had to scroll too much in order to reach the target and 2 of them suggested squeezing the timeline in case of too many tweets in a particular section and give the option to show more if required. 5 participants forgot which query corresponded to which timeline in the comparison screen due to the long scrolling and needed to go back to the top of the page. 3 people were confused from the Busy Venues events, which were displayed, and stated that there were no clues for showing the source of information. Furthermore, 4 participants felt it hard to find the place on the map as on mobile devices there is no hoover effect and only after pressing on the screen, they could have determine the venue that was selected. On the other hand, 6 participants liked the alignment of the timelines and the fact that they could be compared directly.
 \paragraph{}
-In addition, for interface 3, all of the participants directly noticed the lack of features and started looking for clues around the interface. They did not like the fact that there was no clear separation of the sections and that they had to follow the timestamp on each event in order to determine the timeslot. Finally, all did not notice the lack of a graph but when asked, they pointed out that it was not needed for the particular task.
+In addition, for interface 3, all of the participants directly noticed the lack of features and started looking for clues around the interface. They did not like the fact that there was no clear separation of the sections and that they had to follow the time-stamp on each event in order to determine the timeslot. Finally, all did not notice the lack of a graph but when asked, they pointed out that it was not needed for the particular task.
 
 \subsubsection{Conclusion}
 \paragraph{}
@@ -1035,14 +1302,50 @@ The models were tested in the same way as in the unit tests but this time using 
 Two RESTful APIs were implemented for this project but due to time constraints only one had been tested using integration tests. The Busy Venue API(reference to implementation) was tested against valid, wrong or missing GPS input. All the return messages were checked if they were appropriate depending on the given inputs.
 
 \subsubsection{Testing Summary}
-For the duration of this project, 26 tests with 84 assertions were written with overall test coverage of 32.5\%.
+For the duration of this project, 26 tests with 84 assertions were written with overall test code coverage of 32.5\%.
 
 \subsection{Manual Testing}
 \paragraph{}
 Both the initial and the final phases of the Evaluation process were used for performing manual testing. All the participants were given tasks to complete. As new users to the system, they were making mistakes. However, they did not manage to break the system but a few bugs were discovered. There were few cases when the timeline was not loading when there was an attempt to retrieve the venue's time series. Also, for a few participants, the two timelines in the comparison screen where not properly aligned but the problem was identified and fixed.
- 
 
-\chapter{Future work}
+\section{Sonar}
+\paragraph{}
+SonarQube\footnote{http://www.sonarqube.org/} is an open platform that helps managing code quality. As such, it covers architecture \& design, comments, duplications, unit tests, complexity, potential bugs, coding rules, comments and sources. It is compatible with PHP as well. The required configuration was made so the project could be analysed and a report can be extracted. Figure \ref{fig:sonarreport} demonstrates how such a report looked like. It clearly shows the test coverage, percentage of duplications and how many lines of code had been written. Furthermore, if clicked on any of the rows, a more detailed report was displayed.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{images/sonarreport}
+	\label{fig:sonarreport}
+	\caption{Sonar Report}
+\end{figure}
+
+\section{Summary}
+\paragraph{}
+To conclude, this chapter lists and explains the techniques, used for evaluating and testing the final product. Furthermore, it outlines possibilities for future improvements as well as identified problems. However, the next chapter expands on these findings and suggests possible solutions together with a summary of the whole project. 
+
+\chapter{Conclusion}
+
+\section{Future Work}
+\paragraph{}
+All the participants of the evaluation actively participated during the Think Aloud and helped to identify the following possible improvements, which they thought would improve the overall user experience.
+\begin{itemize}
+	\item \textbf{Scale}. The biggest issue, identified using the questionnaire, was that users might not use the system as they did not use Twitter. To try and increase the interest of this system, the best option is to add data from other social media portals like Facebook. Furthermore, the addition of data sources from different parts of the world might be beneficial as some of the events in Glasgow may be influenced by what is happening in a different country or continent.
+	\item \textbf{Comparison variables} At this stage, the application allowed only for comparing tweets, which correspond to two hash-tags. For the future, users like researchers may benefit from a feature, that allows for comparing different variables or data streams between different dates.
+	\item \textbf{Graphs} During the final evaluation, some of the participants, who were studying sociology or business, explained that they could benefit from different graph representations(Line graph or Scatter plot) of the results as they were used to tools like Excel or SPSS, which offer such functionality.  
+	\item \textbf{Suggestions} Offering suggestions, based on the previous searches of the users, could lead to easier understanding of the capabilities of the system and what data it has to offer.
+	\item \textbf{Interface improvements} The limitations of the user interface, identified in Section \ref{sub:finalphase}, should be addressed and most importantly the option to hide most of the events and allow for expanding a section by the user must be introduced so that the amount of scrolling can be drastically reduced.    
+\end{itemize}
+
+\section{Lessons Learnt}
+\paragraph{}
+The biggest lesson for the author was how to drive alone such a relatively big project from the initial planning up to the final evaluation. Furthermore, PHP had to be learnt in parallel with the progress on the project. Additionally, the authors knowledge about the model-view-controller as well as how the frameworks made use of this design pattern had increased significantly. 
+
+\section{Summary}
+\paragraph{}
+This project aimed to build a tool for the fusion and visualisation of timely data. It went thought 23 iterations and 64 commits to the development branch in GitHub\footnote{https://github.com/skDn/Urban-Data-Timeline/tree/dev}. The final product was evaluated using 16 participants in total, who managed to prove that the application was usable by giving it a very high usability score of 89.38(Figure: \ref{fig:susresultsmean}) out of 100. Furthermore, the received verbal feedback confirmed that the implemented features were valuable to the users. 
+
+\section{Acknowledgements}
+I would like to thank Dr. Iadh Ounis and Dr. Craig Macdonald for supervising this project and providing their very valuable feedback when required. Furthermore, many thanks to the Urban Big Data Centre for making this project possible by providing part of the data, collected for their Integrated Multimedia City Data project, and to Dr. Sean Moran, who was developing and supporting the services that were giving me access to the data. Finally, I would like to thank all of the participants, who took part in the evaluation, as their performance and feedback managed to prove that the final product was successful.  
 
 %%%%%%%%%%%%%%%%
 %              %
@@ -1050,7 +1353,67 @@ Both the initial and the final phases of the Evaluation process were used for pe
 %              %
 %%%%%%%%%%%%%%%%
 \begin{appendices}
-
+	\chapter{Progress Reports}
+	\includepdf[pages=-]{meetings/progress1.pdf}
+	\includepdf[pages=-]{meetings/progress2.pdf}
+	\includepdf[pages=-]{meetings/progress3.pdf}
+	\includepdf[pages=-]{meetings/progress4.pdf}
+	\includepdf[pages=-]{meetings/progress5.pdf}
+	\includepdf[pages=-]{meetings/progress6.pdf}
+	\includepdf[pages=-]{meetings/progress7.pdf}
+	\includepdf[pages=-]{meetings/progress8.pdf}
+	\includepdf[pages=-]{meetings/progress9.pdf}
+	\includepdf[pages=-]{meetings/progress10.pdf}
+	\includepdf[pages=-]{meetings/progress11.pdf}
+	\includepdf[pages=-]{meetings/progress12.pdf}
+	\includepdf[pages=-]{meetings/progress13.pdf}
+	\includepdf[pages=-]{meetings/progress14.pdf}
+	\includepdf[pages=-]{meetings/progress15.pdf}
+	\includepdf[pages=-]{meetings/progress16.pdf}
+	\includepdf[pages=-]{meetings/progress17.pdf}
+	\includepdf[pages=-]{meetings/progress18.pdf}
+	\includepdf[pages=-]{meetings/progress19.pdf}
+	\includepdf[pages=-]{meetings/progress20.pdf}
+	\includepdf[pages=-]{meetings/progress21.pdf}
+	\includepdf[pages=-]{meetings/progress22.pdf}
+	\chapter{Evaluation Raw results}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Time}
+		\includepdf[pages=1]{apendix/evaluationresults.pdf}
+	\end{minipage}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Clicks}
+		\includepdf[pages=2]{apendix/evaluationresults.pdf}
+	\end{minipage}
+	\chapter{Evaluation Documents}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Consent}
+		\includepdf[pages=-]{apendix/consent.pdf}
+	\end{minipage}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Introduction and Debrief scripts}
+		\includepdf[pages=1]{apendix/evaluationdocs.pdf}
+	\end{minipage}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Task sheet}
+		\includepdf[pages=2]{apendix/evaluationdocs.pdf}
+	\end{minipage}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Questionnaire}
+		\includepdf[pages=3]{apendix/evaluationdocs.pdf}
+	\end{minipage}
+	\clearpage
+	\begin{minipage}{\textwidth}
+		\section{Setup guide}
+		\includepdf[pages=-]{apendix/setup.pdf}
+	\end{minipage}
+	
 \end{appendices}
 
 %%%%%%%%%%%%%%%%%%%%

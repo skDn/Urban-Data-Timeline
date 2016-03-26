@@ -21,4 +21,7 @@ phpunit-*
 **/dissertation/*.log
 **/dissertation/*.gz
 **/dissertation/*.toc
-
+**/dissertation/images
+**/dissertation/charts
+**/dissertation/meetings
+**/dissertation/apendix
