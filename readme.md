@@ -1,15 +1,15 @@
 ##Setup
 
 ### Starting the server
-Typically, a web server such as Apache or Nginx can be used to serve this application. If there is PHP 5.4+ installed that comes with PHP's built-in development server, the serve Artisan command can be used to start the application but only if it is executed into the main directory of the project:
-$ php artisan serve
-By default the HTTP-server will listen to port 8000. However if that port is already in use, the port can be specified. Just add the --port argument:
-$ php artisan serve --port=8080
+Typically, a web server such as Apache or Nginx can be used to serve this application. If there is PHP 5.4+ installed that comes with PHP's built-in development server, the serve Artisan command can be used to start the application but only if it is executed into the main directory of the project: <br/>
+$ php artisan serve <br/>
+By default the HTTP-server will listen to port 8000. However if that port is already in use, the port can be specified. Just add the --port argument: <br/>
+$ php artisan serve --port=8080 <br/>
 
 ### Services configuration
 
-Furthermore, the “Urban-Data-Timeline\config\services.php” file has to be modified with the urls to each of the services. This change is not required if a ssh tunnel to the services is opened, using the following command:
-$ ssh -L 8080:localhost:9057 -L 8081:localhost:9058 GUID@sibu.dcs.gla.ac.uk "ssh -L 9057:130.209.67.145:8080 -L 9058:130.209.67.145:80 roma"
+Furthermore, the “Urban-Data-Timeline\config\services.php” file has to be modified with the urls to each of the services. This change is not required if a ssh tunnel to the services is opened, using the following command: <br/>
+$ ssh -L 8080:localhost:9057 -L 8081:localhost:9058 GUID@sibu.dcs.gla.ac.uk "ssh -L 9057:130.209.67.145:8080 -L 9058:130.209.67.145:80 roma" <br/>
 
 ### Twitter API
 
