@@ -1,0 +1,71 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Motivations}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Aims}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Background}{chapter.1}% 4
+\BOOKMARK [2][-]{subsection.1.3.1}{Integrated Multimedia City Data}{section.1.3}% 5
+\BOOKMARK [2][-]{subsection.1.3.2}{Terrier IR}{section.1.3}% 6
+\BOOKMARK [2][-]{subsection.1.3.3}{RESTful Web Services}{section.1.3}% 7
+\BOOKMARK [2][-]{subsection.1.3.4}{Web Application}{section.1.3}% 8
+\BOOKMARK [1][-]{section.1.4}{Outline}{chapter.1}% 9
+\BOOKMARK [0][-]{chapter.2}{Related Work}{}% 10
+\BOOKMARK [0][-]{chapter.3}{Project Planning}{}% 11
+\BOOKMARK [1][-]{section.3.1}{Software design approach}{chapter.3}% 12
+\BOOKMARK [2][-]{subsection.3.1.1}{Waterfall model}{section.3.1}% 13
+\BOOKMARK [2][-]{subsection.3.1.2}{Agile model}{section.3.1}% 14
+\BOOKMARK [1][-]{section.3.2}{Requirements Engineering}{chapter.3}% 15
+\BOOKMARK [2][-]{subsection.3.2.1}{Use cases}{section.3.2}% 16
+\BOOKMARK [2][-]{subsection.3.2.2}{Functional requirements}{section.3.2}% 17
+\BOOKMARK [2][-]{subsection.3.2.3}{Non-Functional requirements}{section.3.2}% 18
+\BOOKMARK [2][-]{subsection.3.2.4}{High Level System Diagram}{section.3.2}% 19
+\BOOKMARK [2][-]{subsection.3.2.5}{Challenges}{section.3.2}% 20
+\BOOKMARK [2][-]{subsection.3.2.6}{User Stories}{section.3.2}% 21
+\BOOKMARK [1][-]{section.3.3}{Summary}{chapter.3}% 22
+\BOOKMARK [0][-]{chapter.4}{Design}{}% 23
+\BOOKMARK [1][-]{section.4.1}{Paper prototypes}{chapter.4}% 24
+\BOOKMARK [1][-]{section.4.2}{Architecture diagrams}{chapter.4}% 25
+\BOOKMARK [1][-]{section.4.3}{Components communication}{chapter.4}% 26
+\BOOKMARK [2][-]{subsection.4.3.1}{HTTP Request}{section.4.3}% 27
+\BOOKMARK [2][-]{subsection.4.3.2}{XMLHTTP Request}{section.4.3}% 28
+\BOOKMARK [1][-]{section.4.4}{Choice of technology}{chapter.4}% 29
+\BOOKMARK [2][-]{subsection.4.4.1}{Security}{section.4.4}% 30
+\BOOKMARK [2][-]{subsection.4.4.2}{Web Application Framework}{section.4.4}% 31
+\BOOKMARK [2][-]{subsection.4.4.3}{Javascript Library}{section.4.4}% 32
+\BOOKMARK [2][-]{subsection.4.4.4}{CSS Framework}{section.4.4}% 33
+\BOOKMARK [2][-]{subsection.4.4.5}{Graph API}{section.4.4}% 34
+\BOOKMARK [2][-]{subsection.4.4.6}{Map API}{section.4.4}% 35
+\BOOKMARK [1][-]{section.4.5}{Summary}{chapter.4}% 36
+\BOOKMARK [0][-]{chapter.5}{Implementation}{}% 37
+\BOOKMARK [1][-]{section.5.1}{Prototype Implementation}{chapter.5}% 38
+\BOOKMARK [1][-]{section.5.2}{Product Implementation}{chapter.5}% 39
+\BOOKMARK [2][-]{subsection.5.2.1}{Model}{section.5.2}% 40
+\BOOKMARK [2][-]{subsection.5.2.2}{View}{section.5.2}% 41
+\BOOKMARK [2][-]{subsection.5.2.3}{Controller}{section.5.2}% 42
+\BOOKMARK [1][-]{section.5.3}{Summary}{chapter.5}% 43
+\BOOKMARK [0][-]{chapter.6}{Evaluation}{}% 44
+\BOOKMARK [1][-]{section.6.1}{Product evaluation}{chapter.6}% 45
+\BOOKMARK [2][-]{subsection.6.1.1}{Planning}{section.6.1}% 46
+\BOOKMARK [2][-]{subsection.6.1.2}{Initial phase}{section.6.1}% 47
+\BOOKMARK [2][-]{subsection.6.1.3}{Final phase}{section.6.1}% 48
+\BOOKMARK [1][-]{section.6.2}{Testing}{chapter.6}% 49
+\BOOKMARK [2][-]{subsection.6.2.1}{Unit Tests}{section.6.2}% 50
+\BOOKMARK [2][-]{subsection.6.2.2}{Integration Tests}{section.6.2}% 51
+\BOOKMARK [2][-]{subsection.6.2.3}{Manual Testing}{section.6.2}% 52
+\BOOKMARK [1][-]{section.6.3}{Sonar}{chapter.6}% 53
+\BOOKMARK [1][-]{section.6.4}{Summary}{chapter.6}% 54
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 55
+\BOOKMARK [1][-]{section.7.1}{Future Work}{chapter.7}% 56
+\BOOKMARK [1][-]{section.7.2}{Lessons Learnt}{chapter.7}% 57
+\BOOKMARK [1][-]{section.7.3}{Summary}{chapter.7}% 58
+\BOOKMARK [1][-]{section.7.4}{Acknowledgements}{chapter.7}% 59
+\BOOKMARK [0][-]{section*.169}{Appendices}{}% 60
+\BOOKMARK [0][-]{Appendix.a.A}{Progress Reports}{}% 61
+\BOOKMARK [0][-]{Appendix.a.B}{Semester 1 status report}{}% 62
+\BOOKMARK [0][-]{Appendix.a.C}{Evaluation Raw results}{}% 63
+\BOOKMARK [1][-]{section.a.C.1}{Time}{Appendix.a.C}% 64
+\BOOKMARK [1][-]{section.a.C.2}{Clicks}{Appendix.a.C}% 65
+\BOOKMARK [0][-]{Appendix.a.D}{Evaluation Documents}{}% 66
+\BOOKMARK [1][-]{section.a.D.1}{Consent}{Appendix.a.D}% 67
+\BOOKMARK [1][-]{section.a.D.2}{Introduction and Debrief scripts}{Appendix.a.D}% 68
+\BOOKMARK [1][-]{section.a.D.3}{Task sheet}{Appendix.a.D}% 69
+\BOOKMARK [1][-]{section.a.D.4}{Questionnaire}{Appendix.a.D}% 70
+\BOOKMARK [0][-]{Appendix.a.E}{Setup guide}{}% 71
